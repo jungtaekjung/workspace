@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05_표 연습문제</title>
+    <style>
+        .tb3{
+            border: 2px solid black;
+            
+        }
+
+        .tb3 th{
+            border: 1px solid black;
+        }
+        .tb3 td{
+            background-color: skyblue;    
+        }
+        
+        .tb3 thead{
+            background-color: pink;
+        }
+
+        .tb3 tbody{
+            background-color: yellow;
+        }
+
+        .tb3 tfoot{
+        td{background-color: darkgray;}
+            
+            background-color: yellow;
+
+            color : black;
+        }
+       
+    </style>
+
+
+</head>
+<body>
+    <table border="1" class="tb3">
+        
+        <thead>
+        <tr>
+           <th width="140px" colspan="7" >혜선쌤 굿즈</th> 
+        </tr>
+    </thead>
+        <tbody>
+        <tr>
+            <th rowspan="5">제품리스트</th>
+            <th>코드</th>
+            <th>분류</th>
+            <th>가격</th>
+            <th>구매가능개수</th>
+        </tr>
+        <tr>
+
+            <td >A01-468</td>
+            <td>키링</td>
+            <td>200,000원</td>
+            <td>1068</td>
+        </tr>
+        <tr>
+            <td>A01-469</td>
+            <td>스티커</td>
+            <td>150,000원</td>
+            <td>1700</td>
+        </tr>
+        <tr>
+            <td>A01-470</td>
+            <td>인형</td>
+            <td>950,000원</td>
+            <td>2500</td>
+        </tr>
+        <tr>
+            <td>A01-471</td>
+            <td>텀블러</td>
+            <td>120,000원</td>
+            <td>3200</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="3">총합</th>
+            <td>1,420,000</td>
+            <td>8468개</td>
+        </tr>
+        </tfoot>
+
+
+
+
+
+
+
+    </table>
+</body>
+</html>
