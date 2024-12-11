@@ -52,3 +52,65 @@ p[name=name-1]{background-color: cadetblue;}
 
 /* #hover-test 요소가 변화를 일으키면 0.5초 동안 변함 */
 #hover-test{transition-duration: 0.5s;}
+
+/* 상태 선택자 */
+/* 요소에 초점이 맞춰졌을 때 (:focus) */
+#focus-test:focus{background-color: aquamarine;}
+
+/* 요소가 체크되었을 때(:checked) */
+input[name="fruits"]:checked{
+    background-color: red;
+    /* radio, checkbox는 크기를 제외한 스타일 적용 X */
+
+    width:30px;
+    height:30px;
+
+}
+
+/* 사용 가능 / 불가능(:enabled / :disabled) */
+#test-div2 > input:enabled{
+    background-color: tomato;
+}
+#test-div2 > input:disabled{
+    background-color: thistle;
+}
+
+/* 동위 선택자 */
+
+/* A 바로 뒤에 있는 B요소 선택(+) */
+#div1 + div{background-color: blue;}
+
+/* A 뒤에 있는 모든 B요소 선택(~) */
+#div3 ~ div{background-color: cadetblue;}
+
+/* checkbox 모양 바꾸기 */
+
+#check1+label{
+    border:1px solid black;
+    width : 30px;
+    height : 30px;
+
+    /* 수평 분할 + 크기조절 */
+    display :inline-block;
+    cursor: pointer; /* 마우스 손가락 모양*/
+
+    /* 모서리 라운딩 처리 */
+    border-radius: 15%;
+
+
+}
+#check1:checked + label{
+    background-image: url("../../images/KakaoTalk_20241210_143034106.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* check1이 존재하지만 화면에 보이지 않게 하기 */
+#check1{display: none;}
+
+
+
+
+
+
+

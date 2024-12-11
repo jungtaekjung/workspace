@@ -1,0 +1,37 @@
+/* :only-child */
+#test2>p:only-child{
+    background-color: antiquewhite;
+}
+
+/* :only-of-type */
+#test2>p:only-of-type{
+    background-color: aquamarine;
+}
+
+/* :empty */
+#test3>p:empty{
+    height: 30px;
+    background-color: aqua;
+}
+/* 특정 요소 내부에 있는 특정 클래스만 선택 */
+/* 아이디가 test4-1의 후손 중 클래스가 c4인 요소 선택 */
+#test4-1 .c4{
+    background-color: aqua;
+}
+
+/* #test4-2의 자식 중 클래스가 c4인 li요소만 선택 */
+#test4-2>li.c4{
+    background-color: rgb(224, 111, 91);
+}
+/* test5-1, test5-2, test5-3 배경색을 tomato로 변경 */
+#test5-1,#test5-2,#test5-3{
+    background-color: tomato;
+}
+
+/* 클래스가 여러 개인 요소만 선택 */
+/* 클래스가 test6, c6을 둘다 가진 요소에 
+테두리 1px solid black으로 변경 */
+.test6.c6{
+    border: 1px solid black;
+}
+

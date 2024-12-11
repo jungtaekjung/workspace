@@ -96,5 +96,80 @@
     <div class="div-cls" id="active-test">:active 테스트</div>
     <div class="div-cls" id="hover-test">:hover 테스트</div>
 
+    <hr>
+
+    <h3>상태 선택자</h3>
+    <pre>
+        입력 양식(input, input 관련 태그)의 상태에 따라 선택되는 선택자
+    
+        :focus -> 요소에 초점이 맞춰졌을 때
+        :checked -> 요소가 체크되었을 때(radio, checkbox)
+
+        :enabled / disabled -> 요소가 사용 가능한 / 불가능한 상태일 때
+
+
+    </pre>
+    <form></form>
+    <h4>:focus</h4>
+    <input type="text" id="focus-test">
+
+    <h4>:checked</h4>
+    <label for="apple">사과</label>
+    <input type="checkbox" id="apple" name="fruits"><br>
+
+    <label for="banana">바나나</label>
+    <input type="checkbox" id="banana" name="fruits"><br>
+
+    <label for="melon">멜론</label>
+    <input type="checkbox" id="melon" name="fruits"><br>
+
+    <h4>:enabled / :disabled</h4>
+    <div id="test-div2">
+        사용 가능 : <input type="text" enabled> <br>
+        사용 불가능 : <input type="text" disabled value="변경되면 안되는 값" disabled> <br>
+    </div>
+
+    <hr><hr>
+
+
+    <h3>동위 선택자</h3>
+    <pre>
+        동위 관계(동등한 위치 == 형제 관계)에서
+        뒤(다음)에 위치한 요소를 선택하는 선택자
+
+        A
+        B
+        B
+
+        1) A 바로 뒤(다음)에 있는 B 요소 하나를 선택 (+)
+           A선택자 + B선택자 { CSS 코드; }
+
+        2) A 뒤에 있는 모든 요소를 선택 (~ 틸드(Tilde))
+           A선택자 ~ B선택자 { CSS 코드; }
+    </pre>
+
+    <div id="div1">1번 입니다.</div>
+    <div>2번 입니다</div>
+    <div id="div3">3번 입니다.</div>
+    <div id="div4">4번 입니다.</div>
+
+    <p>관련 없는 태그입니다~</p>
+
+    <div id="div5">5번 입니다.</div>
+
+    <hr><hr>
+
+    <h2>checkbox 모양 바꾸기</h2>
+    <pre>
+        [준비물]
+        - 동위 선택자(+)
+        - 상태 선택자(:checked)
+        - input type="checkbox"
+        - label 태그(for속성)
+        - 체크박스 이미지
+    </pre>
+
+    <input type="checkbox" id="check1">
+    <label for="check1"></label>
 </body>
 </html>
