@@ -1,0 +1,49 @@
+div{
+    /* border : 1px solid black; */
+    
+}
+.header{
+    display:flex;
+    justify-content: flex-start;
+    flex-wrap:wrap;
+    float :left;
+    padding : 10px;
+
+}
+.header2{
+    display:flex;
+    justify-content: flex-end;
+    flex-wrap:wrap;
+    float:right;
+    padding: 10px;
+    
+}
+#login{background-color: blue;}
+
+.mid{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    /* width : 450px; */
+    /* height: 200px; */
+ }
+ #gemini{
+    /* height:1000px; */
+    margin-bottom: 700px;
+    display:flex;
+       
+ }
+/*.mid2{
+
+    width : 450px;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+.foot{
+    width:100%;
+    display:flex;
+    justify-content: space-between;
+    padding : 10px;
+}

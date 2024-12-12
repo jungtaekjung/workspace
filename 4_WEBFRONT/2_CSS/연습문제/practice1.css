@@ -1,6 +1,4 @@
-div{
     /* border:1px solid black; */
-}
 .top{
     margin-left:130px;
 }
@@ -19,15 +17,18 @@ div{
     display : flex;
 }
 .mids{
-    text-align: center;
     display: flex;
     margin-top: 20px;
 }
 .mid{
     padding : 10px 20px;
     border-radius: 50%;
-    
-    
+    text-align: center;
+    align-items: center;
+    display: flex;
+    width: 80px;
+    height: 80px;
+    justify-content: center;
 }    
 
 .fixed-area{
@@ -45,6 +46,4 @@ div{
 
 .fixed-area>a{
     color:#041e49;
-}
-body{
 }

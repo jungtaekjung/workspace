@@ -28,9 +28,9 @@ div{
     
         * clear의 방향성
         - float는 left / right 나눠져 있는데
-            지정된 float 흐름고 ㅏ같은 방향을 해제해야 겹침 문제가 해결됨
+            지정된 float 흐름과 같은 방향을 해제해야 겹침 문제가 해결됨
     */
-    clear : both; /* left, right 모두 해제 */
+    /* clear : both; left, right 모두 해제 */
 }
 
 .float-right{
