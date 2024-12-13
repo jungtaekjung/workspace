@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13_웹 문서 구조.html</title>
+    <link rel="stylesheet" href="css/structure.css">
+    <script src="https://kit.fontawesome.com/5f900fff15.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="header">
+            <div>
+                <a href="#">
+                    <img src="../images/KakaoTalk_20241213_093131503.jpg" id="main-logo">
+                </a>
+            </div>
+            
+            <!-- 검색창 -->
+            <div>
+                <div class="search-area">
+                    
+                    <!-- form 내부 input 태그 값을 서버 또는 페이지로 전달 -->
+                    <form action="#" name="search-form">
+                     
+                        <!-- fieldset : form태그 내부에서 input을 종류별로 묶는 용도로 많이 사용 -->
+                         <fieldset>
+
+                             
+                             
+                             <!-- form태그 내부 input은 name 속성이 존재해야 값 전달 가능함! -->
+                             <input type="text" name="query" id="query"
+                             autocomplete="off" placeholder="검색어를 입력해주세요">
+                             
+                             <button id="saerch-btn" class="fa-solid fa-magnifying-glass"></button>
+                         </fieldset>
+                    </form>
+                </div>
+            </div>
+            
+            <div></div>
+        </div>
+
+        <div class="nav">
+                <ul>
+                    <li><a href="#">공지사항</a></li>
+                    <li><a href="#">자유 게시판</a></li>
+                    <li><a href="#">질문 게시판</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">1:1문의</a></li>
+                </ul>
+        </div>
+        <div class="content">
+            <div></div>
+            <div class="content-2">
+                <form action="#" name="login-form">
+        
+                    <!-- 아이디/비밀번호/로그인버튼 영역 -->
+                    <fieldset id="id-pw-area">
+                        <div>
+                            <input type="text" placeholder="아이디" name="inputId">
+                            <input type="password" placeholder="비밀번호" name="inputPw">
+                        </div>
+                        <div>
+                            <button>로그인</button>
+                        </div>
+                    
+                    </fieldset>
+        
+                    <!-- 회원가입 / ID/PW 찾기 영역 -->
+                    <div id="signup-find-area">
+                        <a href="#">회원가입</a>
+                        <span>|</span>
+                        <a href="#">ID/PW 찾기</a>
+                    </div>
+        
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>Copyright &copy; KH Information Educational Institute G-Class</p>
+        <div>
+            <a href="#">프로젝트 소개</a>
+            <span>|</span>
+            <a href="#">이용약관</a>
+            <span>|</span>
+            <a href="#">개인정보처리방침</a>
+            <span>|</span>
+            <a href="#">고객센터</a>
+        
+        </div>
+    </div>
+</body>
+</html>
