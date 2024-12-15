@@ -47,3 +47,37 @@ header>section:nth-child(2)>section:nth-child(2){
 .top-mid>a{
     margin: 0 6px;
 }
+footer {
+    background-color: #1e3932;
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.rewards h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.rewards p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.rewards .buttons button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.rewards .buttons button:first-child {
+    background-color: #006341;
+    color: white;
+}
+
+.rewards .buttons button:last-child {
+    background-color: white;
+    color: #006341;
+}
