@@ -6,6 +6,13 @@ main{
     margin:auto;
     border: 1px solid black;
 }
+.top-link{
+    flex-basis : 70%;
+}
+
+.img{
+    flex-basis:30%
+}
 
 header{
     height:200px;
