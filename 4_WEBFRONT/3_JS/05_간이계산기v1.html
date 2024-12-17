@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05_간이계산기v1.html</title>
+</head>
+<body>
+    <h1>간이 계산기 만들기</h1>
+    첫번째 값: <input type="text" id="num1" size="20"> 
+    <br>
+    두번째 값: <input type="text" id="num2" size="20">
+    <br>
+    <button onclick="plus()">+</button>
+    <button onclick="minus()">-</button>
+    <button onclick="multi()">*</button>
+    <button onclick="div()">/</button>
+    <button onclick="mod()">%</button>
+    
+    <br><br>
+    계산 결과 : <span id="result"></span>
+    
+    <script>
+        const num1 =document.getElementById('num1');
+        const num2 =document.getElementById('num2');
+
+        const result = document.getElementById("result");
+
+        // Number(문자열) : 문자열을 number 타입으로 변환
+        // NaN(Not a Number) : 숫자가 아닌 값
+        function plus(){result.innerText = Number(num1.value) + Number(num2.value); }
+        function minus(){result.innerText = Number(num1.value) - Number(num2.value); }
+        function multi(){result.innerText = Number(num1.value) * Number(num2.value); }
+        function div(){result.innerText = Number(num1.value) / Number(num2.value); }
+        function mod(){result.innerText = Number(num1.value) % Number(num2.value); }
+
+    </script>
+</body>
+</html>
