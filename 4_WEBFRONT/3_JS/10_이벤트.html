@@ -81,6 +81,62 @@
 
     <button id="changeBtn1">변경</button>
 
+    <hr>
+
+    <h1>HTML 요소 기본 이벤트 제거</h1>
+
+    <h3>a태그 기본 이벤트 제거</h3>
+    <a href="https://www.naver.com" id="moveNaver">네이버로 이동</a>
+
+    <hr>
+
+    <h3>form태그 기본 이벤트 제거</h3>
+    <!-- 내부에서 submit 버튼이 클릭되면 action 경로로 제출 -->
+
+    <h4>방법 1. submit 버튼을 사용 안하는 방법</h4>
+    <form action="01_JS개요.html" name="testForm1">
+        "제출" 이라고 입력되었을 때만 버튼이 submit으로 동작<br>
+        입력 : <input type="text" name="in1" id="in1">
+
+        <button type="button" id="testBtn1">제출하기</button>
+    </form>
+
+    <hr>
+
+    <h4>방법 2. onsubmit을 이용해서 form태그가 제출되는 것을 막는 방법</h4>
+
+    <!-- 
+        onsubmit : form 태그가 제출 되었을 때
+                    -> 제출하기 버튼이 클릭 되었을 때를 의미
+
+        onsubmit = "return false"
+        -> submit을 막는 방법                    
+    -->
+
+
+    <form action="01_JS개요.html" onsubmit="return checkIn2()">
+        "제출" 이라고 입력되었을 때만 버튼이 submit으로 동작<br>
+        입력 : <input type="text" name="in2" id="in2">
+
+        <button type="submit" id="testBtn2">제출하기</button>
+    </form>
+
+    <!-- 
+        * js코드를 body 태그 마지막에 작성하는 이유 *
+
+        1. 고전/표준 이벤트 모델 방식의 코드 수행을 위해서
+        (HTML 요소 먼저 랜더링 -> JS 코드 해석)
+
+        2. head에 용량이 큰 JS를 추가하면
+            페이지 로딩 시간(흰 하면)이 길어지게 된다.
+
+        -> body 마지막으로 옮기면 화면부터 랜더링 후 JS 코드 나중에 해석함    
+
+    -->
+    
+    
     <script src="js/10_이벤트.js"></script>
+
+
 </body>
 </html>

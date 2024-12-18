@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 번호 생성기</title>
+    <style>
+        
+        
+        #container{
+            text-align :center;
+
+        }
+        #lotto-nums{
+            display : flex;
+            justify-content: center;
+
+        }
+        #lotto-nums>div{
+
+            width :50px;
+            height:50px;
+            border : 1px solid black;
+            border-radius : 50px;
+            text-align: center;
+            margin : 0 5px;
+        }
+        #createLotto{
+            margin : 50px 900px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="container">
+        <div id="lotto-nums">
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+        </div>
+    </div>
+    <button id="createLotto">로또 번호 생성</button>
+
+    <script>
+        // 로또 번호 생성시 1~45 난수 생성
+        document.getElementById("createLotto").addEventListener("click",function(){
+            for(let i=0; i<num.length; i++){
+                num[i].innerText=Math.floor(Math.random()*45+1)
+            }
+
+        })
+        // lotto에 저장된 난수 오름차순 정렬
+
+        // + 로또 번호 중복 X 
+
+    </script>
+</body>
+</html>
