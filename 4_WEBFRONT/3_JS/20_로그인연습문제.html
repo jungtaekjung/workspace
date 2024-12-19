@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20_로그인 연습문제</title>
+    <style>
+        .form-popup{
+            display:none;
+        }
+
+        label {
+            display:inline-block;
+            width:80px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>로그인을 클릭하면 로그인 폼이 나타납니다.</h2>
+
+    <button class="open">로그인</button>
+
+    <div class="form-popup" id="myForm">
+        <form action="01_JS개요.html" >
+            <fieldset>
+                <legend>로그인</legend>
+
+                <h1>Login</h1>
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="email" required>
+                <br>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+                <br>
+
+                <button type="submit" class="btn">Login</button>
+                <button type="button" class="btn cancel">Close</button>
+            </fieldset>
+        </form>
+    </div>
+    <script>
+        // 1. 이 문서를 처음 로드하면 로그인 화면은 보이지 않는다.
+
+        // 2. label 태그는 가로로 '80px' 크기를 갖는다.
+
+        // 3. 로그인 버튼을 클릭하면 로그인 화면이 화면에 나타난다.
+
+        const openButton = document.querySelector(".open");
+        openButton.addEventListener("click", function () {
+            const formPopup = document.getElementById("myForm");
+            formPopup.style.display = "block"; // 폼 보이기
+        });
+
+        // 4. Close 버튼을 클릭하면 로그인 화면이 사라진다.
+
+        const closeButton = document.querySelector(".btn.cancel");
+        closeButton.addEventListener("click", function () {
+            const formPopup = document.getElementById("myForm");
+            formPopup.style.display = "none";
+        })    
+    </script>
+</body>
+</html>

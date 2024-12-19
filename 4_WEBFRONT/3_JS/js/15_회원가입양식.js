@@ -9,6 +9,19 @@
 - 형식이 일치하지 않은 경우
 입력창의 배경색을 red, 글자색을 white 로 변경*/
 
+const inputId = document.getElementById("inputId");
+const regExp = /^[a-z](\d|\w|\-|_){5,13}$/;
+inputId.addEventListener("keyup", function(){
+
+    if(regExp.test(inputId.value)){
+        this.style.backgroundColor = "green"
+    }else{
+        this.style.backgroundColor = "red"
+        this.style.color = "white";
+    }
+})
+
+
 // ------------------------------------------------------------------
 
 /* 비밀번호, 비밀번호 확인 : 키보드가 올라올 때 
@@ -17,6 +30,18 @@
 '비밀번호를 입력해주세요' 경고창 출력 후
 focus 를 "비밀번호" 입력창으로 이동
 */
+
+const inputPw = document.getElementById("inputPw");
+const inputPwConfirm = document.getElementById("inputPwConfirm");
+
+inputPwConfirm.addEventListener("keyup", function(){
+
+    if(inputPw.value.length == 0){
+        alert("비밀번호를 입력해주세요");
+        this.value = '';
+        inputPw.focus();
+    }
+})
 
 // ------------------------------------------------------------------
 
@@ -30,6 +55,46 @@ focus 를 "비밀번호" 입력창으로 이동
 - 비밀번호가 작성되지 않은경우 오른쪽에 출력되는 문구 삭제
 
 */
+const pwMessage = document.getElementById("pwMessage");
+
+inputPw.addEventListener("keyup", function(){
+    if(inputPwConfirm.value != ''){
+
+        if(inputPw.value == inputPwConfirm.value){
+            pwMessage.innerText = "비밀번호 일치"
+            pwMessage.classList.add("confirm");
+            pwMessage.classList.remove("error")
+    
+        } else{
+             pwMessage.innerText = "비밀번호 불일치"
+             pwMessage.classList.add("error");
+             pwMessage.classList.remove("confirm")
+        }
+    }
+
+    if(inputPw.value.length == 0 && inputPwConfirm.value == ''){
+        pwMessage.innerText = '';
+    }
+})
+
+inputPwConfirm.addEventListener("keyup", function(){
+
+    if(inputPw.value == inputPwConfirm.value){
+        pwMessage.innerText = "비밀번호 일치"
+        pwMessage.classList.add("confirm");
+        pwMessage.classList.remove("error")
+
+    } else{
+            pwMessage.innerText = "비밀번호 불일치"
+            pwMessage.classList.add("error");
+            pwMessage.classList.remove("confirm")
+    }
+
+    if(inputPw.value.length == 0 && inputPwConfirm.value == ''){
+        pwMessage.innerText = '';
+    }
+})
+
 
 // -------------------------------------------------------------
 
@@ -40,7 +105,24 @@ focus 를 "비밀번호" 입력창으로 이동
 - 형식이 일치할 경우
 "이름" 입력창 오른쪽에 "한글만 입력하세요" 글자를 빨간색으로 출력.
 */
+const inputName = document.getElementById("inputName");
+const nameMessage = document.getElementById("nameMessage");
+inputName.addEventListener("keyup", function(){
+    const regExp = /^[가-힣]{2,5}$/;
 
+    if(regExp.test(inputName.value)){
+        nameMessage.innerText =  "정상입력";
+        nameMessage.style.color = "green";
+
+    } else {
+        nameMessage.innerText =  "한글만 입력하세요";
+        nameMessage.style.color = "red";
+    }
+
+    if(inputName.value.length == 0){
+        nameMessage.innerText =  "";
+    }
+})
 // -----------------------------------------------------------
 
 /* 회원가입 버튼 클릭 시 : validate() 함수를 호출하여 
@@ -52,6 +134,12 @@ function validate(){
     "성별을 선택해주세요." 경고창(==대화상자) 출력 후
     submit 기본 이벤트를 제거하여 회원가입이 진행되지 않게 함.*/
 
+    const gender = document.getElementsByName('gender');
+
+    if(!gender[0].checked && !gender[1].checked){
+        alert("성별을 선택해주세요");
+        return false;
+    }
     
 
     /*
@@ -60,6 +148,19 @@ function validate(){
     submit 기본 이벤트를 제거하여 회원가입이 진행되지 않게 함.
     */
 
+    const tel = document.getElementById('inputTel');
+    const regExp = /^[0][0-9]{1,2}-[0-9]{3,4}-\d{4}$/;
+
+    if(!regExp.test(tel.value)){
+        alert('전화번호 형식이 올바르지 않습니다.')
+        return false;
+    }
+
+    // 전화번호를 입력하지 않은 경우
+    if(tel.value == ''){
+        alert("전화번호를 입력해주세요.")
+        return false;
+    }
 
 
 

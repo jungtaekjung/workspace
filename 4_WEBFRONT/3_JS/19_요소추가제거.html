@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>19_요소추가제거</title>
+    <style>
+        /* 한 줄 */
+        .row{
+            margin : 5px 0;
+            display : flex;
+        }
+
+        /* input 태그 */
+        .in{width : 100px;}
+
+        /* span 태그(X버튼) */
+        .remove{
+            border : 1px solid black;
+            border-radius: 50%;
+            width : 20px;
+            display : inline-block;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="row">
+            <input type="number" class="in">
+        </div>
+        <!-- <div class="row">
+            <input type="number" class="in"><span class="remove">X</span>
+        </div> -->
+    </div>
+
+    <button id="add">추가</button>
+    <button id="calc">계산</button>
+
+    <script src="js/19_요소추가제거.js"></script>
+</body>
+</html>
