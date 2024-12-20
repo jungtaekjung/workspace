@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>체크박스 실습문제</title>
+
+    <style>
+        #result{
+            height: 200px;
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>취미</legend>
+        <table>
+            <tr>
+                <td><label><input type="checkbox" id="all"> 전체선택</label></td>
+                <td><label><input type="checkbox" name="hobby" value="종합"> 종합</label></td>
+                <td><label><input type="checkbox" name="hobby" value="소설"> 소설</label></td>
+                <td><label><input type="checkbox" name="hobby" value="시/에세이"> 시/에세이</label></td>
+                <td><label><input type="checkbox" name="hobby" value="경제/경영"> 경제/경영</label></td>
+                <td><label><input type="checkbox" name="hobby" value="자기계발"> 자기계발</label></td>
+                <td><label><input type="checkbox" name="hobby" value="아동"> 아동</label></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><label><input type="checkbox" name="hobby" value="여행"> 여행</label></td>
+                <td><label><input type="checkbox" name="hobby" value="과학"> 과학</label></td>
+                <td><label><input type="checkbox" name="hobby" value="역사/문화"> 역사/문화</label></td>
+                <td><label><input type="checkbox" name="hobby" value="외국어"> 외국어</label></td>
+                <td><label><input type="checkbox" name="hobby" value="컴퓨터"> 컴퓨터</label></td>
+                <td><label><input type="checkbox" name="hobby" value="만화"> 만화</label></td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <br>
+    
+    <button id="categoryCheck">카테고리 선택</button>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById("all").addEventListener("click",function(){
+            
+            const checkAll=this.checked;
+            const selectCheckbox = document.querySelectorAll('input[name="hobby"]');
+            
+            console.log(checkAll)
+            for(let i=0; i<selectCheckbox.length; i++){
+                selectCheckbox[i].checked = checkAll;
+            }
+        })       
+
+        document.getElementById("categoryCheck").addEventListener('click',function(){
+            const checkSelect = document.querySelectorAll('input[name="hobby"]:checked');
+            let resultSelect = [];
+        
+            for( let i=0; i<checkSelect.length; i++){
+                resultSelect.push(checkSelect[i].value);
+            }
+            if(resultSelect.length>0){
+                
+            }
+        
+        })
+        
+
+    </script>
+</body>
+</html>

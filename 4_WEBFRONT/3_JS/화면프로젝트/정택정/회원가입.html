@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="회원가입.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>환영합니다!</h1>
+            <p>회원가입을 완료하고 저희 서비스를 이용해보세요.</p>
+        </header>
+        <main>
+            <h2>회원가입 양식</h2>
+            <p>아래 정보를 입력해주세요.</p>
+            <form action="회원가입성공.html">
+                <label for="name">이름</label>
+                <input type="text" id="inputName" placeholder="이름을 입력해주세요 3~5글자">
+                <span id="nameMessage"></span>
+
+                <label for="email">이메일</label>
+                <input type="email" id="inputEmail" placeholder="이메일 주소를 입력해주세요">
+
+                <label for="password">비밀번호</label>
+                <input type="password" id="inputPw" placeholder="비밀번호를 입력해주세요">
+                <span id="pwMessage"></span>
+
+                <label for="password">비밀번호확인</label>
+                <input type="password" id="inputPwConfirm" placeholder="비밀번호를 한번 더 입력해주세요">
+                <span id="emailMessage"></span>
+
+                <button type="submit">가입하기</button>
+            </form>
+        </main>
+        <footer>
+            <p>&copy; 2024 회원가입 서비스. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        
+        // 이름 유효성 검사
+        const inputName = document.getElementById("inputName");
+        const nameMessage = document.getElementById("nameMessage");
+        inputName.addEventListener("keyup",()=>{
+            const regExp = /^[가-힣]{2,5}$/;
+
+            if(regExp.test(inputName.value)){
+                nameMessage.innerText="정상입력";
+                nameMessage.style.color = "green";
+
+            }else{
+                nameMessage.innerText = "한글만 입력해주세요";
+                nameMessage.style.color = "red";
+            }
+            if(inputName.value.length ==0){
+                nameMessage.innerText = " ";
+            }
+
+        })
+        // 비밀번호 유효성 검사
+
+        const inputPw = document.getElementById("inputPw");
+        const inputPwConfirm = document.getElementById("inputPwConfirm");
+
+        inputPwConfirm.addEventListener("keyup",function(){
+
+            if(inputPw.value.length ==0){
+                alert("비밀번호를 입력해주세요");
+                this.value=' ';
+                inputPw.focus();
+            }
+        })
+
+        const pwMessage = document.getElementById("pwMessage");
+
+        inputPw.addEventListener("keyup", function(){
+            if(inputPwConfirm.value !=''){
+                
+                if(inputPw.value == inputPwConfirm.value){
+                    pwMessage.innerText = "비밀번호 일치"
+                    pwMessage.classList.add("confirm");
+                    pwMessage.classList.remove("error")
+            
+                } else{
+                    pwMessage.innerText = "비밀번호 불일치"
+                    pwMessage.classList.add("error");
+                    pwMessage.classList.remove("confirm")
+                }
+            }
+            if(inputPw.value.length == 0 && inputPwConfirm.value == ''){
+                 pwMessage.innerText = '';
+            }
+        
+        })
+
+        inputPwConfirm.addEventListener("keyup", function(){
+
+                if(inputPw.value == inputPwConfirm.value){
+                    pwMessage.innerText = "비밀번호 일치"
+                    pwMessage.classList.add("confirm");
+                    pwMessage.classList.remove("error")
+
+                } else{
+                    pwMessage.innerText = "비밀번호 불일치"
+                    pwMessage.classList.add("error");
+                    pwMessage.classList.remove("confirm")
+
+                }
+
+                if(inputPw.value.length == 0 && inputPwConfirm.value == ''){
+                    pwMessage.innerText = '';
+                }
+        })
+
+
+    // 이메일 유효성 검사
+        const inputEmail = document.getElementById('inputEmail');
+        const emailMessage = document.getElementById("emailMessage");
+        inputEmail.addEventListener("keyup",function(){
+            const regExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+$/;
+
+            if(regExp.test(inputEmail.value)){
+                emailMessage.innerHTML = "정상입력";
+                emailMessage.style.color = 'green';
+            }else{
+                emailMessage.innerHTML="이메일 형식에 맞게 입력해주세요"
+                emailMessage.style.color ='red';
+            }
+
+            if(inputEmail.value.length==0){
+                emailMessage.innerText= " ";
+            }
+        })
+
+    
+    </script>
+</body>
+</html>

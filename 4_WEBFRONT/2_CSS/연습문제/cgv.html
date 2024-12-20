@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영화 리뷰 사이트</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1 class="logo">Movie Review</h1>
+        <nav>
+            <ul>
+                <li><a href="#">홈</a></li>
+                <li><a href="#">현재 상영작</a></li>
+                <li><a href="#">영화 리뷰</a></li>
+                <li><a href="#">이벤트</a></li>
+                <li><a href="#">로그인</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="main-banner">
+        <div class="banner-content">
+            <h2>최신 인기 영화 리뷰를 만나보세요!</h2>
+            <p>영화에 대한 리뷰와 평점을 확인하고 여러분의 의견을 남겨보세요.</p>
+            <a href="#" class="btn">자세히 보기</a>
+        </div>
+    </section>
+
+    <section class="now-showing">
+        <h2>현재 상영작</h2>
+        <div class="movie-grid">
+            <div class="movie-item">
+                <img src="images/movie1.jpg" alt="영화 포스터">
+                <h3>영화 제목 1</h3>
+                <p>개요 및 간단한 설명</p>
+            </div>
+            <div class="movie-item">
+                <img src="images/movie2.jpg" alt="영화 포스터">
+                <h3>영화 제목 2</h3>
+                <p>개요 및 간단한 설명</p>
+            </div>
+            <div class="movie-item">
+                <img src="images/movie3.jpg" alt="영화 포스터">
+                <h3>영화 제목 3</h3>
+                <p>개요 및 간단한 설명</p>
+            </div>
+            <div class="movie-item">
+                <img src="images/movie4.jpg" alt="영화 포스터">
+                <h3>영화 제목 4</h3>
+                <p>개요 및 간단한 설명</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews">
+        <h2>최신 리뷰</h2>
+        <div class="review-grid">
+            <div class="review-item">
+                <h3>영화 제목 1</h3>
+                <p>"정말 최고의 영화였습니다! 감동적이었어요."</p>
+                <span>⭐⭐⭐⭐⭐</span>
+            </div>
+            <div class="review-item">
+                <h3>영화 제목 2</h3>
+                <p>"스토리가 아쉬웠지만 배우들의 연기는 훌륭했습니다."</p>
+                <span>⭐⭐⭐⭐</span>
+            </div>
+            <div class="review-item">
+                <h3>영화 제목 3</h3>
+                <p>"생각보다 재미있었어요. 추천합니다!"</p>
+                <span>⭐⭐⭐⭐⭐</span>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024 영화 리뷰 사이트. 모든 권리 보유.</p>
+        <ul class="social-links">
+            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+    </div>
+</footer>
+
+<script>
+    // 간단한 인터랙션 추가: 버튼 클릭 시 경고창 표시
+    document.querySelector('.btn').addEventListener('click', function(event) {
+        event.preventDefault();
+        alert('최신 영화 리뷰로 이동합니다!');
+    });
+
+    // 영화 포스터에 마우스를 올리면 확대되는 효과
+    const movieItems = document.querySelectorAll('.movie-item img');
+    movieItems.forEach(item => {
+        item.addEventListener('mouseover', () => {
+            item.style.transform = 'scale(1.1)';
+            item.style.transition = 'transform 0.3s';
+        });
+        item.addEventListener('mouseout', () => {
+            item.style.transform = 'scale(1)';
+        });
+    });
+</script>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+        color: #333;
+    }
+    header {
+        background-color: #222;
+        color: #fff;
+        padding: 1rem 0;
+    }
+    .logo {
+        font-size: 2rem;
+    }
+    nav ul {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+    nav ul li {
+        margin-right: 20px;
+    }
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .main-banner {
+        background: url('images/banner.jpg') no-repeat center center/cover;
+        color: #fff;
+        text-align: center;
+        padding: 100px 0;
+    }
+    .btn {
+        display: inline-block;
+        background-color: #ff5733;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .movie-grid, .review-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    .movie-item img {
+        width: 100%;
+        border-radius: 10px;
+    }
+    .social-links a {
+        color: #fff;
+        margin-right: 10px;
+    }
+</style>
+
+</body>
+</html>

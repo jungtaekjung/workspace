@@ -55,25 +55,30 @@
     </div>
     <script>
         // 1. 이 문서를 처음 로드하면 로그인 화면은 보이지 않는다.
+        // display : none; -> 요소는 존재하지만 보이지 X, 영역 X
+        // visibility : hidden; -> 요소는 존재하지만 보이지 X, 영역 O
+
+        // document.getElementById("myForm").style.display = "none;"
         
         // 2. label 태그는 가로로 '80px' 크기를 갖는다.
+        const label = documnet.getElementById("label");
+        for(let i=0; i<label<length; i++){
+            label[i].style.width = '80px';
+            label[i].style.display = 'inline-block';
+        }
         
 
         // 3. 로그인 버튼을 클릭하면 로그인 화면이 화면에 나타난다.
-
-        const openButton = document.querySelector(".open");
-        openButton.addEventListener("click", function () {
-            const formPopup = document.getElementById("myForm");
-            formPopup.style.display = "block"; // 폼 보이기
-        });
+        document.getElementsByClassName("open")[0].addEventListener('click',function(){
+            document.getElementById("myForm").style.display ='block';
+        })
+      
 
         // 4. Close 버튼을 클릭하면 로그인 화면이 사라진다.
-
-        const closeButton = document.querySelector(".btn.cancel");
-        closeButton.addEventListener("click", function () {
-            const formPopup = document.getElementById("myForm");
-            formPopup.style.display = "none";
-        })    
+        document.getElementsByClassName("cancel")[0].addEventListener('click',function(){
+            document.getElementById("myForm").style.display='none';
+        })
+        
     </script>
 </body>
 </html>
