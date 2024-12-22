@@ -50,16 +50,37 @@ body {
 nav {
     display: flex;
     gap: 20px;
+    position: relative;
 }
 
-nav a {
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
     text-decoration: none;
     color: #333;
     font-weight: 500;
 }
 
-nav a:hover {
+.nav-link:hover {
     color: #007BFF;
+}
+
+.dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  min-width: 200px;
+  padding: 20px 0;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
 }
 
 .header-icons {
