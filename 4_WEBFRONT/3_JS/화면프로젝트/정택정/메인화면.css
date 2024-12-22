@@ -180,3 +180,35 @@ footer {
 .footer-links a:hover {
     color: #007BFF;
 }
+
+.menu-carousel {
+    display: flex;
+    gap: 20px;
+  }
+
+  .recommendation-items {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .menu-item {
+    text-align: center;
+    max-width: 150px;
+  }
+  
+  .menu-item img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .menu-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .menu-price {
+    font-size: 14px;
+    color: #888;
+    margin-top: 5px;
+  }
