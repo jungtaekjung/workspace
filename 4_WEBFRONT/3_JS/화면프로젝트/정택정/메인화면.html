@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>메인화면.html</title>
-    <link rel="stylesheet" href="메인화면.css" />
+    <link rel="stylesheet" href="styles.css" />
     <style></style>
   </head>
   <body>
@@ -67,69 +67,99 @@
     </header>
 
     <main>
-      <div class="container">
-        <div class="brand-info">
-          <img src="coffeeNHotDog.png" alt="엔제리너스 이미지" />
-          <div class="brand-details">
-            <h1>엔제리너스</h1>
-            <p>
-              ALWAYS AROUND US ANGELINUS<br />
-              LOTTE EATZ에서 제공하는 프리미엄 수제버거 레스토랑
-            </p>
-            <button>브랜드 소개</button>
-            <button>매장 찾기</button>
-          </div>
-        </div>
-
-        <div class="menu-section">
-            <h2>이런 메뉴는 어떠세요?</h2>
-            <div class="menu-carousel">
-              <div class="menu-item">
-                <img src="americano.png" alt="아메리카노" />
-                <p class="menu-name">아메리카노</p>
-                <p class="menu-price">4,500원</p>
-              </div>
-              <div class="menu-item">
-                <img src="chocolate.png" alt="초콜릿 라떼" />
-                <p class="menu-name">초콜릿 라떼</p>
-                <p class="menu-price">5,900원</p>
-              </div>
-              <div class="menu-item">
-                <img src="strawberry.png" alt="딸기 라떼" />
-                <p class="menu-name">딸기 라떼</p>
-                <p class="menu-price">6,300원</p>
-              </div>
-              <div class="menu-item">
-                <img src="strawberry.png" alt="딸기 스노우" />
-                <p class="menu-name">딸기 스노우</p>
-                <p class="menu-price">6,700원</p>
-              </div>
+        <div class="container">
+            <!-- 왼쪽 Brand Info -->
+            <div class="brand-info">
+                <img src="coffeeNHotDog.png" alt="엔제리너스 이미지" />
+                <div class="brand-details">
+                    <h1>엔제리너스</h1>
+                    <p>
+                        ALWAYS AROUND US ANGELINUS<br />
+                        LOTTE EATZ에서 제공하는 프리미엄 수제버거 레스토랑
+                    </p>
+                    <button>브랜드 소개</button>
+                    <button>매장 찾기</button>
+                </div>
             </div>
-          </div>
-          
-        
+    
+            <!-- 오른쪽 콘텐츠 -->
+            <div class="right-content">
+                <div class="menu-section" id="carousel1">
+                    <h2>이런 메뉴는 어떠세요?</h2>
+                    <div class="menu-carousel">
+                        <div class="menu-item">
+                            <img src="americano.png" alt="아메리카노" />
+                            <p class="menu-name">아메리카노</p>
+                            <p class="menu-price">4,500원</p>
+                        </div>
+                        <div class="menu-item">
+                            <img src="chocolate.png" alt="초콜릿 라떼" />
+                            <p class="menu-name">초콜릿 라떼</p>
+                            <p class="menu-price">5,900원</p>
+                        </div>
+                        <div class="menu-item">
+                            <img src="strawberry.png" alt="딸기 라떼" />
+                            <p class="menu-name">딸기 라떼</p>
+                            <p class="menu-price">6,300원</p>
+                        </div>
+                        <div class="menu-item">
+                            <img src="blueberry.png" alt="블루베리 스노우" />
+                            <p class="menu-name">블루베리 스노우</p>
+                            <p class="menu-price">6,700원</p>
+                        </div>
+                        <div class="menu-item">
+                            <img src="mangosnow.png" alt="망고 스노우" />
+                            <p class="menu-name">망고 스노우</p>
+                            <p class="menu-price">6,700원</p>
+                        </div>
+                        <div class="menu-item">
+                            <img src="javasnow.png" alt="자바초코렛칩 스노우" />
+                            <p class="menu-name">자바초코렛칩 스노우</p>
+                            <p class="menu-price">6,900원</p>
+                        </div>
+                    </div>
 
-          <div class="recommendation">
-            <h2>❤ 신제품 ❤</h2>
-            <div class="recommendation-items">
-              <div class="menu-item">
-                <img src="americano.png" alt="아메리카노" />
-                <p class="menu-name">아메리카노</p>
-                <p class="menu-price">4,500원</p>
-              </div>
-              <div class="menu-item">
-                <img src="chocolate.png" alt="초콜릿 라떼" />
-                <p class="menu-name">초콜릿 라떼</p>
-                <p class="menu-price">5,900원</p>
-              </div>
-              <div class="menu-item">
-                <img src="strawberry.png" alt="딸기 라떼" />
-                <p class="menu-name">딸기 라떼</p>
-                <p class="menu-price">6,300원</p>
-              </div>
+                    <button class="prev" onclick="prevSlide('carousel1')"></button>
+                    <button class="next" onclick="nextSlide('carousel1')"></button>
+                </div>
+    
+                <div class="recommendation" id="carousel2">
+                    <h2>❤ 신제품 ❤</h2>
+                    <div class="recommendation-items">
+                        <div class="menu-item2">
+                            <img src="optimize.jpg" alt="다래 레드 스위티" />
+                            <p class="menu-name">다래 레드 스위티</p>
+                            <p class="menu-price">5,900원</p>
+                        </div>
+                        <div class="menu-item2">
+                            <img src="optimize (1).jpg" alt="자몽 블랙티" />
+                            <p class="menu-name">자몽 블랙티</p>
+                            <p class="menu-price">5,900원</p>
+                        </div>
+                        <div class="menu-item2">
+                            <img src="optimize (2).jpg" alt="고흥유자 캐모마일티" />
+                            <p class="menu-name">고흥유자 캐모마일티</p>
+                            <p class="menu-price">5,900원</p>
+                        </div>
+                        <div class="menu-item2">
+                            <img src="optimize (3).jpg" alt="다래 그린 스노우" />
+                            <p class="menu-name">다래 그린 스노우</p>
+                            <p class="menu-price">6,900원</p>
+                        </div>
+                        <div class="menu-item2">
+                            <img src="optimize (4).jpg" alt="제로복숭아 아이스티" />
+                            <p class="menu-name">제로복숭아 아이스티</p>
+                            <p class="menu-price">5,000원</p>
+                        </div>
+                        
+                    </div>
+                    <button class="prev" onclick="prevRecommendationSlide()"></button> 
+                    <button class="next" onclick="nextRecommendationSlide()"></button>
+                </div>
+            </div>
         </div>
-      </div>
     </main>
+    
 
     <footer>
       <div class="footer-links">

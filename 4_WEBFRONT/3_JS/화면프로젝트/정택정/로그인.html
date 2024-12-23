@@ -9,29 +9,56 @@
 <body>
     <div class="signup-container">
         <h1>Sign Up</h1>
-        <form class="signup-form" action="메인화면.html">
+        <form class="signup-form" action="메인화면.html" onsubmit="return validateForm(event)">
             <!-- 이메일 -->
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email">
+                <input type="email" id="email" placeholder="Enter your email" required>
             </div>
 
             <!-- 비밀번호 -->
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password">
+                <input type="password" id="password" placeholder="Enter your password" required>
             </div>
 
             <!-- 버튼 -->
             <div class="button-group">
-                <button type="button" class="cancel-button">Cancel</button>
-                <button type="submit" class="signup-button">Sign Up</button>
+                <button type="button" class="cancel-button" onclick="goToMain()">Cancel</button>
+                <button type="submit" id="signup-button" class="signup-button" disabled>Sign Up</button>
             </div>
         </form>
     </div>
 
-<script>
+    <script>
+        // 입력 필드와 버튼 엘리먼트 가져오기
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const signupButton = document.getElementById("signup-button");
 
-</script>
+        // 이메일과 비밀번호가 모두 입력되었는지 확인하는 함수
+        function checkInputs() {
+            if (emailInput.value.trim() !== "" && passwordInput.value.trim() !== "") {
+                signupButton.disabled = false; // 버튼 활성화
+            } else {
+                signupButton.disabled = true; // 버튼 비활성화
+            }
+        }
+
+        // 메인 화면으로 이동하는 함수 (Cancel 버튼 클릭 시)
+        function goToMain() {
+            window.location.href = "메인화면.html";
+        }
+
+        // 제출 시 폼 유효성 검사
+        function validateForm(event) {
+            if (emailInput.value.trim() === "" || passwordInput.value.trim() === "") {
+                alert("이메일과 비밀번호를 모두 입력해주세요");
+                return false; // 폼 제출 막기
+            }
+            return true; // 폼 제출 허용
+        }
+
+    </script>
 </body>
 </html>

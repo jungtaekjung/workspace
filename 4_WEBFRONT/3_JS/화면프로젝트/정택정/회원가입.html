@@ -31,7 +31,25 @@
                 <input type="password" id="inputPwConfirm" placeholder="비밀번호를 한번 더 입력해주세요">
                 <span id="emailMessage"></span>
 
-                <button type="submit">가입하기</button>
+                <div>
+                    <label for="emailAgreement">이메일 정보 활용에 동의합니까?</label>
+                    <input type="radio" id="emailAgreeYes" name="emailAgreement" value="yes">
+                    <label for="emailAgreeYes">예</label>
+                    <input type="radio" id="emailAgreeNo" name="emailAgreement" value="no">
+                    <label for="emailAgreeNo">아니오</label>
+                </div>
+
+                <div>
+                    <p>개인 정보를 수집 및 사용하는 것에 동의합니까?</p>
+                    <input type="radio" id="agreeYes" name="privacyAgreement" value="yes">
+                    <label for="agreeYes">예</label>
+                    <input type="radio" id="agreeNo" name="privacyAgreement" value="no">
+                    <label for="agreeNo">아니오</label>
+                </div>
+
+                
+
+                <button type="submit" id="submitButton" disabled>가입하기</button>
             </form>
         </main>
         <footer>
@@ -134,6 +152,72 @@
                 emailMessage.innerText= " ";
             }
         })
+
+        const agreeYes = document.getElementById("agreeYes");
+        const agreeNo = document.getElementById("agreeNo");
+        const submitButton = document.getElementById("submitButton");
+
+        // 개인 정보 동의에 따라 버튼 활성화/비활성화
+        const toggleSubmitButton = () => {
+            if (agreeYes.checked) {
+                submitButton.disabled = false; // 동의 시 버튼 활성화
+            } else {
+                submitButton.disabled = true; // 미동의 시 버튼 비활성화
+            }
+        };
+
+        agreeYes.addEventListener("change", toggleSubmitButton);
+        agreeNo.addEventListener("change", toggleSubmitButton);
+
+        // 회원가입 부분 모든 부분이 선택 시 회원가입
+
+        document.getElementById("submitButton").addEventListener("click", function () {
+    const nameInput = document.getElementById("inputName").value.trim();
+    const emailInput = document.getElementById("inputEmail").value.trim();
+    const passwordInput = document.getElementById("inputPw").value;
+    const passwordConfirmInput = document.getElementById("inputPwConfirm").value;
+    const agreeEmail = document.querySelector('input[name="emailAgreement"]:checked');
+    const agreePrivacy = document.querySelector('input[name="privacyAgreement"]:checked');
+
+    const nameRegExp = /^[가-힣]{2,5}$/;
+    const emailRegExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+$/;
+
+    // 유효성 검사
+    if (!nameRegExp.test(nameInput)) {
+        alert("이름을 2~5자의 한글로 올바르게 입력해주세요.");
+        return;
+    }
+
+    if (!emailRegExp.test(emailInput)) {
+        alert("이메일을 올바르게 입력해주세요.");
+        return;
+    }
+
+    if (passwordInput.length < 6) {
+        alert("비밀번호는 6자 이상 입력해주세요.");
+        return;
+    }
+
+    if (passwordInput !== passwordConfirmInput) {
+        alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+        return;
+    }
+
+    if (!agreeEmail || agreeEmail.value !== "yes") {
+        alert("이메일 정보 활용에 동의해주세요.");
+        return;
+    }
+
+    if (!agreePrivacy || agreePrivacy.value !== "yes") {
+        alert("개인정보 수집에 동의해주세요.");
+        return;
+    }
+
+    // 모든 조건이 만족되면 제출
+    alert("회원가입이 완료되었습니다!");
+    document.getElementById("signupForm").submit();
+});
+
 
     
     </script>

@@ -1,0 +1,394 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.5;
+    background-color: #f9f9f9;
+}
+
+  /* 헤더 스타일 */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px 20px;
+    background-color: #f8f8f8;
+    font-size: 0.9em;
+}
+
+.top-bar a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #555;
+}
+
+.top-bar a:hover {
+    color: #007BFF;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.logo img {
+    height: 40px;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    position: relative;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #007BFF;
+}
+
+.dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  top: 100%;
+  left: 0;
+  background: #f9f9f9;
+  min-width: 200px;
+  padding: 20px 0;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.header-icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.header-icons img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.header-icons button {
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.header-icons button:hover {
+    background-color: #0056b3;
+}
+
+
+main {
+    padding-top: 80px;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+.brand-info {
+    width: 50%; /* 왼쪽 영역 */
+    display: flex;
+    flex-direction: column; /* 수직 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    gap: 20px;
+}
+
+.brand-info img {
+    width: auto;
+    height: 400px;
+    background-color: #f0f0f0;
+    margin-top:100px;
+    margin-left :200px;
+}
+
+.right-content {
+    width: 50%; /* 오른쪽 영역 */
+    display: flex;
+    flex-direction: column; /* 수직 정렬 */
+    gap: 40px; /* 섹션 간 간격 */
+    margin-left : 330px;
+}
+
+.brand-details h1 {
+    margin: 0;
+}
+
+.brand-details{
+    margin-top:90px;
+    margin-left:200px;
+}
+
+.menu-section, .recommendation {
+    width: 100%; /* 오른쪽 콘텐츠 전체 사용 */
+}
+
+
+.menu-section {
+    margin-bottom: 40px; /* 간격 조정 */
+}
+
+.menu-section h2, .recommendation h2 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 10px;
+}
+
+.menu-carousel, .recommendation-items {
+    display: flex;
+    flex-wrap: wrap; /* 필요 시 줄바꿈 */
+    gap: 20px;
+
+}
+
+.menu-item {
+    width: 100%; /* 메뉴 아이템 전체 사용 */
+    text-align: center;
+}
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both; /* float 해결 */
+}
+
+.menu-carousel img, .recommendation-items img {
+    width: 150px;
+    height: 150px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+    border-top: 1px solid #eaeaea;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #555;
+}
+
+.footer-links a:hover {
+    color: #007BFF;
+}
+
+.menu-carousel {
+    display: flex;
+    gap: 20px;
+  }
+
+  .recommendation-items {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .menu-item {
+    text-align: center;
+    max-width: 150px;
+  }
+  
+  .menu-item img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .menu-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .menu-price {
+    font-size: 14px;
+    color: #888;
+    margin-top: 5px;
+  }
+
+/* 캐러셀 */
+
+.menu-section { position: relative; /* 부모 요소에 상대 위치 지정 */ width: 100%; }
+
+.menu-carousel {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    width: 100%;
+}
+
+.menu-item {
+    min-width: 25%;
+    transition: transform 0.5s ease;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.prev {
+    left: -80px;
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background: url(nextbutton.svg) 0 0 no-repeat;
+    background-size: cover;
+    -moz-transition: opacity 0.23s;
+    -webkit-transition: opacity 0.23s;
+    transition: opacity 0.23s;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8);
+    -moz-backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.next {
+    right: 70px;
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background: url(nextbutton.svg) 0 0 no-repeat;
+    background-size: cover;
+    -moz-transition: opacity 0.23s;
+    -webkit-transition: opacity 0.23s;
+    transition: opacity 0.23s;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8);
+    -moz-backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* 캐러셀 recommendation */
+
+.recommendation {
+    position: relative; /* 부모 요소에 상대 위치 지정 */
+    width: 100%;
+}
+
+.recommendation-carousel {
+    display: flex;
+    flex-direction: row; /* 가로 방향 정렬 */
+    overflow: hidden;
+    width: 100%;
+}
+
+.menu-item2 {
+    min-width: 25%; /* 각 메뉴 아이템이 컨테이너의 25% 너비를 차지 */
+    transition: transform 0.5s ease;
+}
+
+.recommendation .prev, .recommendation .next {
+    position: absolute; /* 부모 요소에 상대적으로 위치 조정 */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1; /* 버튼이 다른 요소들 위에 표시되도록 설정 */
+}
+
+.recommendation .prev {
+    left: -90px; /* 부모 요소의 왼쪽에 위치 */
+}
+
+.recommendation .next {
+    right: 70px; /* 부모 요소의 오른쪽에 위치 */
+}
+
+.recommendation .prev{
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background: url(nextbutton.svg) 0 0 no-repeat;
+    background-size: cover;
+    -moz-transition: opacity 0.23s;
+    -webkit-transition: opacity 0.23s;
+    transition: opacity 0.23s;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8);
+    -moz-backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.recommendation .next{
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background: url(nextbutton.svg) 0 0 no-repeat;
+    background-size: cover;
+    -moz-transition: opacity 0.23s;
+    -webkit-transition: opacity 0.23s;
+    transition: opacity 0.23s;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8);
+    -moz-backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
