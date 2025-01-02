@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSP Project</title>
+</head>
+<body>
+    
+    <h3>Get 방식 요청</h3>
+
+    <form action="/JSPProject/login" method="get">
+        <!-- 요청 주소 : /JSPProject/login
+             데이터 전달 방식 : get (주소 뒤에 데이터가 붙어서 전달됨) -->
+        ID : <input type="text" name="inputId"><br>
+        PW : <input type="password" name="inputPw"><br>
+
+        <button>로그인</button>
+    </form>
+
+    <hr>
+
+    <h3>Servlet/JSP로 페이지 이동하기</h3>
+
+    <!-- 서버 요청 주소 작성 -->
+    <!-- 
+        GET 방식 요청 종류 : a태그, JS(location), 직접 주소 작성, form태그 method="get"
+    -->
+
+    <a href="/JSPProject/pizza/order">피자 주문하기</a>
+    
+		<hr>
+
+		<h3>회원가입</h3>
+            <form action="/JSPProject/signUp" method="post">
+                <table>
+                <tr>
+                    <th>아이디 : </th>
+                    <td>
+                        <input type="text" name="memberId">
+                    </td>
+                </tr>
+    
+                <tr>
+                    <th>비밀번호 : </th>
+                    <td>
+                        <input type="text" name="memberPw">
+                    </td>
+                </tr>
+    
+                <tr>
+                    <th>이름 : </th>
+                    <td>
+                        <input type="text" name="memberName">
+                    </td>
+                </tr>
+    
+                <tr>
+                    <th>자기소개 </th>
+                    <td> 
+                        <textarea name="intro" rows="3" cols="30"></textarea>
+                    </td>
+                </tr>
+            </table>
+    
+            <button>회원가입</button>
+            <button type="reset">초기화</button>
+        </form>
+</body>
+</html>

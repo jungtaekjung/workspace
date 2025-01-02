@@ -7,37 +7,34 @@
 </head>
 <body>
     <h1>index라는 이름이 붙은 파일은 메인 페이지 역할을 합니다.</h1>
-    지금은 서블릿 수업중 입니다~~
 
     <hr>
 
     <pre>
         form 태그 : 내부에 작성된 input 태그의 값을 지정된 서버 또는 페이지로
                     제출(전달)하는 역할
-            
-    * 이 때, 어떤 input 태그에 작성된 값이 제출된건지 알 수 있도록
-      input 태그에 name 속성을 반드시 작성해야 한다!!!
+        
+        * 이 때, 어떤 input 태그에 작성된 값이 제출된 건지 알 수 있도록
+          ipnut 태그에 name 속성을 반드시 작성해야 한다.
 
-    * form 태그 속성
-    - action : input 태그의 값을 전달할 서버 또는 페이지 주소를 작성하는 속성
-    - method : 데이터 전달 방식을 지정하는 속성(get/post)
+        * form 태그 속성
+        - action : input 태그의 값을 전달할 서버 또는 페이지 주소를 작성하는 속성
+        - method : 데이터 전달 방식을 지정하는 속성(get/post)
     </pre>
 
-    <!-- http://localhost:8080/ServletProject/ 
+    <!-- http://localhost:8080/ServletProject/
     
     - http://아이피:포트번호 : 통신 규약, 서버 컴퓨터의 위치를 지정(고정)
-    
     
     - /ServletProject/ : 요청하고자 하는 내용을 나타내는 주소
     -->
     <form action="/ServletProject/example1.do">
         <!-- ServletProject 프로젝트에 example1.do라는 요청을 전달한다. -->
 
-        이름 : <input type="text" name="inputName"> <br>
-        나이 : <input type="text" name="inputAge"> <br>
+        이름 : <input type="text" name="inputName"><br>
+        나이 : <input type="text" name="inputAge"><br>
 
         <button type="submit">서버로 제출하기</button>
-
     </form>
 
     <hr>
@@ -45,16 +42,16 @@
     <h3>GET 방식 요청 및 응답</h3>
     <pre>
         GET 방식 : 요청하려는 주소 뒤에 전달하려는 값(input 태그에 작성된 값)을
-                    문자열 형태로 붙여서 서버로 전달하는 방식
-
+                  문자열 형태로 붙여서 서버로 전달하는 방식
+        
         * 장점 : 단순함, 캐싱 가능(요청 저장 가능 == 북마크, 즐겨찾기)
         * 단점 : 보안에 취약함
 
-        * form태그 method 속성의 기본값
+        * form 태그 method 속성의 기본값
     </pre>
 
     <form action="/ServletProject/example2.do" method="get">
-       주문자 : <input type="text" name="orderer"><br>
+         주문자 : <input type="text" name="orderer"><br>
 
         <label>
             <input type="checkbox" name="coffee" value="아이스 아메리카노">
@@ -83,12 +80,12 @@
         <br>
        
         <button>주문서 제출하기</button>
-      
+
     </form>
-    
+
     <hr>
-    
-     <pre>
+
+    <pre>
         
         요청 주소(action) : /ServletProject/example3.do
 
@@ -129,7 +126,6 @@
         <br>
 
         <button>회원 정보 제출하기</button>
-	</form>        
-    
+    </form>    
 </body>
 </html>
