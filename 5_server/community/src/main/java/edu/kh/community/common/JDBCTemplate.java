@@ -1,12 +1,14 @@
 package edu.kh.community.common;
 
-import java.io.FileInputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 
 public class JDBCTemplate {
 
@@ -29,38 +31,26 @@ public class JDBCTemplate {
    // DB 연결 정보를 담고 있는 Connection 객체 반환 메소드
    public static Connection getConnection() {
 
-      // 계속 공용으로 사용되는 conn 변수에
-      // 커넥션이 없거나 (null)
-      // 또는 이전 커넥션이 있었으나 닫힌 경우
-      // -> 새로운 커넥션 필요!
+      
 
       try {
-         // 프로그램 하나에 커넥션 1개만을 사용
-         if(conn == null || conn.isClosed()) {
-
-            Properties prop = new Properties();
-            // K,V 가 모두 String인 Map, XML 파일 입출력에 특화
-
-            // driver.xml 파일 읽어오기
-            prop.loadFromXML(new FileInputStream("driver.xml"));
-
-            // 커넥션 생성 준비
-            String driver = prop.getProperty("driver");
-            String url = prop.getProperty("url");
-            String user = prop.getProperty("user");
-            String password = prop.getProperty("password");
-
-            // 커넥션 생성
-
-            // 1. jdbc 드라이버 메모리 로드
-            Class.forName(driver);
-
-            // 2) DriverManager 통해 Connection 생성
-            conn = DriverManager.getConnection(url, user, password);
-
-            // 3) 트랜잭션 제어를 위한 자동 커밋 비활성화
-            conn.setAutoCommit(false);
-         }
+    	  
+    	  // JNDI(Java Naming and Directory Interface API)
+    	  // - 디렉토리에 접근할 때 사용하는 Java API
+    	  // - 애플리케이션(프로그램, 웹앱)은 JNDI를 이용해서 파일 또는 서버 Resource를 찾을 수 있음
+    	  
+    	  Context initContext = new InitialContext();
+    	  
+    	  // servers -> context.xml 파일 찾기
+    	  Context envContext = (Context)initContext.lookup("java:/comp/env");
+    	  
+    	  // DBCP 세팅의 <Resource> 태그를 찾아 DataSource 형식의 객체로 얻어오기
+    	  // DataSource : Connection Pool을 구현하는 객체(만들어둔 Connection 얻어올 수 있음)
+    	  DataSource ds = (DataSource)envContext.lookup("jdbc/oracle");
+    	  
+    	  conn = ds.getConnection();
+    	  conn.setAutoCommit(false);
+         
 
 
       }catch(Exception e) {
