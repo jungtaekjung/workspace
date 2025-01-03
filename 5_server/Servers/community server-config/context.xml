@@ -38,7 +38,7 @@
 		
 		2) Connection 개수에 제한을 두어 DB에 과도하게 요청되는 경우를 방지
 			   
-      <!-- DBCP 세팅 -->   
+       DBCP 세팅 -->   
    <Resource 
       name="jdbc/oracle" 
       auth="Container"
