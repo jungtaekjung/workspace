@@ -100,4 +100,31 @@ public class MemberDAO {
 		return result;
 	}
 
+	/** 내 정보 수정 DAO
+	 * @param mem
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int myPageInfo(Member mem, Connection conn) throws Exception{
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("myPageInfo");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, mem.getMemberNickname());
+			pstmt.setString(2, mem.getMemberTel());
+			pstmt.setString(3, mem.getMemberAddress());
+			pstmt.setInt(4, mem.getMemberNo());
+			
+			result=pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

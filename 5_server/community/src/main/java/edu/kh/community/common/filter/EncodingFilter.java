@@ -76,7 +76,7 @@ public class EncodingFilter extends HttpFilter implements Filter {
 		String contextPath = ((HttpServletRequest)request).getContextPath();
 		
 		// application scope에 값 세팅
-		application.setAttribute("conextPath", contextPath);
+		application.setAttribute("contextPath", contextPath);
 		
 		// 연결된 다음 필터 수행(없으면 Servlet 수행)
 		chain.doFilter(request, response);
