@@ -30,7 +30,8 @@ public class EncryptWrapper extends HttpServletRequestWrapper{
 		String value = null;
 		
 		switch(name) {
-		case "memberPw" : case "inputPw" :  value = getSha512(super.getParameter(name)); break;
+		case "memberPw" : case "inputPw" : case "currentPw" : case "newPw" :
+			value = getSha512(super.getParameter(name)); break;
 		
 		
 		// 암호화 되는 경우가 아니라면 기존 getParameter() 메소드의 형태 유지

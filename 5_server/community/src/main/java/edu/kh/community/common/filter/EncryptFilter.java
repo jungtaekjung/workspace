@@ -18,7 +18,9 @@ import edu.kh.community.wrapper.EncryptWrapper;
 // 필터에 적용될 url이 여러 개인 경우 : String 배열 초기화 형태{}로 작성
 @WebFilter(filterName = "encryptFilter",
 			urlPatterns= {"/member/login",
-						  "/member/signUp"})
+						  "/member/signUp",
+						  "/member/myPage/changePw",
+						  "/member/myPage/secession"})
 public class EncryptFilter extends HttpFilter implements Filter {
        
 	public void init(FilterConfig fConfig) throws ServletException {

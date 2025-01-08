@@ -18,24 +18,24 @@ public class MemberService {
 		Connection conn = getConnection();
 		// DAO 수행
 		Member loginMember = dao.login(mem,conn);
-		
+
 		// Connection 반환
 		close(conn);
 		// 결과 반환
-		
+
 		return loginMember;
 	}
 
 	public int signUp(Member mem) throws Exception{
-		
+
 		Connection conn = getConnection(); // DBCP에서 얻어옴
-		
+
 		int result = dao.signUp(mem,conn);
 		if(result !=0) commit(conn);
 		else			rollback(conn);
-		
+
 		close(conn); //DBCP로 돌려줌
-		
+
 		return result;
 	}
 
@@ -45,17 +45,83 @@ public class MemberService {
 	 * @throws Exception
 	 */
 	public int myPageInfo(Member mem) throws Exception{
-		
+
 		Connection conn = getConnection();
-		
+
 		int result = dao.myPageInfo(mem,conn);
 		if(result !=0) commit(conn);
 		else 			rollback(conn);
-		
+
 		close(conn);
-		
+
 		return result;
-		
-		
+
+
 	}
+
+
+
+	/** 비밀번호 변경
+	 * @param currentPw
+	 * @param newPw
+	 * @param memberNo
+	 * @return
+	 * @throws Exception
+	 */
+	public int changePw(String currentPw, String newPw, int memberNo) throws Exception{
+		Connection conn = getConnection();
+
+		int result = dao.changePw(currentPw,newPw,memberNo,conn);
+		if(result !=0) commit(conn);
+		else 			rollback(conn);
+
+		close(conn);
+
+		return result;
+	}
+
+	/** 회원탈퇴
+	 * @param memberPw
+	 * @param memberNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int secession(String memberPw, int memberNo) throws Exception{
+		Connection conn = getConnection();
+
+		int result = dao.secession(memberPw,memberNo,conn);
+		if(result !=0) commit(conn);
+		else 			rollback(conn);
+
+		close(conn);
+
+		return result;
+	}
+
+
+	   public int emailDupCheck(String memberEmail) throws Exception{
+	      Connection conn = getConnection();
+	      
+	      int result = dao.emailDupCheck(memberEmail, conn);
+	      
+	      if(result != 0) commit(conn);
+	      else rollback(conn);
+	      
+	      close(conn);
+	      return result;
+	   }
+
+	public int nickDupCheck(String memberNickname) throws Exception{
+		 Connection conn = getConnection();
+	      
+	      int result = dao.nickDupCheck(memberNickname, conn);
+	      
+	      if(result != 0) commit(conn);
+	      else rollback(conn);
+	      
+	      close(conn);
+	      return result;
+	}
+
+
 }

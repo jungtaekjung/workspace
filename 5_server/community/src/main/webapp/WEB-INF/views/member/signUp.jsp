@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="../resources/css/main-style.css">
     <link rel="stylesheet" href="../resources/css/signUp-style.css">
     <script src="https://kit.fontawesome.com/5f900fff15.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <main>
@@ -38,14 +41,14 @@
         	실제 회원가입 요청(POST)
         	-> 요청 주소가 같아도 데이터 전달 방식이 다르면 중복 허용!
          -->
-            <form action="signUp" method="post" name="signUp-form">
+            <form action="signUp" method="post" name="signUp-form" onsubmit="return signUpValidate()">
                 <label for="memberEmail">
                     <span class="required">*</span> 아이디(이메일)
                 </label>
                 <div class="signUp-input-area">
                     <input type="text" id="memberEmail" name="memberEmail"
                         placeholder="아이디(이메일)" maxlength="30"
-                        autocomplete="off" required>
+                        autocomplete="off">
 
                         <!-- autocomplete='off' : 자동완성 미사용 -->
                          <!-- required : 필수 작성 input 태그 -->
@@ -53,7 +56,7 @@
                          <button type="button">인증번호 받기</button>
                 </div>
 
-                <span class="signUp-message">메일을 받을 수 있는 이메일을 입력해주세요</span>
+                <span class="signUp-message" id="emailMessage">메일을 받을 수 있는 이메일을 입력해주세요</span>
 
                 <label for="memberCheck">
                     <span class="required">*</span> 인증번호
@@ -61,7 +64,7 @@
                 <div class="signUp-input-area">
                     <input type="text" id="memberCheck" 
                         placeholder="인증번호 입력" maxlength="30"
-                        autocomplete="off" required>
+                        autocomplete="off">
 
                         <!-- autocomplete='off' : 자동완성 미사용 -->
                          <!-- required : 필수 작성 input 태그 -->
@@ -85,7 +88,7 @@
                     
                 </div>
                 
-                <span class="signUp-message error">비밀번호가 일치하지 않습니다.</span>
+                <span class="signUp-message" id="pwMessage">영어, 숫자, 특수문자(!,@,#,-,_) 6~30글자 사이로 작성해주세요.</span>
 
                 <label for="memberNickname">
                     <span class="required">*</span> 닉네임
@@ -96,7 +99,7 @@
 
                 </div>
                 
-                <span class="signUp-message confirm">사용 가능한 닉네임 입니다.</span>
+                <span class="signUp-message" id="nicknameMessage">영어/숫자/한글 2~10글자 사이로 작성해주세요.</span>
 
                 <label for="memberTel">
                     <span class="required">*</span> 전화번호
@@ -107,7 +110,7 @@
 
                 </div>
                 
-                <span class="signUp-message confirm">사용 가능한 전화번호 입니다.</span>
+                <span class="signUp-message" id="telMessage">전화번호를 입력해주세요.(-제외)</span>
             
                 <label for="memberAddress">
                     주소
@@ -135,6 +138,7 @@
             </form>
         </section>
     </main>
+    <script src="${contextPath}/resources/js/signUp.js"></script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 
