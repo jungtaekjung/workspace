@@ -67,6 +67,9 @@ public class EncodingFilter extends HttpFilter implements Filter {
 		// 모든 요청의 문자 인코딩을 UTF-8로 설정
 		request.setCharacterEncoding("UTF-8");
 		
+		// 모든 응답의 문자 인코딩을 UTF-8로 설정
+		response.setCharacterEncoding("UTF-8");
+		
 		// application scope로 최상위 경로를 얻어올 수 있는 값 세팅
 		
 		// application 내장객체 얻어오기

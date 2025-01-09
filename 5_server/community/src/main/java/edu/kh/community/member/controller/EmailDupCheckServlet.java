@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.kh.community.member.model.service.MemberService;
 @WebServlet("/member/emailDupCheck")
-public class EmailDupCheckServlet extends HttpServlet{
+public class EmailDupCheckServlet extends HttpServlet{ 
 
    @Override
    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

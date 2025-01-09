@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import edu.kh.community.member.model.dto.Member;
@@ -225,6 +227,77 @@ public class MemberDAO {
 			close(pstmt);
 		}
 		return result;
+	}
+
+
+
+	/** 회원 정보 조회 ajax
+	 * @param inputEmail
+	 * @param conn
+	 * @return member
+	 * @throws Exception
+	 */
+	public Member select(String inputEmail, Connection conn) throws Exception{
+		Member member =null; // 결과 저장용 변수
+
+		try {
+			String sql = prop.getProperty("selectOne");
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, inputEmail);
+
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+				member = new Member();
+				member.setMemberEmail(    rs.getString("MEMBER_EMAIL") );
+				member.setMemberNickname(    rs.getString("MEMBER_NICK")    );
+				member.setMemberTel(       rs.getString("MEMBER_TEL")     );
+				member.setMemberAddress(    rs.getString("MEMBER_ADDR")  );
+				member.setEnrollDate(       rs.getString("ENROLL_DT")     );
+
+			}
+
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+
+		return member;
+	}
+
+
+
+	/** 회원 목록 조회 ajax
+	 * @param conn
+	 * @return memberList
+	 * @throws Exception
+	 */
+	public List<Member> selectAll(Connection conn) throws Exception{
+		List<Member> memberList =new ArrayList<>(); // 결과 저장용 변수
+
+		try {
+			String sql = prop.getProperty("selectAll");
+
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while(rs.next()) {
+				Member member = new Member();
+				member.setMemberEmail(    rs.getString("MEMBER_EMAIL") );
+				member.setMemberNickname(    rs.getString("MEMBER_NICK")    );
+				member.setMemberNo(rs.getInt("MEMBER_NO"));
+			
+				memberList.add(member); // 리스트에 추가
+			}
+
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+
+		return memberList;
 	}
 
 

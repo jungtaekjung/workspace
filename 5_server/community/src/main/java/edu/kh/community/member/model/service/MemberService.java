@@ -1,6 +1,7 @@
 package edu.kh.community.member.model.service;
 
 import java.sql.Connection;
+import java.util.List;
 
 import static edu.kh.community.common.JDBCTemplate.*;
 import edu.kh.community.member.model.dao.MemberDAO;
@@ -123,5 +124,42 @@ public class MemberService {
 	      return result;
 	}
 
+	
+
+	/** 회원 정보 조회 ajax
+	 * @param inputEmail
+	 * @return member
+	 * @throws Exception
+	 */
+	public Member selectOne(String inputEmail) throws Exception{
+		Connection conn = getConnection();
+		
+		Member member = dao.select(inputEmail,conn);
+
+		close(conn);
+
+		return member;
+	
+	}
+
+	/** 회원 목록 전체 조회 ajax
+	 * @return memberList
+	 * @throws Exception
+	 */
+	public List<Member> selectAll() throws Exception{
+		Connection conn = getConnection();
+		
+		 List<Member> memberList = dao.selectAll(conn);
+
+		close(conn);
+
+		return memberList;	
+	}
+
+	
+	
+
+	
+	
 
 }

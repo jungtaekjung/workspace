@@ -10,6 +10,7 @@
     <title>KH 커뮤니티</title>
     <link rel="stylesheet" href="resources/css/main-style.css">
     <script src="https://kit.fontawesome.com/5f900fff15.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
     <main>
@@ -40,12 +41,43 @@
         <section class="content">
             <section class=content-1>
             	
-            	loginMember : ${sessionScope.loginMember}
-            	
-            	<hr>
-            	
-            	message : ${sessionScope.message }
-            
+            	<h3>회원 정보 조회(ajax)</h3>
+                <p>이메일을 입력 받아 일치하는 회원 정보를 출력</p>
+
+                이메일 : <input type="text" id="inEmail">
+                <button id="selectBtn">조회</button>
+
+                <div id="result1"></div>
+
+                <hr>
+
+                <h3>회원 목록 조회</h3>
+                <p>일정 시간마다 비동기로 회원 목록(회원 번호, 이메일, 닉네임)</p>
+
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>회원 번호</th>
+                            <th>이메일</th>
+                            <th>닉네임</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tbody">
+                        <tr>
+                            <td>1</td>
+                            <td>user01@kh.or.kr</td>
+                            <td>유저일</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>user02@kh.or.kr</td>
+                            <td>유저이</td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </section>
 
             <section class="content-2">
