@@ -206,7 +206,7 @@ function selectAll(){ // 회원 전체 조회 함수
 }
 
 // 즉시 실행 함수
-(function(){
+/*(function(){
     
     selectAll(); // 함수 호출 -> 회원 목록을 먼저 조회
     
@@ -216,4 +216,4 @@ function selectAll(){ // 회원 전체 조회 함수
     window.setInterval(selectAll,10000) // 10초
     // 함수 이름만 작성 -> 함수 코드 대입
     // -> 10초마다 selectAll(회원 전체 조회 함수) 실행
-})();
+})();*/
