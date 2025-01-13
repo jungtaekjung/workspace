@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Properties;
 
 import edu.kh.community.board.model.dto.Board;
+import edu.kh.community.board.model.dto.BoardDetail;
+import edu.kh.community.board.model.dto.BoardImage;
 import edu.kh.community.board.model.dto.Pagination;
 import edu.kh.community.member.model.dao.MemberDAO;
 public class BoardDAO {
@@ -136,4 +138,81 @@ public class BoardDAO {
 		return boardList;
 	}
 
+	
+
+	/** 게시글 상세조회
+	 * @param conn
+	 * @param boardNo
+	 * @return detail
+	 * @throws Exception
+	 */
+	public BoardDetail selectBoardDetail(Connection conn, int boardNo) throws Exception{
+		
+		   BoardDetail detail = null;
+		      
+		      try {
+		         String sql = prop.getProperty("boardDetail");
+		         
+		         pstmt = conn.prepareStatement(sql);
+		         
+		         pstmt.setInt(1, boardNo);
+		         
+		         rs = pstmt.executeQuery();
+		         
+		         if(rs.next()) {
+		        	 detail = new BoardDetail();
+		        	 detail.setBoardNo(rs.getInt("BOARD_NO"));
+		        	 detail.setBoardTitle(rs.getString("BOARD_TITLE"));
+		        	 detail.setBoardContent(rs.getString("BOARD_CONTENT"));
+		        	 detail.setCreateDate(rs.getString("CREATE_DT"));
+		        	 detail.setUpdateDate(rs.getString("UPDATE_DT"));
+		        	 detail.setReadCount(rs.getInt("READ_COUNT"));
+		        	 detail.setMemberNo(rs.getInt("MEMBER_NO"));
+		        	 detail.setMemberNickname(rs.getString("MEMBER_NICK"));
+		        	 detail.setProfileImage(rs.getString("PROFILE_IMG"));
+		        	 detail.setBoardName(rs.getString("BOARD_NM"));
+		         }
+		         
+		      }finally {
+		         close(rs);
+		         close(pstmt);
+		         
+		      }
+		      return detail;
+	}
+
+	/** 게시글에 첨부된 이미지 조회
+	 * @param conn
+	 * @param boardNo
+	 * @return imageList
+	 * @throws Exception
+	 */
+	public List<BoardImage> selectImageList(Connection conn, int boardNo) throws Exception{
+		 List<BoardImage> imageList = new ArrayList<>();
+	      
+	      try {
+	         String sql = prop.getProperty("selectImageList");
+
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, boardNo);
+	         
+	         rs = pstmt.executeQuery();
+	         
+	         while(rs.next()) {
+	        	BoardImage boardImage = new BoardImage();
+	           
+	        	boardImage.setImageNo(rs.getInt("IMG_NO"));
+	            boardImage.setImageRename(rs.getString("IMG_RENAME"));
+	            boardImage.setImageOriginal(rs.getString("IMG_ORIGINAL"));
+	            boardImage.setImageLevel(rs.getInt("IMG_LEVEL"));
+	            boardImage.setBoardNo(boardNo);
+	            
+	            imageList.add(boardImage);
+	         }
+	      } finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	      return imageList;
+	   }
 }

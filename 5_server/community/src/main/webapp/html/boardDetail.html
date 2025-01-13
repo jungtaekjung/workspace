@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 목록</title>
+
+    <link rel="stylesheet" href="../resources/css/boardDetail-style.css">
+    <link rel="stylesheet" href="../resources/css/main-style.css">
+
+</head>
+<body>
+    <main>
+        
+        <header>
+            <section>
+                <a href="#">
+                    <img src="../resources/images/logo.jpg" id="main-logo">
+                </a>
+            </section>
+            
+            <!-- 검색창 -->
+            <section>
+                <div class="search-area">
+                    
+                    <!-- form 내부 input 태그 값을 서버 또는 페이지로 전달 -->
+                    <form action="#" name="search-form">
+                     
+                        <!-- fieldset : form태그 내부에서 input을 종류별로 묶는 용도로 많이 사용 -->
+                         <fieldset>
+
+                             
+                             
+                             <!-- form태그 내부 input은 name 속성이 존재해야 값 전달 가능함! -->
+                             <input type="text" name="query" id="query"
+                             autocomplete="off" placeholder="검색어를 입력해주세요">
+                             
+                             <button id="search-btn" class="fa-solid fa-magnifying-glass"></button>
+                         </fieldset>
+                    </form>
+                </div>
+            </section>
+            
+
+            </section>
+        </header>
+
+        <nav>
+                <ul>
+                    <li><a href="#">공지사항</a></li>
+                    <li><a href="#">자유 게시판</a></li>
+                    <li><a href="#">질문 게시판</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">1:1문의</a></li>
+                </ul>
+        </nav>
+
+        <!-- 게시글 상세조회 -->
+       <section class="board-detail">
+
+            <!-- 제목 -->
+            <div class="board-title">제목</div>
+
+            <!-- 프로필 + 닉네임 + 작성일 + 수정일 + 조회수 -->
+       
+            <div class="board-header">
+                <div class="board-writer">
+                    <img src="../resources/images/profile.png">
+                    <span>닉네임</span>
+                </div>
+                <div class="board-info">
+                    <p><span>작성일</span> 2025년 1월 13일 10:07:23</p>
+                    <p><span>마지막 수정일</span> 2025년 1월 13일 10:07:23</p>
+                    <p><span>조회수</span> 27</p>
+                </div>
+            </div>
+            <!-- 썸네일 영역 -->
+             <h5>썸네일</h5>
+             <div class="img-box">
+                <div class="boardImg thumbnail">
+                    <img src="../resources/images/logo.jpg">
+                    <a href="#">다운로드</a>
+                </div>
+             </div>
+
+            <!-- 업로드 이미지 영역 -->
+             <h5>업로드 이미지</h5>
+             <div class="img-box">
+                <div class="boardImg">
+                    <img src="../resources/images/logo.jpg">
+                    <a href="#">다운로드</a>
+                </div>
+
+                <div class="boardImg">
+                    <img src="../resources/images/logo.jpg">
+                    <a href="#">다운로드</a>
+                </div>
+
+                <div class="boardImg">
+                    <img src="../resources/images/logo.jpg">
+                    <a href="#">다운로드</a>
+                </div>
+
+                <div class="boardImg">
+                    <img src="../resources/images/logo.jpg">
+                    <a href="#">다운로드</a>
+                </div>
+             </div>
+
+            <!-- 내용 -->
+             <div class="board-content">
+
+                 내용입니다<br>
+                 내용입니다<br>
+                 내용입니다<br>
+                 내용입니다<br>
+                 내용입니다<br>
+            </div>
+            <!-- 버튼 영역 -->
+             <div class="board-btn-area">
+                <button id="updateBtn">수정</button>
+                <button id="deleteBtn">삭제</button>
+                <button id="goToListBtn">목록으로</button>
+             </div>
+        </section>
+
+    </main>
+    <footer>
+        <p>Copyright &copy; KH Information Educational Institute G-Class</p>
+        <section>
+            <a href="#">프로젝트 소개</a>
+            <span>|</span>
+            <a href="#">이용약관</a>
+            <span>|</span>
+            <a href="#">개인정보처리방침</a>
+            <span>|</span>
+            <a href="#">고객센터</a>
+        
+        </section>
+    </footer>
+</body>
+</html>
