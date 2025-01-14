@@ -1,0 +1,84 @@
+/* 댓글 목록 */
+#reply-list{
+    list-style: none;
+    padding : 0;
+}
+
+/* 댓글 한 줄 */
+.reply-row{
+    border-top:1px solid #ccc;
+    padding : 15px 30px;
+}
+
+/* 댓글 작성자 프로필 이미지 */
+.reply-writer > img{
+    width: 40px;
+    height : 40px;
+}
+
+/* 댓글 작성자 닉네임, 작성일 */
+.reply-writer > span {
+    font-weight : bold;
+    margin-left: 10px;
+}
+
+.reply-date{
+    font-size : 0.8em;
+    color : #aaa;
+
+}
+
+/* 버튼영역 */
+.reply-btn-area{
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 버튼 */
+.reply-btn-area> button{
+    width:50px;
+    height:30px;
+    font-weight: bold;
+    background-color: #455ba8;
+    border:0;
+    border-radius: 3px;
+    cursor: pointer;
+    color: white;
+    margin-left: 10px;
+}
+
+.reply-btn-area>button:hover{
+    background-color: white;
+    color:#455ba8;
+    border : 2px solid #455ba8;
+}
+
+/* 댓글 작성 영역 */
+.reply-write-area{
+    display : flex;
+    justify-content: center;
+    margin : 30px 0;
+    min-height: 85px;
+}
+
+/* 댓글 작성 내용 */
+#replyContent{
+    resize:none;
+    flex-basis : 75%;
+    margin-right : 10px;
+}
+
+#addReply{
+    flex-basis: 8%;
+    background-color: #455ba8;
+    color : white;
+    border : 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#addReply:hover{
+    background-color: white;
+    color : #455ba8;
+    border : 2px solid #455ba8;
+}
