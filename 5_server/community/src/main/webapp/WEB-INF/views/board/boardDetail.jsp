@@ -152,7 +152,7 @@
             const boardNo = "${detail.boardNo}";
 
             // 로그인한 회원 번호
-            const loginMemberNo  ="${loginMember.memberNo}";
+            const loginMemberNo  ="${loginMember.memberNo}"; 
             // 로그인 O : "10";
             // 로그인 X : "";(빈 문자열)
 

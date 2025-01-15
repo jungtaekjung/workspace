@@ -70,5 +70,63 @@ public class ReplyService {
 		
 		
 		return result;
+	}
+
+
+
+
+
+
+	/** 댓글 삭제
+	 * @param replyNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteReply(int replyNo) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		int result = dao.deleteReply(conn,replyNo);
+		
+		if(result >0) commit(conn);
+		else		  rollback(conn);
+		
+		close(conn);
+		
+		return result;
+		
+	}
+
+
+
+
+
+
+	/** 댓글 수정 
+	 * @param replyNo
+	 * @param replyContent
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateReply(int replyNo, String replyContent) throws Exception{
+		
+		
+		Connection conn = getConnection();
+		
+		//XSS 방지처리
+		replyContent = Util.XSSHandling(replyContent);
+		// 개행 처리
+		replyContent = Util.newLineHandling(replyContent);
+		
+		int result = dao.updateReply(conn,replyNo,replyContent);
+		
+		if(result >0) commit(conn);
+		else		  rollback(conn);
+		
+		close(conn);
+		
+		return result;
+		
+		
 	} 
 }

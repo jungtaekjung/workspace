@@ -31,12 +31,16 @@
                                     <!-- 댓글 작성자인 경우 -->
                                     <c:if test="${reply.memberNo == loginMember.memberNo}">
                                         <div class="reply-btn-area">
-                                            <button>수정</button>
-                                            <button>삭제</button>
+                                            <button onclick="showUpdateReply(${reply.replyNo},this)">수정</button>
+                                            <button onclick="deleteReply(${reply.replyNo})">삭제</button>
                                         </div>
                                     </c:if>
                                 </li>
+
                             </c:forEach>
+
+
+
                         </ul>
                     </div>
 
