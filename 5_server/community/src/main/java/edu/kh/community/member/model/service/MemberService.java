@@ -100,31 +100,31 @@ public class MemberService {
 	}
 
 
-	   public int emailDupCheck(String memberEmail) throws Exception{
-	      Connection conn = getConnection();
-	      
-	      int result = dao.emailDupCheck(memberEmail, conn);
-	      
-	      if(result != 0) commit(conn);
-	      else rollback(conn);
-	      
-	      close(conn);
-	      return result;
-	   }
+	public int emailDupCheck(String memberEmail) throws Exception{
+		Connection conn = getConnection();
 
-	public int nickDupCheck(String memberNickname) throws Exception{
-		 Connection conn = getConnection();
-	      
-	      int result = dao.nickDupCheck(memberNickname, conn);
-	      
-	      if(result != 0) commit(conn);
-	      else rollback(conn);
-	      
-	      close(conn);
-	      return result;
+		int result = dao.emailDupCheck(memberEmail, conn);
+
+		if(result != 0) commit(conn);
+		else rollback(conn);
+
+		close(conn);
+		return result;
 	}
 
-	
+	public int nickDupCheck(String memberNickname) throws Exception{
+		Connection conn = getConnection();
+
+		int result = dao.nickDupCheck(memberNickname, conn);
+
+		if(result != 0) commit(conn);
+		else rollback(conn);
+
+		close(conn);
+		return result;
+	}
+
+
 
 	/** 회원 정보 조회 ajax
 	 * @param inputEmail
@@ -133,13 +133,13 @@ public class MemberService {
 	 */
 	public Member selectOne(String inputEmail) throws Exception{
 		Connection conn = getConnection();
-		
+
 		Member member = dao.select(inputEmail,conn);
 
 		close(conn);
 
 		return member;
-	
+
 	}
 
 	/** 회원 목록 전체 조회 ajax
@@ -148,18 +148,33 @@ public class MemberService {
 	 */
 	public List<Member> selectAll() throws Exception{
 		Connection conn = getConnection();
-		
-		 List<Member> memberList = dao.selectAll(conn);
+
+		List<Member> memberList = dao.selectAll(conn);
 
 		close(conn);
 
 		return memberList;	
 	}
 
-	
-	
+	public int updateProfileImage(int memberNo, String profileImage) throws Exception{
+		Connection conn = getConnection();
 
-	
-	
+		int result = dao.updateProfileImage(memberNo,profileImage,conn);
 
+
+		if(result >0) commit(conn);
+		else		  rollback(conn);
+
+		close(conn);
+
+		return result;
+	} 
 }
+
+
+
+
+
+
+
+

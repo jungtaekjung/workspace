@@ -288,7 +288,7 @@ public class MemberDAO {
 				member.setMemberEmail(    rs.getString("MEMBER_EMAIL") );
 				member.setMemberNickname(    rs.getString("MEMBER_NICK")    );
 				member.setMemberNo(rs.getInt("MEMBER_NO"));
-			
+
 				memberList.add(member); // 리스트에 추가
 			}
 
@@ -298,6 +298,25 @@ public class MemberDAO {
 		}
 
 		return memberList;
+	}
+
+	public int updateProfileImage(int memberNo, String profileImage, Connection conn) throws Exception{
+		int result = 0;
+
+		try {
+			String sql = prop.getProperty("updateProfileImage");
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, profileImage);
+			pstmt.setInt(2, memberNo);
+
+			result = pstmt.executeUpdate();
+
+		}finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
 
 

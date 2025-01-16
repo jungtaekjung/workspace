@@ -5,7 +5,7 @@
 <!-- 왼쪽 사이드 메뉴 -->
 <section class="left-side">
 	<ul class="list-group">
-		<li><a href="#">프로필</a></li>
+		<li><a href="${contextPath}/member/myPage/profile">프로필</a></li>
 		
 		<!-- /community/member/myPage/info -->
 		<li><a href="${contextPath}/member/myPage/info">내 정보</a></li>

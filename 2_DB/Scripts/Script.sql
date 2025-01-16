@@ -371,7 +371,15 @@ SELECT * FROM REPLY;
 -- 댓글 삭제
 UPDATE REPLY
 SET REPLY_ST = 'Y'
+WHERE REPLY_NO = ;
+
+-- 댓글 수정
+
+-- 댓글 수정
+UPDATE REPLY
+SET REPLY_CONTENT = ? 
 WHERE REPLY_NO = ?;
+
 
 
 
