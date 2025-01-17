@@ -57,9 +57,9 @@
             쿼리스트링 : 주소에 담겨져서 전달되는 파라미터를 나타내는 문자열
             주소?name속성=값&name속성=값
         -->
-        <li><a href="${contextPath}/board/list?type=1">공지사항</a></li>
-        <li><a href="${contextPath}/board/list?type=2">자유 게시판</a></li>
-        <li><a href="${contextPath}/board/list?type=3">질문 게시판</a></li>
+        <li><a href="${contextPath}/board/list?type=1&cp=1">공지사항</a></li>
+        <li><a href="${contextPath}/board/list?type=2&cp=1">자유 게시판</a></li>
+        <li><a href="${contextPath}/board/list?type=3&cp=1">질문 게시판</a></li>
         <li><a href="#">FAQ</a></li>
         <li><a href="#">1:1문의</a></li>
     </ul>

@@ -51,20 +51,20 @@ public class BoardDAO {
 			String sql = prop.getProperty("selectBoardName");
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, type);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			if(rs.next()) {
 				boardName = rs.getString(1);
 			}
-			
+
 		}finally {
 			close(rs);
 			close(pstmt);
 		}
-		
-		
-		
+
+
+
 		return boardName;
 	}
 
@@ -80,19 +80,19 @@ public class BoardDAO {
 			String sql = prop.getProperty("getListCount");
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, type);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			if(rs.next()) {
 				listCount = rs.getInt(1);
 			}
-			
+
 		}finally {
 			close(rs);
 			close(pstmt);
 		}
-		
-		
+
+
 		return listCount;
 	}
 
@@ -105,22 +105,22 @@ public class BoardDAO {
 	 */
 	public List<Board> selectBoardList(Connection conn, Pagination pagination, int type) throws Exception{
 		List<Board> boardList = new ArrayList<>();
-		
+
 		try {
 			String sql = prop.getProperty("selectBoardList");
-			
+
 			// BETWEEN 구문에 들어갈 범위 계산
 			int start = (pagination.getCurrentPage() -1) * pagination.getLimit()+1;
 			int end = start + pagination.getLimit()-1;
-			
+
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, type);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			while(rs.next()) {
 				Board board = new Board();
 				board.setBoardNo(rs.getInt("BOARD_NO"));
@@ -128,7 +128,8 @@ public class BoardDAO {
 				board.setMemberNickname(rs.getString("MEMBER_NICK"));
 				board.setCreateDate(rs.getString("CREATE_DT"));
 				board.setReadCount(rs.getInt("READ_COUNT"));
-				
+				board.setThumbnail(rs.getString("THUMBNAIL"));
+
 				boardList.add(board);
 			}
 		}finally {
@@ -138,7 +139,7 @@ public class BoardDAO {
 		return boardList;
 	}
 
-	
+
 
 	/** 게시글 상세조회
 	 * @param conn
@@ -147,38 +148,38 @@ public class BoardDAO {
 	 * @throws Exception
 	 */
 	public BoardDetail selectBoardDetail(Connection conn, int boardNo) throws Exception{
-		
-		   BoardDetail detail = null;
-		      
-		      try {
-		         String sql = prop.getProperty("boardDetail");
-		         
-		         pstmt = conn.prepareStatement(sql);
-		         
-		         pstmt.setInt(1, boardNo);
-		         
-		         rs = pstmt.executeQuery();
-		         
-		         if(rs.next()) {
-		        	 detail = new BoardDetail();
-		        	 detail.setBoardNo(rs.getInt("BOARD_NO"));
-		        	 detail.setBoardTitle(rs.getString("BOARD_TITLE"));
-		        	 detail.setBoardContent(rs.getString("BOARD_CONTENT"));
-		        	 detail.setCreateDate(rs.getString("CREATE_DT"));
-		        	 detail.setUpdateDate(rs.getString("UPDATE_DT"));
-		        	 detail.setReadCount(rs.getInt("READ_COUNT"));
-		        	 detail.setMemberNo(rs.getInt("MEMBER_NO"));
-		        	 detail.setMemberNickname(rs.getString("MEMBER_NICK"));
-		        	 detail.setProfileImage(rs.getString("PROFILE_IMG"));
-		        	 detail.setBoardName(rs.getString("BOARD_NM"));
-		         }
-		         
-		      }finally {
-		         close(rs);
-		         close(pstmt);
-		         
-		      }
-		      return detail;
+
+		BoardDetail detail = null;
+
+		try {
+			String sql = prop.getProperty("boardDetail");
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, boardNo);
+
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+				detail = new BoardDetail();
+				detail.setBoardNo(rs.getInt("BOARD_NO"));
+				detail.setBoardTitle(rs.getString("BOARD_TITLE"));
+				detail.setBoardContent(rs.getString("BOARD_CONTENT"));
+				detail.setCreateDate(rs.getString("CREATE_DT"));
+				detail.setUpdateDate(rs.getString("UPDATE_DT"));
+				detail.setReadCount(rs.getInt("READ_COUNT"));
+				detail.setMemberNo(rs.getInt("MEMBER_NO"));
+				detail.setMemberNickname(rs.getString("MEMBER_NICK"));
+				detail.setProfileImage(rs.getString("PROFILE_IMG"));
+				detail.setBoardName(rs.getString("BOARD_NM"));
+			}
+
+		}finally {
+			close(rs);
+			close(pstmt);
+
+		}
+		return detail;
 	}
 
 	/** 게시글에 첨부된 이미지 조회
@@ -188,34 +189,113 @@ public class BoardDAO {
 	 * @throws Exception
 	 */
 	public List<BoardImage> selectImageList(Connection conn, int boardNo) throws Exception{
-		 List<BoardImage> imageList = new ArrayList<>();
-	      
-	      try {
-	         String sql = prop.getProperty("selectImageList");
+		List<BoardImage> imageList = new ArrayList<>();
 
-	         pstmt = conn.prepareStatement(sql);
-	         pstmt.setInt(1, boardNo);
-	         
-	         rs = pstmt.executeQuery();
-	         
-	         while(rs.next()) {
-	        	BoardImage boardImage = new BoardImage();
-	           
-	        	boardImage.setImageNo(rs.getInt("IMG_NO"));
-	            boardImage.setImageRename(rs.getString("IMG_RENAME"));
-	            boardImage.setImageOriginal(rs.getString("IMG_ORIGINAL"));
-	            boardImage.setImageLevel(rs.getInt("IMG_LEVEL"));
-	            boardImage.setBoardNo(boardNo);
-	            
-	            imageList.add(boardImage);
-	         }
-	      } finally {
-	         close(rs);
-	         close(pstmt);
-	      }
-	      return imageList;
-	   }
+		try {
+			String sql = prop.getProperty("selectImageList");
 
-	
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+
+			rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				BoardImage boardImage = new BoardImage();
+
+				boardImage.setImageNo(rs.getInt("IMG_NO"));
+				boardImage.setImageRename(rs.getString("IMG_RENAME"));
+				boardImage.setImageOriginal(rs.getString("IMG_ORIGINAL"));
+				boardImage.setImageLevel(rs.getInt("IMG_LEVEL"));
+				boardImage.setBoardNo(boardNo);
+
+				imageList.add(boardImage);
+			}
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return imageList;
+	}
+
+	/** 다음 게시글 번호 조회
+	 * @param conn
+	 * @return boardNo
+	 * @throws Exception
+	 */
+	public int nextBoardNo(Connection conn) throws Exception{
+
+		int boardNo = 0;
+
+		try {
+			String sql = prop.getProperty("nextBoardNo");
+
+			stmt = conn.createStatement();
+
+			rs = stmt.executeQuery(sql);
+
+			if(rs.next()) {
+				boardNo = rs.getInt(1);
+			}
+
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+
+
+		return boardNo;
+	}
+
+	/** 게시글 등록
+	 * @param detail
+	 * @param boardCode
+	 * @param conn 
+	 * @return result
+	 */
+	public int insertBoard(BoardDetail detail, int boardCode, Connection conn) throws Exception{
 		
+		int result = 0;
+		System.out.println(detail);
+		try {
+			String sql = prop.getProperty("insertBoard");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, detail.getBoardNo());
+			pstmt.setString(2, detail.getBoardTitle());
+			pstmt.setString(3, detail.getBoardContent());
+			pstmt.setInt(4, detail.getMemberNo());
+			pstmt.setInt(5, boardCode);
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertBoardImage(Connection conn, BoardImage image) throws Exception{
+		
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("insertBoardImage");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, image.getImageRename());
+			pstmt.setString(2, image.getImageOriginal());
+			pstmt.setInt(3, image.getImageLevel());
+			pstmt.setInt(4, image.getBoardNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
 }

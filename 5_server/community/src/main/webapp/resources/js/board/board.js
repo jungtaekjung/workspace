@@ -29,7 +29,13 @@
             const params = new URL(location.href).searchParams;
 
             const type = "type=" + params.get("type");
-            const cp = "cp=" + params.get("cp");
+           
+            let cp;
+            if(params.get("cp") != null){ // 쿼리스트링에 cp가 있는 경우
+                cp="cp=" + params.get("cp"); // cp=2
+            }else{
+                cp="cp=1";
+            }
 
             // url 완성하기
 

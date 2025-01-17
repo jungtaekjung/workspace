@@ -14,46 +14,75 @@
 		SELECT COUNT(*)
 		FROM BOARD
 		WHERE BOARD_CD = ?
-		AND BOARD_ST ='N'</entry>
+		AND
+		BOARD_ST ='N'</entry>
 
 	<!-- 특정 게시판 게시글 목록 조회 -->
 
 	<entry key="selectBoardList">
 		SELECT * FROM(
-			SELECT ROWNUM RNUM, A.* FROM(
-				SELECT BOARD_NO, BOARD_TITLE, MEMBER_NICK,
-				TO_CHAR(CREATE_DT,'YYYY-MM-DD') AS CREATE_DT
-				,READ_COUNT
-			FROM BOARD
-			JOIN
-			MEMBER USING(MEMBER_NO)
-			WHERE BOARD_CD = ?
-			AND BOARD_ST = 'N'
-			ORDER BY
-			BOARD_NO DESC
-			) A
+		SELECT ROWNUM RNUM, A.* FROM(
+		SELECT
+		BOARD_NO, BOARD_TITLE, MEMBER_NICK,
+		TO_CHAR(CREATE_DT,'YYYY-MM-DD') AS
+		CREATE_DT
+		,READ_COUNT, 
+			(SELECT IMG_RENAME FROM BOARD_IMG I
+			 WHERE B.BOARD_NO = I.BOARD_NO
+			 AND IMG_LEVEL = 0) AS THUMBNAIL
+		FROM BOARD B
+		JOIN
+		MEMBER USING(MEMBER_NO)
+		WHERE
+		BOARD_CD = ?
+		AND BOARD_ST = 'N'
+		ORDER BY
+		BOARD_NO DESC
+		) A
 		)
-		WHERE RNUM BETWEEN ? AND ?
+		WHERE RNUM
+		BETWEEN ? AND ?
 	</entry>
-	
+
 	<!-- 게시글 상세조회 -->
 	<entry key="boardDetail">
 		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT,
-			TO_CHAR(CREATE_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') AS CREATE_DT,
-			TO_CHAR(UPDATE_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') AS UPDATE_DT,
-			READ_COUNT, MEMBER_NO, MEMBER_NICK, PROFILE_IMG, BOARD_NM
+		TO_CHAR(CREATE_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') AS CREATE_DT,
+		TO_CHAR(UPDATE_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') AS UPDATE_DT,
+		READ_COUNT, MEMBER_NO, MEMBER_NICK, PROFILE_IMG, BOARD_NM
 		FROM BOARD
 		JOIN MEMBER USING(MEMBER_NO)
 		JOIN BOARD_TYPE USING(BOARD_CD)
-		WHERE BOARD_NO = ?
+		WHERE
+		BOARD_NO = ?
 		AND BOARD_ST = 'N'
 	</entry>
-	
+
 	<!-- 게시글 이미지 리스트조회 -->
 	<entry key="selectImageList">
 		SELECT * FROM BOARD_IMG
 		WHERE BOARD_NO = ?
-		ORDER BY IMG_LEVEL
+		ORDER BY
+		IMG_LEVEL
+	</entry>
+
+	<!-- 다음 게시글 번호 조회 -->
+	<entry key="nextBoardNo">
+		SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+	</entry>
+
+	<!-- 게시글 등록 -->
+	<entry key="insertBoard">
+		INSERT INTO BOARD
+		VALUES(?, ?, ?, DEFAULT, DEFAULT,
+		DEFAULT, DEFAULT, ?, ?)
+	</entry>
+
+	<!-- 게시글 이미지 등록 -->
+	<entry key="insertBoardImage">
+		INSERT INTO BOARD_IMG
+		VALUES(SEQ_IMG_NO.NEXTVAL, ?, ?,
+		?, ?)
 	</entry>
 </properties>
 

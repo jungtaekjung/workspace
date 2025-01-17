@@ -151,3 +151,18 @@
     cursor: pointer;
     border: 0;
 }
+
+.list-table tr > td:nth-of-type(2){ /* 2번째 제목 td */ 
+
+    position : relative;
+
+}
+
+/* 썸네일 스타일 */
+.list-thumbnail{
+    max-width: 50px;
+    max-height: 30px;
+    position: absolute;
+    left: -15px;
+    top : 17px;
+}

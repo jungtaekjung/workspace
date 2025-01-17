@@ -115,6 +115,7 @@
                 
                 <!-- 내용 -->
                 <div class="board-content">
+                    ${detail.boardContent}
             </div>
             <!-- 버튼 영역 -->
              <div class="board-btn-area">
