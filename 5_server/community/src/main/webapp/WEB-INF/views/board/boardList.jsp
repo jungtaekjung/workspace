@@ -140,9 +140,13 @@
                                 <button>검색</button>
                             </form>
                         </section>
-                        <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
                     </main>
-
+                    <div class="modal">
+                        <span id="modal-close">&times;</span>
+                        <img id="modal-image" src="${contextPath}/resources/images/gromit.webp">
+                    </div>
+                    <script src="${contextPath}/resources/js/board/board.js"></script>
+                    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
                 </body>
 
                 </html>

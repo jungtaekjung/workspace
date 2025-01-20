@@ -84,6 +84,13 @@
 		VALUES(SEQ_IMG_NO.NEXTVAL, ?, ?,
 		?, ?)
 	</entry>
+	
+	<!-- 게시글 삭제 -->
+	<entry key="deleteBoard">
+		UPDATE BOARD SET
+		BOARD_ST = 'Y'
+		WHERE BOARD_NO =?
+	</entry>
 </properties>
 
 

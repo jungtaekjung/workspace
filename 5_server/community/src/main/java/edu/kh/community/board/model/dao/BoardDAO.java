@@ -296,6 +296,29 @@ public class BoardDAO {
 		return result;
 	}
 
+	/** 게시글 삭제
+	 * @param boardNo
+	 * @param conn 
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteBoard(int boardNo, Connection conn) throws Exception{
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("deleteBoard");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1,boardNo);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 
 }
