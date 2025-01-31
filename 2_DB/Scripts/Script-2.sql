@@ -1,0 +1,603 @@
+-- 외래 키 제약 조건 비활성화
+BEGIN
+    FOR c IN (SELECT constraint_name, table_name FROM user_constraints WHERE constraint_type = 'R')
+    LOOP
+        EXECUTE IMMEDIATE 'ALTER TABLE ' || c.table_name || ' DISABLE CONSTRAINT ' || c.constraint_name;
+    END LOOP;
+END;
+-- 모든 테이블 드롭
+BEGIN
+    FOR t IN (SELECT table_name FROM user_tables)
+    LOOP
+        EXECUTE IMMEDIATE 'DROP TABLE ' || t.table_name || ' CASCADE CONSTRAINTS';
+    END LOOP;
+END;
+-- 모든 시퀀스 삭제하기
+BEGIN
+    FOR seq IN (SELECT sequence_name FROM user_sequences)
+    LOOP
+        EXECUTE IMMEDIATE 'DROP SEQUENCE ' || seq.sequence_name;
+    END LOOP;
+END;
+
+
+COMMIT;
+
+
+-- 회원 테이블 생성
+CREATE TABLE SITE_USER(
+   USER_NO   NUMBER PRIMARY KEY,
+   USER_ID   VARCHAR2(50)   NOT NULL,
+   USER_PW   VARCHAR2(500)   NOT NULL,
+   USER_NM   VARCHAR2(30)   NOT NULL,
+   USER_EMAIL   VARCHAR2(100)   NOT NULL,
+   USER_DT   DATE DEFAULT SYSDATE NOT NULL,
+   SECESSION_FL   CHAR(1)   DEFAULT 'N' NOT NULL,
+   USER_NICK   VARCHAR2(50)   NOT NULL,
+   USER_MBTI   VARCHAR2(15)   NOT NULL,
+   PROFILE_IMG   VARCHAR2(500)   NULL,
+   GENDER   CHAR(1)   NOT NULL,
+   BIRTH_DT   DATE   NOT NULL,
+   USER_PHONE VARCHAR2(15) NOT NULL
+   
+);
+
+-- 회원 번호 시퀀스
+CREATE SEQUENCE SEQ_USER_NO;
+
+-- 회원 랜덤 INSERT 100
+BEGIN
+   FOR i IN 1..100 LOOP
+      INSERT INTO SITE_USER (
+         USER_NO, 
+         USER_ID, 
+         USER_PW, 
+         USER_NM, 
+         USER_EMAIL, 
+         USER_DT, 
+         SECESSION_FL, 
+         USER_NICK, 
+         USER_MBTI, 
+         PROFILE_IMG, 
+         GENDER, 
+         BIRTH_DT, 
+         USER_PHONE -- USER_PHONE 컬럼 추가
+      ) VALUES (
+         SEQ_USER_NO.NEXTVAL, -- USER_NO: 시퀀스를 사용하여 값 생성
+         'user' || LPAD(i, 3, '0'), -- USER_ID
+         '02DeqFdlQnpEbQRZqnvpfK7a9sO9iISEV7Hzxntivto23dJ/i16UMur0ACYxwsfAxFwzfn5yarbQnsbAtkCJAg==', -- USER_PW
+         '유저' || i, -- USER_NM: 동적으로 변경
+         'user' || LPAD(i, 3, '0') || '@naver.com', -- USER_EMAIL
+         DEFAULT, -- USER_DT
+         DEFAULT, -- SECESSION_FL
+         '유저' || i, -- USER_NICK
+         CASE ROUND(DBMS_RANDOM.VALUE(1, 16))
+            WHEN 1 THEN 'ISTJ'
+            WHEN 2 THEN 'ISFJ'
+            WHEN 3 THEN 'INFJ'
+            WHEN 4 THEN 'INTJ'
+            WHEN 5 THEN 'ISTP'
+            WHEN 6 THEN 'ISFP'
+            WHEN 7 THEN 'INFP'
+            WHEN 8 THEN 'INTP'
+            WHEN 9 THEN 'ESTP'
+            WHEN 10 THEN 'ESFP'
+            WHEN 11 THEN 'ENFP'
+            WHEN 12 THEN 'ENTP'
+            WHEN 13 THEN 'ESTJ'
+            WHEN 14 THEN 'ESFJ'
+            WHEN 15 THEN 'ENFJ'
+            WHEN 16 THEN 'ENTJ'
+         END, -- USER_MBTI: 랜덤하게 생성
+         NULL, -- PROFILE_IMG
+         CASE 
+            WHEN MOD(i, 2) = 0 THEN 'M' 
+            ELSE 'F' 
+         END, -- GENDER: M, F alternates
+         TO_DATE(1950 + MOD(i, 51), 'YYYY'), -- BIRTH_DT: 1950 ~ 2000
+         '010-' || LPAD(TO_CHAR(FLOOR(DBMS_RANDOM.VALUE(0, 10000))), 4, '0') || '-' || LPAD(TO_CHAR(FLOOR(DBMS_RANDOM.VALUE(0, 10000))), 4, '0') -- USER_PHONE: 랜덤 생성
+      );
+   END LOOP;
+
+   COMMIT;
+END;
+
+
+
+
+-- 게시판 종류 테이블 생성
+CREATE TABLE BOARD_TYPE(
+   BOARD_CD   NUMBER   PRIMARY KEY,
+   BOARD_NM   VARCHAR2(50)   NOT NULL
+);
+
+-- 게시판 종류 테이블에 대한 커멘트
+COMMENT ON COLUMN BOARD_TYPE.BOARD_CD IS '게시판 코드';
+COMMENT ON COLUMN BOARD_TYPE.BOARD_NM IS '게시판 종류';
+
+
+INSERT INTO BOARD_TYPE VALUES (1, '영화잡담');
+INSERT INTO BOARD_TYPE VALUES (2, '영화추천');
+INSERT INTO BOARD_TYPE VALUES (3, '공지사항');
+
+
+
+
+-- 게시판 테이블 생성
+CREATE TABLE BOARD (
+   BOARD_NO   NUMBER   PRIMARY KEY,
+   BOARD_TITLE   VARCHAR2(200)   NOT NULL,
+   BOARD_CONTENT   VARCHAR2(4000)   NOT NULL,
+   CREATE_DT   DATE DEFAULT SYSDATE NOT NULL,
+   READ_COUNT   NUMBER DEFAULT 0 NOT NULL,
+   BOARD_ST   CHAR(1)   DEFAULT 'N' NOT NULL,
+   USER_NO   NUMBER   NOT NULL REFERENCES SITE_USER(USER_NO),
+   BOARD_CD   NUMBER   NOT NULL REFERENCES BOARD_TYPE(BOARD_CD)
+);
+
+-- 게시글 번호 시퀀스
+CREATE SEQUENCE SEQ_BOARD_NO;
+
+
+-- BOARD 테이블 샘플 데이터 삽입(PL/SQL)
+BEGIN
+    FOR I IN 1..10 LOOP
+    
+        INSERT INTO BOARD
+        VALUES(SEQ_BOARD_NO.NEXTVAL,
+               SEQ_BOARD_NO.CURRVAL || '번째 게시글',
+               SEQ_BOARD_NO.CURRVAL || '번째 게시글 내용입니다.',
+               DEFAULT, DEFAULT, DEFAULT, 1, 3
+        );
+    END LOOP;
+END;
+
+COMMIT;
+
+SELECT count(*) FROM board;
+
+-- 게시판 테이블에 대한 커멘트
+COMMENT ON COLUMN BOARD.BOARD_NO IS '게시글 번호';
+COMMENT ON COLUMN BOARD.BOARD_TITLE IS '게시글 제목';
+COMMENT ON COLUMN BOARD.BOARD_CONTENT IS '게시글 내용';
+COMMENT ON COLUMN BOARD.CREATE_DT IS '게시글 작성일';
+COMMENT ON COLUMN BOARD.READ_COUNT IS '조회수';
+COMMENT ON COLUMN BOARD.BOARD_ST IS '게시글 상태';
+COMMENT ON COLUMN BOARD.USER_NO IS '회원 번호(FK)';
+COMMENT ON COLUMN BOARD.BOARD_CD IS '게시판 코드(FK)';
+
+SELECT COUNT(*) from BOARD WHERE BOARD_CD = 1;
+SELECT COUNT(*) from BOARD WHERE BOARD_CD = 2;
+SELECT COUNT(*) from BOARD WHERE BOARD_CD = 3;
+
+
+-- 시즌 테이블 생성
+CREATE TABLE SEASON (
+   SEASON_NO   NUMBER   PRIMARY KEY,
+   SEASON_NM   VARCHAR2(100)   NOT NULL
+);
+
+-- 시즌 테이블에 대한 커멘트
+COMMENT ON COLUMN SEASON.SEASON_NO IS '시즌 번호';
+COMMENT ON COLUMN SEASON.SEASON_NM IS '시즌 이름';
+
+-- 시즌 데이터 넣기
+INSERT INTO SEASON VALUES(1, '봄');
+INSERT INTO SEASON VALUES(2, '여름');
+INSERT INTO SEASON VALUES(3, '가을');
+INSERT INTO SEASON VALUES(4, '겨울');
+
+-- 국가 테이블 생성
+CREATE TABLE NATION (
+   NATION_NO   NUMBER   PRIMARY KEY,
+   NATION_NM   VARCHAR2(50)   NOT NULL
+);
+
+-- 국가 테이블에 대한 커멘트
+COMMENT ON COLUMN NATION.NATION_NO IS '국가 번호';
+COMMENT ON COLUMN NATION.NATION_NM IS '국가 이름';
+
+-- 국가 데이터 넣기
+INSERT INTO NATION VALUES(1, '한국');
+INSERT INTO NATION VALUES(2, '미국');
+INSERT INTO NATION VALUES(3, '일본');
+INSERT INTO NATION VALUES(4, '중국');
+INSERT INTO NATION VALUES(5, '영국');
+INSERT INTO NATION VALUES(6, '프랑스');
+INSERT INTO NATION VALUES(7, '홍콩');
+INSERT INTO NATION VALUES(8, '대만');
+INSERT INTO NATION VALUES(9, '인도');
+INSERT INTO NATION VALUES(10, '독일');
+INSERT INTO NATION VALUES(11, '러시아');
+INSERT INTO NATION VALUES(12, '그 외 국가');
+COMMIT;
+
+
+-- 등급 테이블 생성
+CREATE TABLE RATING (
+   RATING_NO   NUMBER   PRIMARY KEY,
+   RATING_NM   VARCHAR2(50)   NOT NULL
+);
+
+-- 등급 테이블에 대한 커멘트
+COMMENT ON COLUMN RATING.RATING_NO IS '등급 번호';
+COMMENT ON COLUMN RATING.RATING_NM IS '등급 이름';
+
+-- 등급 데이터 삽입
+INSERT INTO RATING VALUES(1, '전체 이용가');
+INSERT INTO RATING VALUES(2, '12세 이용가');
+INSERT INTO RATING VALUES(3, '15세 이용가');
+INSERT INTO RATING VALUES(4, '19세 이용가');
+
+
+
+-- 영화 테이블 생성
+CREATE TABLE MOVIE (
+   MOVIE_NO   VARCHAR2(20)   PRIMARY KEY,
+   MOVIE_TITLE   VARCHAR2(90)   NOT NULL,
+   MOVIE_OVERVIEW   VARCHAR2(2000)   NULL,
+   RELEASE_DT   DATE   NULL,
+   DURATION   NUMBER   NULL,
+   MOVIE_POSTER   VARCHAR2(500)   NULL,
+   NATION_NO   NUMBER REFERENCES NATION(NATION_NO) NOT NULL,
+   RATING_NO   NUMBER REFERENCES RATING(RATING_NO) NOT NULL,
+   SEASON_NO   NUMBER REFERENCES SEASON(SEASON_NO) NOT NULL
+);
+SELECT count(*) FROM MOVIE;
+COMMIT;
+DROP TABLE MOVIE;
+
+
+
+-- 영화 테이블에 대한 커멘트
+COMMENT ON COLUMN MOVIE.MOVIE_NO IS '영화 번호';
+COMMENT ON COLUMN MOVIE.MOVIE_TITLE IS '영화 제목';
+COMMENT ON COLUMN MOVIE.MOVIE_OVERVIEW IS '줄거리';
+COMMENT ON COLUMN MOVIE.RELEASE_DT IS '개봉일자';
+COMMENT ON COLUMN MOVIE.DURATION IS '영화 시간';
+COMMENT ON COLUMN MOVIE.MOVIE_POSTER IS '포스터';
+COMMENT ON COLUMN MOVIE.NATION_NO IS '제작국가';
+COMMENT ON COLUMN MOVIE.RATING_NO IS '영화등급';
+COMMENT ON COLUMN MOVIE.SEASON_NO IS '시즌 번호';
+
+
+
+-- 댓글 테이블 생성
+CREATE TABLE REPLY (
+   REPLY_NO   NUMBER   PRIMARY KEY,
+   REPLY_CONTENT   VARCHAR2(500)   NOT NULL,
+   REPLY_DT   DATE DEFAULT SYSDATE NOT NULL,
+   REPLY_ST   CHAR(1) DEFAULT 'N' NOT NULL,
+   BOARD_NO   NUMBER REFERENCES BOARD(BOARD_NO) NOT NULL,
+   USER_NO   NUMBER REFERENCES SITE_USER(USER_NO) NOT NULL
+);
+
+-- 댓글 테이블에 대한 커멘트
+COMMENT ON COLUMN REPLY.REPLY_NO IS '댓글 번호';
+COMMENT ON COLUMN REPLY.REPLY_CONTENT IS '댓글 내용';
+COMMENT ON COLUMN REPLY.REPLY_DT IS '댓글 작성일';
+COMMENT ON COLUMN REPLY.REPLY_ST IS '댓글 상태';
+COMMENT ON COLUMN REPLY.BOARD_NO IS '게시글 번호(FK)';
+COMMENT ON COLUMN REPLY.USER_NO IS '회원 번호(FK)';
+
+
+-- 댓글 번호 시퀀스
+CREATE SEQUENCE SEQ_REPLY_NO;
+
+
+
+
+-- 리뷰 테이블 생성
+CREATE TABLE REVIEW (
+   REVIEW_NO   NUMBER   PRIMARY KEY,
+   S_CONTENT   VARCHAR2(500)   NOT NULL,
+   L_CONTENT   VARCHAR2(2000)   NULL,
+   REVIEW_RATING   NUMBER   NOT NULL,
+   REVIEW_DT   DATE DEFAULT SYSDATE NOT NULL,
+   REVIEW_ST   CHAR(1) DEFAULT 'Y' NOT NULL,
+   USER_NO   NUMBER REFERENCES SITE_USER(USER_NO) NOT NULL,
+   MOVIE_NO   VARCHAR2(20) REFERENCES MOVIE(MOVIE_NO) NOT NULL
+);
+
+-- 리뷰 테이블에 대한 커멘트
+COMMENT ON COLUMN REVIEW.REVIEW_NO IS '리뷰 번호';
+COMMENT ON COLUMN REVIEW.S_CONTENT IS '리뷰 한줄평';
+COMMENT ON COLUMN REVIEW.L_CONTENT IS '상세 리뷰';
+COMMENT ON COLUMN REVIEW.REVIEW_RATING IS '리뷰 평점';
+COMMENT ON COLUMN REVIEW.REVIEW_DT IS '리뷰 작성일';
+COMMENT ON COLUMN REVIEW.REVIEW_ST IS '리뷰 상태';
+COMMENT ON COLUMN REVIEW.USER_NO IS '회원 번호(FK)';
+COMMENT ON COLUMN REVIEW.MOVIE_NO IS '영화 번호(FK)';
+
+-- 리뷰 번호 시퀀스
+CREATE SEQUENCE SEQ_REVIEW_NO;
+
+
+-- 리뷰 데이터 넣기
+DECLARE
+    v_movie_no MOVIE.MOVIE_NO%TYPE;
+BEGIN
+    FOR i IN 1..10 LOOP  -- 10개의 리뷰를 생성
+        -- 랜덤 영화 번호 선택
+        SELECT MOVIE_NO
+        FROM (
+            SELECT MOVIE_NO FROM MOVIE WHERE MOVIE_TITLE = "스토리 오브 일루시브 스노우";
+        ) ;
+
+        -- 리뷰 데이터 삽입
+        INSERT INTO REVIEW (
+            REVIEW_NO,
+            S_CONTENT,
+            L_CONTENT,
+            REVIEW_RATING,
+            REVIEW_DT,
+            REVIEW_ST,
+            USER_NO,
+            MOVIE_NO
+        ) VALUES (
+            SEQ_REVIEW_NO.NEXTVAL,
+            '짧은 리뷰 내용 ' || TO_CHAR(SYSDATE, 'HH24:MI:SS'),  -- 시간을 추가하여 리뷰 내용을 구별
+            '자세한 리뷰 내용 ' || TO_CHAR(SYSDATE, 'HH24:MI:SS'),
+            TRUNC(DBMS_RANDOM.VALUE(1, 5)),  -- 1부터 5까지의 랜덤 평점
+            SYSDATE,
+            'Y',
+            TRUNC(DBMS_RANDOM.VALUE(1, 100)),  -- 가정된 사용자 번호, 1부터 10 사이
+            v_movie_no
+        );
+    END LOOP;
+    COMMIT;  -- 변경사항을 커밋
+END;
+DECLARE
+    v_movie_no MOVIE.MOVIE_NO%TYPE;
+BEGIN
+    FOR i IN 1..10 LOOP  -- 10개의 리뷰를 생성
+        -- 랜덤 영화 번호 선택
+        SELECT MOVIE_NO
+        INTO v_movie_no
+        FROM (
+            SELECT MOVIE_NO 
+            FROM MOVIE 
+            WHERE MOVIE_NO = 'A08675'
+        ) WHERE ROWNUM = 1; -- 한 행만 선택
+
+        -- 리뷰 데이터 삽입
+        INSERT INTO REVIEW (
+            REVIEW_NO,
+            S_CONTENT,
+            L_CONTENT,
+            REVIEW_RATING,
+            REVIEW_DT,
+            REVIEW_ST,
+            USER_NO,
+            MOVIE_NO
+        ) VALUES (
+            SEQ_REVIEW_NO.NEXTVAL,
+            '짧은 리뷰 내용 ' || TO_CHAR(SYSDATE, 'HH24:MI:SS'),  -- 시간을 추가하여 리뷰 내용을 구별
+            '자세한 리뷰 내용 ' || TO_CHAR(SYSDATE, 'HH24:MI:SS'),
+            TRUNC(DBMS_RANDOM.VALUE(1, 6)),  -- 1부터 5까지의 랜덤 평점
+            SYSDATE,
+            'Y',
+            TRUNC(DBMS_RANDOM.VALUE(1, 100)),  -- 가정된 사용자 번호, 1부터 100 사이
+            v_movie_no
+        );
+    END LOOP;
+    COMMIT;  -- 변경사항을 커밋
+END;
+/
+
+
+
+
+COMMIT;
+SELECT COUNT(*) FROM REVIEW;
+
+
+-- 영화 좋아요 테이블 생성
+CREATE TABLE MOVIE_LIKE (
+   USER_NO   NUMBER   NOT NULL REFERENCES SITE_USER(USER_NO),
+   MOVIE_NO   VARCHAR2(20)   NOT NULL REFERENCES MOVIE(MOVIE_NO),
+   PRIMARY KEY (USER_NO, MOVIE_NO)
+);
+-- 영화 좋아요 테이블에 대한 커멘트
+COMMENT ON COLUMN MOVIE_LIKE.USER_NO IS '회원 번호(FK)';
+COMMENT ON COLUMN MOVIE_LIKE.MOVIE_NO IS '영화 번호(FK)';
+
+
+SELECT USER_NO, MOVIE_NO, MOVIE_TITLE FROM MOVIE_LIKE JOIN MOVIE USING(MOVIE_NO)WHERE USER_NO =1;
+
+DECLARE
+    v_user_no SITE_USER.USER_NO%TYPE;
+    v_movie_no MOVIE.MOVIE_NO%TYPE;
+    e_duplicate EXCEPTION;
+    PRAGMA EXCEPTION_INIT(e_duplicate, -00001); -- 중복 키 위반 오류 코드
+
+BEGIN
+    FOR i IN 1..10 LOOP
+        BEGIN
+            -- 랜덤 유저 번호 선택
+            SELECT USER_NO INTO v_user_no
+            FROM (SELECT USER_NO FROM SITE_USER WHERE user_no=1)
+            WHERE ROWNUM = 1;
+
+            -- 랜덤 영화 번호 선택
+            SELECT MOVIE_NO INTO v_movie_no
+            FROM (SELECT MOVIE_NO FROM MOVIE ORDER BY DBMS_RANDOM.VALUE)
+            WHERE ROWNUM = 1;
+
+            -- '좋아요' 데이터 삽입
+            INSERT INTO MOVIE_LIKE (USER_NO, MOVIE_NO)
+            VALUES (v_user_no, v_movie_no);
+
+            COMMIT;
+        EXCEPTION
+            WHEN e_duplicate THEN
+                NULL; -- 중복되는 경우 무시
+        END;
+    END LOOP;
+END;
+
+BEGIN
+    FOR i IN 1..10 LOOP
+        BEGIN
+            -- 랜덤 유저 번호 선택
+            SELECT USER_NO INTO v_user_no
+            FROM (SELECT USER_NO FROM SITE_USER WHERE user_no=1)
+            WHERE ROWNUM = 1;
+
+            -- 랜덤 영화 번호 선택
+            SELECT MOVIE_NO INTO v_movie_no
+            FROM (SELECT MOVIE_NO FROM MOVIE WHERE MOVIE_NO = 'A08675')
+            WHERE ROWNUM = 1;
+
+            -- '좋아요' 데이터 삽입
+            INSERT INTO MOVIE_LIKE (USER_NO, MOVIE_NO)
+            VALUES (v_user_no, v_movie_no);
+
+            COMMIT;
+        EXCEPTION
+            WHEN e_duplicate THEN
+                NULL; -- 중복되는 경우 무시
+        END;
+    END LOOP;
+END;
+
+
+
+
+-- 게시글 추천 테이블 생성
+CREATE TABLE BOARD_RECOM (
+   BOARD_NO   NUMBER   NOT NULL REFERENCES BOARD(BOARD_NO),
+   USER_NO   NUMBER   NOT NULL REFERENCES SITE_USER(USER_NO),
+   PRIMARY KEY (BOARD_NO, USER_NO)
+);
+
+-- 게시글 추천 테이블에 대한 커멘트
+COMMENT ON COLUMN BOARD_RECOM.BOARD_NO IS '게시글 번호(FK)';
+COMMENT ON COLUMN BOARD_RECOM.USER_NO IS '회원 번호(FK)';
+
+-- 장르 테이블 생성
+CREATE TABLE GENRE (
+   GENRE_NO   NUMBER   PRIMARY KEY,
+   GENRE_NM   VARCHAR2(10)   NOT NULL,
+   MOVIE_NO   NUMBER   NOT NULL REFERENCES MOVIE(MOVIE_NO)
+);
+
+-- 장르 테이블에 대한 커멘트
+COMMENT ON COLUMN GENRE.GENRE_NO IS '장르 번호';
+COMMENT ON COLUMN GENRE.GENRE_NM IS '장르 이름';
+COMMENT ON COLUMN GENRE.MOVIE_NO IS '영화 번호(FK)';
+
+SELECT MOVIE_NO 
+            FROM MOVIE 
+            WHERE MOVIE_TITLE = '스토리 오브 일루시브 스노우';
+
+
+-- 배우 테이블 생성
+CREATE TABLE ACTOR (
+   ACTOR_NO   NUMBER   PRIMARY KEY,
+   ACTOR_NAME   VARCHAR2(500)   NOT NULL,
+   MOVIE_NO   NUMBER   NOT NULL REFERENCES MOVIE(MOVIE_NO)
+);
+
+
+
+-- 배우 테이블에 대한 커멘트
+COMMENT ON COLUMN ACTOR.ACTOR_NO IS '배우 번호';
+COMMENT ON COLUMN ACTOR.ACTOR_NAME IS '배우 이름';
+COMMENT ON COLUMN ACTOR.MOVIE_NO IS '영화 번호(FK)';
+
+-- 배우 번호 시퀀스
+CREATE SEQUENCE SEQ_ACTOR_NO;
+
+SELECT * FROM REVIEW;
+
+
+-- 영화 스틸 이미지 테이블 생성
+CREATE TABLE MOVIE_IMG (
+   STILL_NO   NUMBER   PRIMARY KEY,
+   STILL_IMG   VARCHAR2(500)   NOT NULL,
+   MOVIE_NO   NUMBER   NOT NULL REFERENCES MOVIE(MOVIE_NO)
+);
+
+-- 영화 스틸 이미지 테이블에 대한 커멘트
+COMMENT ON COLUMN MOVIE_IMG.STILL_NO IS '스틸 이미지 번호';
+COMMENT ON COLUMN MOVIE_IMG.STILL_IMG IS '스틸 이미지';
+COMMENT ON COLUMN MOVIE_IMG.MOVIE_NO IS '영화 번호(FK)';
+
+
+CREATE TABLE BOARD_IMG (
+   IMG_NO   NUMBER   PRIMARY KEY,
+   BOARD_NO   NUMBER   NOT NULL REFERENCES BOARD(BOARD_NO),
+   IMG_RENAME   VARCHAR2(500)   NOT NULL,
+   IMG_ORIGINAL   VARCHAR2(500)   NOT NULL
+);
+
+
+-- 게시글 이미지 테이블에 대한 커멘트
+COMMENT ON COLUMN BOARD_IMG.IMG_NO IS '이미지 번호';
+COMMENT ON COLUMN BOARD_IMG.BOARD_NO IS '게시글 번호(FK)';
+COMMENT ON COLUMN BOARD_IMG.IMG_RENAME IS '변경된 이미지 이름';
+COMMENT ON COLUMN BOARD_IMG.IMG_ORIGINAL IS '원본 이미지 이름';
+
+COMMIT;
+
+-- 게시글 이미지 번호 시퀀스
+CREATE SEQUENCE SEQ_IMG_NO;
+
+SELECT MOVIE_NO FROM MOVIE WHERE MOVIE_NO = 'A08675';
+
+SELECT USER_NO FROM SITE_USER WHERE USER_NO = 1;
+
+INSERT INTO MOVIE (MOVIE_NO, MOVIE_TITLE, NATION_NO, RATING_NO, SEASON_NO)
+VALUES ('A08675', '스토리 오브 일루시브 스노우', 1, 1, 1);
+
+INSERT INTO SITE_USER (USER_NO, USER_ID, USER_PW, USER_NM, USER_EMAIL, USER_NICK, USER_MBTI, GENDER, BIRTH_DT, USER_PHONE)
+VALUES (500, 'user01', 'encrypted_password', '유저1', 'user001@naver.com', '유저1', 'ISTJ', 'M', TO_DATE('1990-01-01', 'YYYY-MM-DD'), '010-1234-5678');
+
+INSERT INTO REVIEW (
+    REVIEW_NO, S_CONTENT, L_CONTENT, REVIEW_RATING, USER_NO, MOVIE_NO
+) VALUES (
+    SEQ_REVIEW_NO.NEXTVAL,
+    '짧은 리뷰 내용',
+    '자세한 리뷰 내용',
+    3,
+    500, -- USER_NO: SITE_USER 테이블에 존재하는 값
+    'A08675' -- MOVIE_NO: MOVIE 테이블에 존재하는 값
+);
+
+
+SELECT
+
+m.MOVIE_NO,ROUND(AVG(rv.REVIEW_RATING), 1) AS AVG_RATING
+
+    FROM
+        MOVIE m
+
+        LEFT JOIN REVIEW rv ON m.MOVIE_NO = rv.MOVIE_NO
+         GROUP BY
+        m.MOVIE_NO, ROUND(AVG(rv.REVIEW_RATING), 1) AS AVG_RATING;
+       
+       
+ SELECT * FROM MOVIE_LIKE;      
+       
+       
+       
+SELECT
+    m.MOVIE_NO,
+    ROUND(AVG(rv.REVIEW_RATING), 1) AS AVG_RATING
+FROM
+    (SELECT MOVIE_NO FROM MOVIE WHERE MOVIE_NO = ?) m
+LEFT JOIN
+    REVIEW rv ON m.MOVIE_NO = rv.MOVIE_NO
+GROUP BY
+    m.MOVIE_NO;
+
+
+SELECT * FROM MOVIE_LIKE
+WHERE MOVIE_NO = 'A08675';
+
+INSERT INTO MOVIE_LIKE (USER_NO, MOVIE_NO)
+VALUES (1, 'A08675');
+
+
+INSERT INTO 

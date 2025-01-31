@@ -1,0 +1,10 @@
+Dispatcher Servlet(발송자 서블릿)
+: 요청을 컨트롤러로 전달 + 응답
+
+Handler Mapping(매핑 처리)
+: 어떤 요청을 어떤 클래스/메소드로 연결하는지 제어하는 객체
+
+View Resolver(뷰 해결사)
+: Controller에서 반환된 문자열("common/main")
+ 앞, 뒤에 경로(/WEB-INF/views/), 확장자(.jsp)를 붙여서
+ jsp 파일의 경로를 지정한 후 forward(요청 위임)을 하는 객체

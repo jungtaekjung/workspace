@@ -190,6 +190,12 @@ COMMENT ON COLUMN REVIEW.REVIEW_ST IS '리뷰 상태';
 COMMENT ON COLUMN REVIEW.USER_NO IS '회원 번호(FK)';
 COMMENT ON COLUMN REVIEW.MOVIE_NO IS '영화 번호(FK)';
 
+SELECT * FROM REVIEW;
+SELECT * FROM MOVIE;
+
+INSERT INTO REVIEW
+VALUES (SEQ_REVIEW_NO.NEXTVAL,?,?,?,DEFAULT,DEFAULT,500,?)
+
 -- 리뷰 번호 시퀀스
 CREATE SEQUENCE SEQ_REVIEW_NO;
 
@@ -280,9 +286,11 @@ CREATE SEQUENCE SEQ_IMG_NO;
 
 SELECT * FROM SITE_USER;
 
+UPDATE SITE_
+
 INSERT INTO SITE_USER
 VALUES(SEQ_USER_NO.NEXTVAL,'user01','pass01','유저일','user01@naver.com',DEFAULT,DEFAULT,'user01','istp',
-		'04540,,서울특별시 강남구 테헤란로 14길 6 5층',NULL,'M','1994-06-20');
+		NULL,'M','1994-06-20','010-1234-1234');
 	
 ALTER TABLE SITE_USER MODIFY USER_PW VARCHAR2(100);	
 COMMIT;
@@ -294,3 +302,191 @@ WHERE USER_NO =1;
 UPDATE SITE_USER SET
 SECESSION_FL = 'Y'
 WHERE USER_PW =? AND USER_NO =?;
+
+-- 회원탈퇴 비밀번호 확인
+
+SELECT count(*) FROM SITE_USER
+		WHERE USER_PW =?
+		AND SECESSION_FL = 'N'
+
+-- BOARD 테이블 샘플 데이터 삽입(PL/SQL)
+BEGIN
+    FOR I IN 1..500 LOOP
+    
+        INSERT INTO BOARD
+        VALUES(SEQ_BOARD_NO.NEXTVAL,
+               SEQ_BOARD_NO.CURRVAL || '번째 게시글',
+               SEQ_BOARD_NO.CURRVAL || '번째 게시글 내용입니다.',
+               DEFAULT, DEFAULT, DEFAULT, 1, 3
+        );
+    END LOOP;
+END;
+SELECT COUNT(*) FROM BOARD;
+
+
+INSERT INTO RATING VALUES(1, '전체 이용가');
+INSERT INTO RATING VALUES(2, '12세 이용가');
+INSERT INTO RATING VALUES(3, '15세 이용가');
+INSERT INTO RATING VALUES(4, '19세 이용가');
+
+ INSERT INTO NATION VALUES(1, '한국');
+ INSERT INTO NATION VALUES(2, '미국');
+ INSERT INTO NATION VALUES(3, '일본');
+ INSERT INTO NATION VALUES(4, '중국');
+ INSERT INTO NATION VALUES(5, '영국');
+ INSERT INTO NATION VALUES(6, '프랑스');
+ INSERT INTO NATION VALUES(7, '홍콩');
+ INSERT INTO NATION VALUES(8, '대만');
+ INSERT INTO NATION VALUES(9, '인도');
+ INSERT INTO NATION VALUES(10, '독일');
+ INSERT INTO NATION VALUES(11, '러시아');
+ INSERT INTO NATION VALUES(12, '그 외 국가');
+
+INSERT INTO SEASON VALUES(1, '봄');
+INSERT INTO SEASON VALUES(2, '여름');
+INSERT INTO SEASON VALUES(3, '가을');
+INSERT INTO SEASON VALUES(4, '겨울');
+
+
+INSERT INTO MOVIE VALUES (
+    SEQ_MOVIE_NO.NEXTVAL,
+    ' 명탐정 코난 : 시한장치의 마천루',
+    '“5월 3일 토요일 밤 10시! 베이카 시네마 로비에서 만나는 거다! 잊지 마!”검은 조직에 의해 초등학생 코난의 몸으로 작아진 고등학생 명탐정 쿠도 신이치.천재 건축가 모리야 테이지 교수에게 가든 파티의 초대를 받았지만, 코난인 상태로는 참석할 수 없어 대리인을 부탁하려 소꿉친구 모리 란에게 목소리 변조기를 사용해 신이치로서 전화를 건다.하지만 란이 신이치의 생일 전날인 5월 3일 밤 10시, 심야 영화를 보자고 조건을 걸어 난처해지고 만다.약속 당일, 뉴스에서 화약 도난 사건을 보던 코난이자 신이치에게 수상한 협박 전화가 걸려 오고 의문의 남자가 도심 전체를 표적으로 한 연쇄 폭탄 테러를 예고한다.자신에게 도전장을 내민 연쇄 폭탄 테러임을 알아챈 신이치는 범인과의 숨 막히는 대결 중, 베이카 시티 빌딩에 있는 란이 타깃이 되어 위험에 처했음을 깨닫는데…‘명탐정 코난’, 전무후무 레전드 애니메이션의 ‘시작’!진실은 언제나 하나!',
+    TO_DATE('20241002', 'YYYYMMDD'),
+    94,
+    'http://file.koreafilm.or.kr/thm/02/99/18/56/tn_DPF030009.jpg',
+    3,
+    4,
+    3
+);
+
+INSERT INTO MOVIE VALUES (
+    SEQ_MOVIE_NO.NEXTVAL,
+    ' 스위칭 로맨스',
+    '동거하는 커플 미셸과 앨런은 친구의 결혼식에서 미래에 대해 생각하게 되고, 미셸은 결혼을 원하지만 앨런은 지금으로도 충분하다 생각한다.미셸은 결혼하지 않겠다면 헤어지자 통보하고 부모님 집으로 돌아가고, 앨런 또한 정답을 찾아 부모님을 찾아간다.한편 하워드는 외도 상대였던 모니카와 정리를 원하고,샘은 영화관에서 홀로 괴로워하다 그레이스를 만나 즐거운 한때를 나눈다.미셸의 부모님은 아이들의 결정을 위해 집으로 앨런의 부모를 초대하고, 드디어 만나게 된 네 사람은 충격에 빠지는데...',
+    TO_DATE('20240411', 'YYYYMMDD'),
+    95,
+    'http://file.koreafilm.or.kr/thm/02/99/18/39/tn_DPF029123.jpg',
+    2,
+    4,
+    1
+);
+
+INSERT INTO MOVIE VALUES (
+    SEQ_MOVIE_NO.NEXTVAL,
+    ' 사랑은 빛',
+    '''사랑을 하는 여성에게는 빛이 보인다''특이한 체질을 가진 대학생 사이조. 연애와는 거리가 먼 그는 어느 날, ''사랑이라는 것을 알고 싶다''라고 말하는 문학소녀 시노노메에게 첫눈에 반해 ''사랑의 정의''를 나누는 교환일기를 시작한다. 그들의 모습에 사이조를 짝사랑 해온 소꿉친구 키타시로의 마음은 술렁인다.그들은 수천 년 동안 인류가 고민해 온 ''사랑''을 풀 수 있을까? 그리고 각각의 사랑의 행방은 어떻게 될 것인가?',
+    TO_DATE('20240416', 'YYYYMMDD'),
+    110,
+    'http://file.koreafilm.or.kr/thm/02/99/18/37/tn_DPF029035.jpg',
+    3,
+    4,
+    1
+);
+
+INSERT INTO MOVIE VALUES (
+    SEQ_MOVIE_NO.NEXTVAL,
+    ' 이솝이야기',
+    '이야기를 하는 사람들은 왜 이야기를 하게 되었을까. 이 작품은 2,600년 전 그리스 사모스 섬의 노예로 살던 한 이야기꾼이 남긴 ‘이야기’에 관한 이야기다. 몇 천 년이 지나도 사람들의 마음을 움직이며 그 마음속에 전해져 내려오는 이야기라는 것의 본질에 관해, 그리고 이야기를 전하는 사람들의 마음에 대해서 말이다. 텍스트가 가진 힘과 그 이야기를 무대 위 그려내는 수많은 움직임과 색채, 그리고 음악이 어우러져 하나의 총체적 경험으로써 관객에게 다가가길 바란다.',
+    TO_DATE('20240710', 'YYYYMMDD'),
+    107,
+    'http://file.koreafilm.or.kr/thm/02/99/18/48/tn_DPA001991.jpg',
+    12,
+    4,
+    2
+);
+
+INSERT INTO MOVIE VALUES (
+    SEQ_MOVIE_NO.NEXTVAL,
+    ' 굿바이 크루얼 월드',
+    '마지막에 웃게 될 자는 누구인가?야쿠자의 자금 세탁 현장을 습격하는 5인조 강도단. 그들은 각자의 사연을 가지고 한탕을 하기 위해 모인 사람들이다.돈을 강탈하는 데에 성공하고 그들은 각자의 일상으로 돌아가려 하지만, 야쿠자들은 경찰까지 개입시키면서 이들을 쫓으려 하는데…밑바닥 인생들의 치열한 생존 싸움, 승자는 누가 될 것인가!',
+    TO_DATE('20240716', 'YYYYMMDD'),
+    127,
+    'http://file.koreafilm.or.kr/thm/02/99/18/46/tn_DPF029705.jpg',
+    3,
+    4,
+    2
+);
+INSERT INTO MOVIE VALUES(
+	62612, '28년 후',
+	'섬 밖으로 나서게 되고 감염자가와 생존자 구분 없이 변이가 되어가고 있다는 비밀',
+	TO_DATE('20240716', 'YYYYMMDD'),
+    127,
+    'http://file.koreafilm.or.kr/thm/02/99/18/46/tn_DPF029705.jpg',
+    3,
+    4,
+    2
+);
+
+INSERT INTO MOVIE VALUES(
+	62555, '릴로 스티치',
+	'섬 밖으로 나서게 되고 감염자가와 생존자 구분 없이 변이가 되어가고 있다는 비밀',
+	TO_DATE('20240716', 'YYYYMMDD'),
+    127,
+    'http://file.koreafilm.or.kr/thm/02/99/18/46/tn_DPF029705.jpg',
+    3,
+    4,
+    2
+);
+
+INSERT INTO MOVIE VALUES(
+	62555, '릴로 스티치',
+	'섬 밖으로 나서게 되고 감염자가와 생존자 구분 없이 변이가 되어가고 있다는 비밀',
+	TO_DATE('20240716', 'YYYYMMDD'),
+    127,
+    'http://file.koreafilm.or.kr/thm/02/99/18/46/tn_DPF029705.jpg',
+    3,
+    4,
+    2
+);
+
+INSERT INTO MOVIE VALUES(
+	08916, '허니랜드',
+	'섬 밖으로 나서게 되고 감염자가와 생존자 구분 없이 변이가 되어가고 있다는 비밀',
+	TO_DATE('20240716', 'YYYYMMDD'),
+    127,
+    'http://file.koreafilm.or.kr/thm/02/99/18/46/tn_DPF029705.jpg',
+    3,
+    4,
+    2
+);
+
+
+SELECT * FROM MOVIE;
+SELECT * FROM REVIEW;
+
+-- 회원 리뷰 평점 조회
+
+SELECT REVIEW_RATING 
+FROM REVIEW 
+WHERE USER_NO = ? 
+AND MOVIE_NO = ? 
+AND REVIEW_ST = 'Y';
+
+DROP TABLE BOARD_IMG CASCADE CONSTRAINTS;
+DROP TABLE MOVIE_IMG CASCADE CONSTRAINTS;
+DROP TABLE ACTOR CASCADE CONSTRAINTS;
+DROP TABLE GENRE CASCADE CONSTRAINTS;
+DROP TABLE BOARD_RECOM CASCADE CONSTRAINTS;
+DROP TABLE MOVIE_LIKE CASCADE CONSTRAINTS;
+DROP TABLE REVIEW CASCADE CONSTRAINTS;
+DROP TABLE REPLY CASCADE CONSTRAINTS;
+DROP TABLE MOVIE CASCADE CONSTRAINTS;
+DROP TABLE RATING CASCADE CONSTRAINTS;
+DROP TABLE NATION CASCADE CONSTRAINTS;
+DROP TABLE SEASON CASCADE CONSTRAINTS;
+DROP TABLE BOARD CASCADE CONSTRAINTS;
+DROP TABLE BOARD_TYPE CASCADE CONSTRAINTS;
+DROP TABLE SITE_USER CASCADE CONSTRAINTS;
+
+-- 시퀀스 삭제
+DROP SEQUENCE SEQ_USER_NO;
+DROP SEQUENCE SEQ_BOARD_NO;
+DROP SEQUENCE SEQ_REPLY_NO;
+DROP SEQUENCE SEQ_REVIEW_NO;
+DROP SEQUENCE SEQ_MOVIE_NO;
+DROP SEQUENCE SEQ_ACTOR_NO;
+DROP SEQUENCE SEQ_IMG_NO;
+
+
+
