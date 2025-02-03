@@ -6,5 +6,5 @@ Handler Mapping(매핑 처리)
 
 View Resolver(뷰 해결사)
 : Controller에서 반환된 문자열("common/main")
- 앞, 뒤에 경로(/WEB-INF/views/), 확장자(.jsp)를 붙여서
- jsp 파일의 경로를 지정한 후 forward(요청 위임)을 하는 객체
+  앞,뒤에 경로(/WEB-INF/views/), 확장자(.jsp)를 붙여서
+  jsp파일의 경로를 지정한 후 forward(요청 위임)을 하는 객체
