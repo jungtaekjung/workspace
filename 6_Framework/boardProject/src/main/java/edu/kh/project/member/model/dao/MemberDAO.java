@@ -25,4 +25,15 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.login",inputMember);
 	}
 
+	public int signUp(Member inputMember) {
+		
+		// 1) mapper의 namespace를 지정 후 
+		//	  그 안에 어떤 id를 가지는 sql을 수행할 지 작성
+		
+		// 2) SQL에 사용할 데이터 전달(자료형 중요!)
+		
+		
+		return sqlSession.insert("memberMapper.signUp",inputMember);
+	}
+
 }
