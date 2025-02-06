@@ -74,7 +74,7 @@
 		"oracle_thin-194ba6ef492-d65d1da8cbfc730": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
-			"name": "localhost",
+			"name": "project 사용자 계정",
 			"save-password": true,
 			"configuration": {
 				"host": "localhost",

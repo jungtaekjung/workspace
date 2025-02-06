@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ajaxMapper">
+
+	<!-- 이메일로 닉네임 조회 -->
+	<select id="selectNickname" parameterType="string"
+		resultType="string">
+
+		SELECT MEMBER_NICKNAME
+		FROM MEMBER
+		WHERE MEMBER_EMAIL =
+		#{email}
+		AND MEMBER_DEL_FL = 'N'
+
+	</select>
+
+	<!-- parameterType : 전달 받은 파라미터의 자료형 작성(선택사항)
+						미 작성 시 TypeHandler가 알아서 처리
+						
+	 -->
+	<!--  닉네임으로 전화번호 조회 -->
+	<select id="selectTel" parameterType="string" resultType="string">
+		SELECT MEMBER_TEL
+		FROM MEMBER
+		WHERE MEMBER_NICKNAME = #{nickname}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+</mapper>

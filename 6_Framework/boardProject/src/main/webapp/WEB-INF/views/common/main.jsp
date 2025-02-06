@@ -33,6 +33,18 @@
 
                 ${sessionScope.loginMember}
 
+                <h3>이메일이 일치하는 회원 닉네임 조회</h3>
+                email : <input id="inputEmail">
+                <button onclick="selectNickname('user01@kh.or.kr')">조회</button>
+                <div id="result">콘솔 확인</div>
+
+                <hr>
+
+                <h3>닉네임이 일치하는 회원의 전화번호 조회</h3>
+                <input type="text" id="inputNickname">
+                <button id="btn1">조회</button>
+                <h4 id="result1"></h4>
+
 
 
             </section>

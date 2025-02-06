@@ -180,6 +180,8 @@
                     }).open();
                 }
             </script>
+
+            <script src="/resources/js/member/signUp.js"></script>
         </body>
 
         </html>

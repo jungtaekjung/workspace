@@ -48,6 +48,7 @@ public class MyPageDAO {
 	 * @return encPw
 	 */
 	public String selectEncPw(int memberNo) {
+		
 		return sqlSession.selectOne("myPageMapper.selectEncPw",memberNo);
 	}
 
