@@ -1,9 +1,12 @@
 package edu.kh.project.member.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.kh.project.member.model.dao.AjaxDAO;
+import edu.kh.project.member.model.dto.Member;
 
 @Service // 서비스 + bean등록(IOC)
 public class AjaxServiceImpl implements AjaxService{
@@ -21,5 +24,27 @@ public class AjaxServiceImpl implements AjaxService{
 	@Override
 	public String selectTel(String nickname) {
 		return dao.selectTel(nickname);
+	}
+
+	// 이메일 중복 검사
+	@Override
+	public int checkEmail(String email) {
+		return dao.checkEmail(email);
+	}
+
+	// 닉네임 중복 검사
+	@Override
+	public int checkNickname(String nickname) {
+		return  dao.checkNickname(nickname);
+	}
+
+	@Override
+	public Member selectMember(String email) {
+		return dao.selectMember(email);
+	}
+
+	@Override
+	public List<Member> selectAllMember(String email) {
+		return dao.selectAllMember(email);
 	}
 }
