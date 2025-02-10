@@ -209,7 +209,7 @@ sendAuthKeyBtn.addEventListener("click", function(){
         authKeyMessage.innerText = "05:00";
         authKeyMessage.classList.remove("confirm");
 
-
+        clearInterval(authTimer); // 기존 타이머 삭제
         authTimer = window.setInterval(()=>{
 
 
