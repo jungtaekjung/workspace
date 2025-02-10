@@ -44,6 +44,26 @@
          <tbody></tbody>
       </table>
 
+      <h1>실시간 지진해일 긴급대피장소</h1>
+
+      <button id="btn2">실시간 지진해일 대피소 정보</button>
+      <br><br>
+
+      <table border="1" id="result2">
+         <thead>
+            <tr>
+               <th>대피지구일련번호</th>
+               <th>지역코드</th>
+               <th>대피장소명</th>
+               <th>수용인원</th>
+               <th>해발고도</th>
+               <th>사용여부</th>
+               <th>도로명상세주소</th>
+               <th>도로명주소코드</th>
+            </tr>
+         </thead>
+         <tbody></tbody>
+      </table>
 
       <script>
          $(function () {
@@ -52,7 +72,7 @@
             // json 형식으로 응답 받을 때
          
             
-            <% --
+            /*
                   $.ajax({
                      url: "air",
                      data: { location: $("#location").val() },
@@ -104,7 +124,7 @@
 
                      },
                      error: function () { console.log("통신 실패") }
-                  }) --%>
+                  }) */
 
 
 
@@ -153,41 +173,46 @@
             })
          })
 
-         $(function () {
-            $("#btn1").click(function () {
+         $(document).ready(function () {
+            $("#btn2").click(function () {
+               $.ajax({
+                  url: "earthquake", // 컨트롤러의 엔드포인트
+                  success: function (data) {
+                     console.log(data);
 
-            })
-         })
+                     // XML 형식의 응답 데이터를 jQuery 객체로 변환 후 <item> 요소 찾기
+                     const itemArr = $(data).find("item");
 
+                     // 데이터를 담을 변수 선언
+                     let value = "";
+
+                     // 반복문을 통해 데이터 접근 및 HTML 요소 생성
+                     itemArr.each(function (index, item) {
+                        value += "<tr>" +
+                           "<td>" + $(item).find("SHNT_PLACE_SN").text() + "</td>" +  // 대피지구일련번호
+                           "<td>" + $(item).find("ARCD").text() + "</td>" +  // 지역코드
+                           "<td>" + $(item).find("SHNT_PLACE_NM").text() + "</td>" +  // 대피장소명
+                           "<td>" + $(item).find("PSBL_NMPR").text() + "</td>" +  // 수용인원
+                           "<td>" + $(item).find("EV_ANTCTY").text() + "</td>" +  // 해발고도
+                           "<td>" + $(item).find("USE_AT").text() + "</td>" +  // 사용 여부
+                           "<td>" + $(item).find("SHNT_PLACE_DTL_POSITION").text() + "</td>" +  // 상세주소
+                           "<td>" + $(item).find("RDNMADR_CD").text() + "</td>" +  // 도로명주소코드
+                           "</tr>";
+                     });
+
+                     // 생성된 HTML을 테이블에 삽입
+                     $("#result2 > tbody").html(value);
+                  },
+                  error: function () {
+                     console.log("통신 에러");
+                  }
+               });
+            });
+         });
       </script>
 
 
-      <hr>
-
-      <h1>실시간 지진해일 긴급대피장소</h1>
-
-      <button id="btn2">실시간 지진해일 대피소 정보</button>
-      <br><br>
-
-      <table border="1" id="result2">
-         <thead>
-            <tr>
-               <th>시도명</th>
-               <th>시군구명</th>
-               <th>대피지구명</th>
-               <th>대피장소명</th>
-               <th>주소</th>
-               <th>경도</th>
-               <th>위도</th>
-               <th>수용가능인원수</th>
-               <th>대피소 분류명</th>
-            </tr>
-         </thead>
-         <tbody></tbody>
-      </table>
-
-      공공데이터사이트에 행정안전부_지진해일 긴급대피장소 검색 후 xml 방식으로 진행
-
+      
 
 
 
