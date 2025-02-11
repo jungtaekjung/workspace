@@ -67,16 +67,16 @@
                     </c:when>
                     <c:otherwise>
                         <!-- 로그인 O -->
-                         <label for="headerMenuToggle">
+                        <label for="headerMenuToggle">
                             닉네임 <i class="fa-solid fa-caret-down"></i>
-                         </label>
+                        </label>
 
-                         <input type="checkbox" id="headerMenuToggle">
+                        <input type="checkbox" id="headerMenuToggle">
 
-                         <div class="header-menu">
+                        <div class="header-menu">
                             <a href="/myPage/info">내정보</a>
                             <a href="/member/logout">로그아웃</a>
-                         </div>
+                        </div>
 
                     </c:otherwise>
                 </c:choose>
@@ -86,10 +86,15 @@
 
         <nav>
             <ul>
-                <li><a href="#">공지사항</a></li>
+                <!-- <li><a href="#">공지사항</a></li>
                 <li><a href="#">자유 게시판</a></li>
                 <li><a href="#">질문 게시판</a></li>
                 <li><a href="#">FAQ</a></li>
-                <li><a href="#">1:1문의</a></li>
+                <li><a href="#">1:1문의</a></li> -->
+                
+                <c:forEach var="board" items="${boardTypeList}">
+                    <li><a href="/board/${board.BOARD_CODE}">${board.BOARD_NAME}</a></li>
+                </c:forEach>
+
             </ul>
         </nav>
