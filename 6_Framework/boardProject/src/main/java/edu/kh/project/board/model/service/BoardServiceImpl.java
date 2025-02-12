@@ -51,4 +51,16 @@ public class BoardServiceImpl implements BoardService{
 		return map;
 	}
 
+	// 게시글 상세 조회
+	@Override
+	public Board selectBoard(Map<String, Object> map) {
+		return dao.selectBoard(map);
+	}
+
+	@Override
+	public int boardLikeCheck(int memberNo, int boardNo) {
+		return dao.boardLikeCheck(memberNo,boardNo);
+	}
+
+	
 }

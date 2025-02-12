@@ -1,5 +1,6 @@
 package edu.kh.project.board.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.kh.project.board.model.dto.Board;
 import edu.kh.project.board.model.service.BoardService;
+import edu.kh.project.member.model.dto.Member;
 
 @Controller
 @RequestMapping("/board")
@@ -70,4 +75,52 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
+	// 게시글 상세 조회
+	@GetMapping("/{boardCode}/{boardNo}")
+	public String boardDetail(@PathVariable("boardCode") int boardCode,
+								@PathVariable("boardNo") int boardNo,
+								Model model, // 데이터 전달용 객체
+								RedirectAttributes ra // 리다이렉트 시 데이터 전달용 객체
+								, @SessionAttribute(value="loginMember", required=false) Member loginMember
+								// 세션에서 loginMember 얻어와서 회원 정보 저장, 없는 경우 null
+			) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("boardCode", boardCode);
+		map.put("boardNo", boardNo);
+		
+		
+		// 게시글 상세 조회 서비스 호출
+		Board board = service.selectBoard(map);
+		
+		
+		String path = null;
+		if(board != null) { // 조회 결과가 있을 경우
+			// -----------------------------------------------
+			// 현재 로그인한 상태인 경우
+			// 로그인한 회원이 해당 게시글에 좋아요를 눌렀는지 확인
+			if(loginMember != null) {
+				int memberNo = loginMember.getMemberNo();
+				// 좋아요 여부 확인 서비스 호출
+				int result = service.boardLikeCheck(memberNo,boardNo);
+				
+				// 좋아요를 누른 적이 있을 경우
+				if(result>0) model.addAttribute("likeCheck","yes");
+				
+			}
+			
+			// -----------------------------------------------
+			
+			path= "board/boardDetail"; // boardDetail 페이지 forward
+			model.addAttribute("board",board);
+			
+		}else { // 조회 결과가 없을 경우
+			path = "redirect:/board/" + boardCode; // 해당 게시판 목록 첫 페이지
+			ra.addFlashAttribute("message","해당 게시글이 존재하지 않습니다");
+		}
+		
+		
+		return path;
+		
+	}
 }
