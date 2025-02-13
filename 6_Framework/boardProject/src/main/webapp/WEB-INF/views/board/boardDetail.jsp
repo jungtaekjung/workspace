@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/resources/css/board/boardDetail-style.css">
     <link rel="stylesheet" href="/resources/css/board/comment-style.css">
 
-    <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a95430b2e6.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <main>
@@ -54,7 +54,7 @@
                         <c:if test="${!empty likeCheck}">
                             <i class="fa-solid fa-heart" id="boardLike"></i> 
                         </c:if>        
-                        <span>${board.likeCount}</span>
+                        <span id="likeCount">${board.likeCount}</span>
                     </span>
 
                 </div>
@@ -144,6 +144,33 @@
     </main>
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
+    <!--
+        로그인한 회원 번호 얻어오는 방법 3가지
+        1) ajax로 session에 있는 loginMember의 memberNo를 반환
+        2) HTML 요소로 로그인한 회원의 번호를 숨겨 놓고 JS로 얻어오기
+            ex) input type = 'hidden', 데이터 속성 이용
+        3) jsp 파일 제일 위에 있는 script 태그에 JS + EL 이용해서 전역변수로 선언해두기
+
+    
+    
+    -->
+
+    <script>
+        // JSP 해석 우선 순위 : java/EL/JSTL > HTML,CSS,JS
+
+
+        // 로그인한 회원 번호, 게시글 번호를 전역 변수로 선언
+        // 이 때, 작성한 EL구문이 null일 경우 빈 칸으로 출력 되어
+        // 변수에 값이 대입되지 않는 문제가 발생할 수 있다.
+        // -> 해결 방법 : EL 구문을 '', "" 문자열로 감싸준다.
+        
+        const loginMemberNo = "${loginMember.memberNo}";
+
+        const boardNo = '${board.boardNo}';
+    </script>
+
+    <script src="/resources/js/board/boardDetail.js"></script>
 
 
 </body>

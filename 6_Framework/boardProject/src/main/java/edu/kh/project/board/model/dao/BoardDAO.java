@@ -87,4 +87,53 @@ public class BoardDAO {
 		board.setBoardNo(boardNo);
 		return sqlSession.selectOne("boardMapper.boardLikeCheck",board);
 	}
+
+
+
+
+
+	/** 좋아요 테이블 삽입
+	 * @param paramMap
+	 * @return result
+	 */
+	public int likeInsert(Map<String, Integer> paramMap) {
+		
+		return sqlSession.insert("boardMapper.likeInsert",paramMap);
+	}
+
+
+
+
+
+	/** 좋아요 테이블 삭제
+	 * @param paramMap
+	 * @return result
+	 */
+	public int likeDelete(Map<String, Integer> paramMap) {
+		return sqlSession.delete("boardMapper.likeDelete",paramMap);
+	}
+
+
+
+
+
+	/** 좋아요 갯수 조회
+	 * @param paramMap
+	 * @return count
+	 */
+	public int boardLikeCount(Map<String, Integer> paramMap) {
+		return sqlSession.selectOne("boardMapper.boardLikeCount",paramMap);
+	}
+
+
+
+
+
+	/** 조회수 증가
+	 * @param boardNo
+	 * @return count
+	 */
+	public int updateReadCount(int boardNo) {
+		return sqlSession.update("boardMapper.updateReadCount",boardNo);
+	}
 }
