@@ -80,4 +80,10 @@ public class MyPageDAO {
 	}
 
 
+
+	public int updateProfileImage(Member loginMember) {
+		return sqlSession.update("myPageMapper.updateProfileImage",loginMember);
+	}
+
+
 }

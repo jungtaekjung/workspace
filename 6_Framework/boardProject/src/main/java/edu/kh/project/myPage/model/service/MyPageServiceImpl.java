@@ -1,9 +1,14 @@
 package edu.kh.project.myPage.model.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.kh.project.member.model.dto.Member;
 import edu.kh.project.myPage.model.dao.MyPageDAO;
@@ -71,14 +76,83 @@ public class MyPageServiceImpl implements MyPageService{
 	@Transactional(rollbackFor = {Exception.class})
 	@Override
 	public int secession(String memberPw, int memberNo) {
+
 		
 		String encPw = dao.selectEncPw(memberNo);
-		
+
+		// 2. 비밀번호 일치 시 회원 탈퇴 진행
 		if(bcrypt.matches(memberPw, encPw)) {
 			
 			return dao.secession(memberNo);
 		}
-		
+
+		// 3. 비밀번호 불일치 시 0 반환
 		return 0;
 	}
+
+
+
+
+
+	// 프로필 이미지 수정 서비스
+	@Override
+	public int updateProfile(MultipartFile profileImage, Member loginMember, String webPath, String filePath) throws IllegalStateException, IOException {
+		
+		// 프로필 이미지 변경 실패 대비
+		String prevImg = loginMember.getProfileImage(); // 이전 이미지 저장
+		
+		String rename = null; // 변경명 저장 변수
+		
+		// 업로드된 이미지가 있을 경우
+		if(profileImage.getSize()>0) {
+			// 1) 파일 이름 변경
+			rename = fileRename(profileImage.getOriginalFilename());
+			
+			// 2) 바뀐 이름을 loginMember에 세팅
+			loginMember.setProfileImage(webPath+rename);
+			
+			
+		}else { // 없을 경우(x버튼 클릭)
+			loginMember.setProfileImage(null);
+			// 이미지를 null로 변경해서 삭제
+		}
+		// 프로필 이미지 수정 DAO 메소드 호출
+		int result = dao.updateProfileImage(loginMember);
+		
+		if(result > 0) { // 이미지 수정 성공 시
+			
+			// 새 이미지가 업로드된 경우
+			if(rename != null) {
+				profileImage.transferTo(new File(filePath + rename));
+			}
+			
+		}else { // 수정 실패
+			// 이전 이미지로 프로필 다시 세팅
+			loginMember.setProfileImage(prevImg);
+			
+		}
+		
+		return result;
+	
+	
+	}
+	
+	// 파일명 변경 메소드
+	   public static String fileRename(String originFileName) {
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+	      String date = sdf.format(new java.util.Date(System.currentTimeMillis()));
+
+	      int ranNum = (int) (Math.random() * 100000); // 5자리 랜덤 숫자 생성
+
+	      String str = "_" + String.format("%05d", ranNum);
+
+	      String ext = originFileName.substring(originFileName.lastIndexOf("."));
+
+	      return date + str + ext;
+	   }
+
+	
+	
+	
+	
 }
