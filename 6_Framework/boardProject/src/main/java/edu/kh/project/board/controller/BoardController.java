@@ -110,8 +110,8 @@ public class BoardController {
 
 		// 게시글 상세 조회 서비스 호출
 		Board board = service.selectBoard(map);
-
-
+		System.out.println("아무거나");
+		System.out.println(board);
 		String path = null;
 		if(board != null) { // 조회 결과가 있을 경우
 			// -----------------------------------------------
