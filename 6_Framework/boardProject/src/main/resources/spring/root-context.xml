@@ -65,7 +65,7 @@
 	</bean>
 	
 	
-<!-- 
+	<!-- 
    파일 업로드를 위한 MutipartResolver 구현체 CommonsMultipartResolver  bean 등록 
    -> CommonsMultipartResolver를 bean으로 등록하면
       multipart/form-data 형식으로 요청 시  input type="file" 태그를 자동적으로 인식하여 
@@ -95,6 +95,7 @@
           사이즈가 이보다 클 경우 이 사이즈 이상의 데이터는 파일에 저장됩니다. 
           기본값은 10240 바이트.
     -->
+	
 
 
 

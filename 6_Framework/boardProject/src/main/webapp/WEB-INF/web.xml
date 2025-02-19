@@ -11,10 +11,11 @@
 		and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
+		
 		<param-value>
-			classpath:spring/root-context.xml
-			classpath:spring/spring-security.xml
-			classpath:spring/email-context.xml
+		classpath:spring/root-context.xml
+		classpath:spring/spring-security.xml
+		classpath:spring/email-context.xml
 		</param-value>
 	</context-param>
 

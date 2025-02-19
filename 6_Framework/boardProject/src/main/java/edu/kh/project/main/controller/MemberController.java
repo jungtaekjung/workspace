@@ -39,73 +39,76 @@ public class MemberController {
 	@Autowired // 등록된 Bean 중에서 필드와 타입이 일치하는 Bean을 주입
 	// -> MemberService를 구현한 MemberServiceImpl의 Bean 주입
 	private MemberService service;
-
-	// 로그인 전용 화면 이동
+	
+	
+	//로그인 전용 화면 이동
 	@GetMapping("/login")
 	public String login() {
 		return "member/login";
 	}
 	
-	// 회원가입 전용 화면 이동
+	//회원가입 전용 화면 이동
 	@GetMapping("/signUp")
 	public String signUp() {
 		return "member/signUp";
 	}
 	
-	// 회원 가입 진행
+	//회원 가입 진행
+	
 	@PostMapping("/signUp")
 	public String signUp(Member inputMember, String[] memberAddress
-			,RedirectAttributes ra) {
+							,RedirectAttributes ra) {
 		// Member inputMember : 커맨드 객체(제출된 파라미터가 저장된 객체)
-		// RedirectAttributes ra  : 리다이렉트 시 데이터를 request scope로 전달하는 객체
-	
+		//RedirectAttributes ra : 리다이렉트 시 데이터를 request scope로 전달하는 객체
+		
 		// 1234^^^서울시^^^강남구
-		// 주소 구분자 , -> ^^^ 변경
+		// 주소 구분자, -> ^^^ 변경
 		//String addr = inputMember.getMemberAddress().replaceAll(",", "^^^");
 		//inputMember.setMemberAddress(addr);
-		// -> 클라이언트가 ,를 직접 입력하면 문제 발생
+		//-> 클라이언트가 , 를 직접 입력하면 문제 발생
 		
-		// 주소를 입력하지 않은 경우(,,) null로 변경
+		//주소를 입력하지 않은 경우 (,,) null로 변경
 		if(inputMember.getMemberAddress().equals(",,")) {
 			inputMember.setMemberAddress(null);
-			
-		}else { // 주소를 입력한 경우
+		}else { //주소를 입력한 경우
 			
 			// String.join("구분자", String[])
-			// 배열의 요소를 하나의 문자열로 변경
+			//배열의 요소를 하나의 문자열로 변경
 			// 단, 요소 사이에 "구분자" 추가
-			String addr = String.join("^^^", memberAddress);
+			String addr = String.join("^^^",memberAddress );
 			inputMember.setMemberAddress(addr);
 		}
-		// 회원가입 서비스 호출
+		//회원가입 서비스 호출
 		int result = service.signUp(inputMember);
 		
-		// 가입 여부에 따라서 주소 작성
+		//가입 여부에 따라서 주소 작성
 		String path = "redirect:";
+		String message=null;
 		
-		if(result>0) { // 가입 성공
+		if(result>0) { //가입 성공
+			//메인 페이지
+			path+="/";
+			//000 님의 가입을 환영합니다
+			message=inputMember.getMemberNickname()+"님의 가입을 환영합니다";
 			
-			// 메인 페이지
-			path += "/";
+		}else {//가입 실패
+			// 회원가입 페이지
+			path+="signUp"; // 회원가입 페이지 상대경로 작성
+			// path +="/member/signUp" // 절대경로 작성
+			// 회원가입 실패
 			
-			// 000님의 가입을 환영합니다.
-			ra.addFlashAttribute("message", inputMember.getMemberNickname() +"님의 가입을 환영합니다");
-			
-		}else { // 가입 실패
-			// 회원 가입 페이지
-			// 회원 가입 실패 알림창
-			path +="signUp"; // 상대 경로 작성
-			// path += "/member/signUp"; // 절대 경로
-			
-			ra.addFlashAttribute("message","회원 가입 실패");
+			message="회원 가입 실패";
 			
 		}
+		// 리다이렉트 시 session에 잠깐 올라갔다가 내려오도록 세팅
+		ra.addFlashAttribute("message",message);
 		
 		
 		
-		return path;
+		return "redirect:/";
 	}
-		
+
+
 
 	/** alt + shift + j
 	 * 로그인 요청 처리
@@ -139,12 +142,13 @@ public class MemberController {
 		// -> 파라미터가 전달되지 않는 경우 주의
 		
 		// HttpServletResponse resp : 서버 -> 클라이언트 응답 방법을 가지고 있는 객체
-		// -----------------------------------------------------------------------
+		//-----------------------------------------------------------------
 		
 		
 		
 		// 로그인 서비스 호출
 		Member loginMember = service.login(inputMember);
+
 		//DB 조회 결과 확인
 		//System.out.println(loginMember);
 
@@ -171,57 +175,60 @@ public class MemberController {
 			// 아이디 저장
 			
 			
-			/* Cookie
+			/* Cookie란?
 			 * - 클라이언트 측(브라우저)에서 관리하는 파일
 			 * 
-			 * - 쿠키파일에 등록된 주소 요청시 마다 
-			 * 	 자동으로 요청 첨부되어 서버로 전달됨
+			 * - 쿠키파일에 등록된 주소 요청시 마다
+			 * 	 자동으로 요청에 첨부되어 서버로 전달됨
 			 * 
 			 * - 서버로 전달된 쿠키에
 			 * 	 값 추가, 수정, 삭제 등을 진행한 후
-			 *   다시 클라이언트에게 반환
-			 */
+			 * 	 다시 클라이언트에게 반환
+			 * 
+			 * */
 			
 			/* Session : 서버가 클라이언트의 정보를 저장하고 있음 */
 			
-			// 쿠키 생성(K:V로 해당 쿠키에 담을 데이터 지정)
-			Cookie cookie = new Cookie("saveId", loginMember.getMemberEmail());
 			
+			//쿠키 생성 (K:V로 해당 쿠키에 담을 데이터 지정)
+			Cookie cookie = new Cookie("saveId",loginMember.getMemberEmail());
 			
-			if(saveId !=null) { //체크 되었을 때
-				// 한달 동안 유지 되는 쿠키 생성
-				cookie.setMaxAge(60*60*24*30); // 초 단위
+			if(saveId!=null) { //체크 되었을 때
+				//한 달동안 유지되는 쿠키 생성
+				cookie.setMaxAge(60*60*24*30); //초 단위
 			}else { //체크 안 되었을때
-				// 기존 쿠키 삭제
-				// -> 0초 동안 유지되는 쿠키 생성
+				//기존 쿠키 삭제
+				// -> 0초동안 유지되는 쿠키 생성
 				cookie.setMaxAge(0);
 			}
 			
-			// 클라이언트가 어떤 요청을 할 때 쿠키가 첨부될지 경로(주소)를 지정
-			cookie.setPath("/"); // localhost / 이하 모든 주소
+			//클라이언트가 어떤 요청을 할 때 쿠키가 첨부될지 경로(주소)를 지정
+			cookie.setPath("/"); // localhost/ 이하 모든 주소
 								 // ex) /, /member/login, /member/logout 등 모든 요청에 쿠키 첨부
 			
-			// 응답 객체(HttpServletResponse)를 이용해서
-			// 만들어진 쿠키를 클라이언트에게 전달
+			//응답 객체(HttpServletResponse)를 이용해서
+			//만들어진 쿠키를 클라이언트에게 전달
+			
 			resp.addCookie(cookie);
 			
-
 			
+
 
 
 		}else { //로그인 실패 시
 			path +=referer; // HTTP Header - referer(이전 주소)
 			
-			/* redirect(재요청) 시 
+			/* redirect(재요청) 시
 			 * 기존 요청(request)는 사라지고
-			 * 새로운 요청(request)를 만들기 때문에
-			 * redirect된 페이지에서는 이전 요청이 유지되지 않음
-			 * -> 유지하고 싶은 경우 Session 이용
+			 * 새로운 요청(request)을 만들기 때문에
+			 * redirect된 페이지에서는 이전 요청이 유지되지 않음.
+			 * -> 유지하고 싶은 경우 Session 이용.
 			 * 
-			 * [Spring}
+			 * 
+			 * [Spring]
 			 * 이러한 상황을 해결하기 위해 RedirectAttributes를 제공
 			 * 
-			 * RedirectAttributes : 리다이렉트 시 데이터를 request scope로 전달할 수 있게 하는 객체
+			 * RedirectAttributes : 리다이렉트 시 데이터를 request scope로 전달할 수 있게 하는 객체.
 			 * 
 			 * 응답 전 : request scope
 			 * 
@@ -231,8 +238,12 @@ public class MemberController {
 			 * 
 			 * */
 			
+			
 			// addFlashAttribute : 잠시 Session에 추가
-			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다");
+			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
+			
+			
+			
 		}
 
 		return path;
@@ -348,9 +359,8 @@ public class MemberController {
 	}
 
 	//******************************************************
-
-
-	/* 스프링에서 예외 처리 방법(3종류, 우선 순위, 중복 사용)
+	
+	/* 스프링 예외 처리 방법(3종류, 우선 순위, 중복 사용)
 	 * 
 	 * 1순위 : 메소드 단위로 처리
 	 * 		-> try-catch / throws
@@ -360,10 +370,12 @@ public class MemberController {
 	 * 
 	 * 3순위 : 프로그램 단위(전역) 처리
 	 * 		-> @ControllerAdvice
-	 */
+	 * 
+	 * 
+	 * */
 	
 	// 현재 클래스에서 발생하는 모든 예외를 모아서 처리
-	// @ExceptionHandler(Exception.class)
+//	@ExceptionHandler(Exception.class)
 	public String exceptionHandler(Exception e, Model model) {
 		// Exception e : 예외 정보를 담고 있는 객체
 		// Model model : 데이터 전달용 객체(request scope가 기본)
@@ -372,11 +384,16 @@ public class MemberController {
 		
 		model.addAttribute("e",e);
 		
-		// forward 진행
-		// -> View Resolver가 prefix, suffix 붙여서 jsp 경로 만듬
+		//forward 진행
+		//-> View Resolver가 prefix,suffix 붙여서 jsp 경로 만듦
 		return "common/error";
-		
 	}
+	
+	
+	
+
+
+
 
 
 

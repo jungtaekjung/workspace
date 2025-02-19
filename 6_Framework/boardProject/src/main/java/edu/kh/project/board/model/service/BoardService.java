@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.kh.project.board.model.dto.Board;
+import edu.kh.project.member.model.dto.Member;
 
 public interface BoardService {
 
@@ -25,12 +26,13 @@ public interface BoardService {
 	 */
 	Board selectBoard(Map<String, Object> map);
 
-	/** 좋아요 여부 확인
-	 * @param memberNo
-	 * @param boardNo
-	 * @return int
+	//int boardLikeCheck(int boardNo, Member loginMember);
+
+	/** 좋아요 여부확인
+	 * @param map
+	 * @return
 	 */
-	int boardLikeCheck(int memberNo, int boardNo);
+	int boardLikeCheck(Map<String, Object> map);
 
 	/** 좋아요 처리 서비스
 	 * @param paramMap
@@ -38,10 +40,26 @@ public interface BoardService {
 	 */
 	int like(Map<String, Integer> paramMap);
 
+	
 	/** 조회수 증가 서비스
 	 * @param boardNo
 	 * @return count
 	 */
 	int updateReadCount(int boardNo);
+
+	/** 게시글 목록 조회(검색)
+	 * @param paramMap
+	 * @param cp
+	 * @return 
+	 */
+	Map<String, Object> selectBoardList(Map<String, Object> paramMap, int cp);
+
+
+
+
+
+
+
+
 
 }

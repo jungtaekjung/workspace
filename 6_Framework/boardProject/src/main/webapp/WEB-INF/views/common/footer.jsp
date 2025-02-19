@@ -15,7 +15,7 @@
     </article>
 </footer>
 
-<%-- message가 존재할 경우 --%>
+<%--  message가 존재할 경우 --%>
 <c:if test="${!empty message}">
 
     <script>
@@ -23,5 +23,7 @@
         // 문자열의 경우 따옴표가 없는 상태이니 붙여줘야한다!!!
         alert('${message}');
     </script>
+
+
 
 </c:if>

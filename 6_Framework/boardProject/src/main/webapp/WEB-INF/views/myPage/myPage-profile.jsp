@@ -30,6 +30,8 @@
 
                 <h1 class="myPage-title">프로필</h1>
                 <span class="myPage-subject">프로필 이미지를 변경할 수 있습니다.</span>
+
+
                 <%--  
                     - 파일 제출 시 무조건 POST 방식
                     - enctype 속성 추가
@@ -45,21 +47,23 @@
 
                 --%>
 
-
                 <form action="profile" method="POST" name="myPageFrm" id="profileFrm"
                     enctype="multipart/form-data">
 
                     <div class="profile-image-area">
-                        <!-- 프로필 이미지가 있는 경우 -->
-                         <c:if test="${!empty loginMember.profileImage}">
-                             <img src="${loginMember.profileImage}" id="profileImage">
-                         </c:if>
-                         <!-- 프로필 이미지가 없는 경우 -->
-                         <c:if test="${empty loginMember.profileImage}">
+                        <!--프로필 이미지가 있는 경우-->
+                        <c:if test="${!empty loginMember.profileImage}">
+                            <img src="${loginMember.profileImage}" id="profileImage">
+
+                        </c:if>
+                        <!--프로필 이미지가 없는 경우-->
+                        <c:if test="${empty loginMember.profileImage}">
+
                             <img src="/resources/images/user.png" id="profileImage">
                         </c:if>
 
-                        </div>
+
+                    </div>
                     <span id="deleteImage">x</span>
 
                     <div class="profile-btn-area">
@@ -90,7 +94,6 @@
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     <script src="/resources/js/myPage/myPage.js"></script>
-
 
 </body>
 </html>

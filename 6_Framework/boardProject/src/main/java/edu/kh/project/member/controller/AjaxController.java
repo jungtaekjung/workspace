@@ -8,83 +8,106 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.kh.project.member.model.dto.Member;
 import edu.kh.project.member.model.service.AjaxService;
 
-@Controller // 요청, 응답 제어 + bean 등록
+@Controller // 요청,응답 제어 + bean등록
 public class AjaxController {
-
+	
+	
 	@Autowired // DI
 	private AjaxService service;
-
-	// 이메일로 닉네임 조회
-	@GetMapping(value="/selectNickname", produces="application/text; charset=UTF-8")
+	
+	//이메일로 닉네임 조회
+	@GetMapping(value="/selectNickname",produces = "application/text; charset=UTF-8")
 	@ResponseBody // 비동기 요청한 곳으로 돌아감
-	public String selectNickname(String email) {
-		// 쿼리스트링에 담긴 파라미터
-
-		// return 리다이렉트 // 포워드; -> 새로운 화면이 보미(동기식)
-		// return 데이터; -> 데이터를 요청한 곳으로 반환(비동기식)
+	public String selectNickname(String email){
+								//쿼리스트링에 담긴 파라미터
+		System.out.println(email);
+		
+		//return 리다이렉트 /포워드; -> 새로운 화면이 보임(동기식)
+		//return 데이터; -> 데이터를 요청한 곳으로 반환(비동기식)
 		return service.selectNickname(email);
 	}
-
-
-	// 닉네임으로 전화번호 조회
-
-	// produces 속성은 한글이 깨질 때 사용한다
-	@GetMapping(value="/selectTel")
+	
+	
+	//닉네임으로 전화번호 조회
+	// produces 속성은 한글이 깨질 때 사용!
 	@ResponseBody // HttpMessageConverter를 이용해
 				  // JS에서 인식할 수 있는 형태(TEXT/JSON)로 변환
-				  // + 비동기 요청한 곳으로 돌아감
+				  // +비동기 요청한 곳으로 돌아감
+	@GetMapping(value="/selectTel")
 	public String selectTel(String nickname) {
-
+		
 		return service.selectTel(nickname);
+		
 	}
+	
+	
+	
+	
+//	@ResponseBody
+//	@GetMapping("/dupCheck/email")
+//	public String dupCheck(String email) {
+//		
+//		return service.dupCheck(email);
+//		
+//	}
 	
 
-	// 이메일 중복 검사
+	@ResponseBody
 	@GetMapping("/dupCheck/email")
-	@ResponseBody
-	public int checkEmail(String email) {
+	public String checkEmail(String email) {
+		
 		return service.checkEmail(email);
+		
 	}
 	
-	// 닉네임 중복 검사
-	@GetMapping("/dupCheck/nickname")
+	
+	//닉네임 중복 검사
 	@ResponseBody
+	@GetMapping("/dupCheck/nickname")
 	public int checkNickname(String nickname) {
+		
 		return service.checkNickname(nickname);
+		
 	}
 	
-	@PostMapping(value="/selectMember", produces="application/json; charset=UTF-8")
+	
+	@PostMapping(value="/selectMember", produces = "application/json; charset=UTF-8")
 	@ResponseBody // java 데이터 -> JSON, TEXT로 변환 + 비동기 요청한 곳으로 응답
 	public Member selectMember(@RequestBody Map<String, Object> paramMap) {
-		// @RequestBody Map<String, Object> paramMap
-		// -> 요청된 HTTP Body에 담긴 모든 데이터를 Map으로 반환
 		
-		String email = (String)paramMap.get("email");
-		
+		//@RequestBody Map<String, Object> paramMap
+		//--> 요청된 HTTP Body에 담긴 모든 데이터를 Map으로 반환
+		String email= (String)paramMap.get("email");
 		return service.selectMember(email);
 	}
-
-
-	@PostMapping(value="/selectMemberList", produces="application/json; charset=UTF-8")
-	@ResponseBody // java 데이터 -> JSON, TEXT로 변환 + 비동기 요청한 곳으로 응답
-	public List<Member> selectAllMember(@RequestBody Map<String, Object> paramMap) {
-		// @RequestBody Map<String, Object> paramMap
-		// -> 요청된 HTTP Body에 담긴 모든 데이터를 Map으로 반환
+	
+	@ResponseBody
+	@PostMapping(value="/selectMemberList", produces = "application/json; charset=UTF-8")
+	public List<Object> selectMemberList(@RequestBody Map<String, Object> paramMap) {
+		// List<Member>
+		String input=(String)paramMap.get("input");
+		return service.selectMemberList(input);
 		
-		String email = (String)paramMap.get("email");
-		
-		return service.selectAllMember(email);
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
-
-	
-	
 
 /* Ajax를 이용한 비동기 통신 시
  * 
@@ -114,8 +137,6 @@ public class AjaxController {
  * 
  * Spring에서 사용하는 MessageConverter 종류
  * 1순위 : ByteArrayHttpMessageConverter (바이트 배열 자동 변환)
- * 2순위 : StringHttpMessageConverter (Text 형식 자동 변환)
- * 3순위 : MappingJackson2HttpMessageConverter (요청 데이터 -> DTO/Map , 응답 데이터 -> JSON)
+* 2순위 : StringHttpMessageConverter (Text 형식 자동 변환)
+* 3순위 : MappingJackson2HttpMessageConverter (요청 데이터 -> DTO/Map , 응답 데이터 -> JSON)
  * */
-
-

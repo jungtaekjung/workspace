@@ -25,17 +25,16 @@ public class BoardDAO {
 	}
 
 	
-
 	
-
 	/** 특정 게시판의 삭제되지 않은 게시글 수 조회
 	 * @param boardCode
 	 * @return listCount
 	 */
 	public int getListCount(int boardCode) {
-		
 		return sqlSession.selectOne("boardMapper.getListCount",boardCode);
 	}
+
+
 
 	/** 특정 게시판에서 현재 페이지에 해당하는 부분에 대한 게시글 목록 조회
 	 * @param boardCode
@@ -46,21 +45,19 @@ public class BoardDAO {
 		
 		// RowBounds 객체
 		// - 마이바티스에서 페이징 처리를 위해 제공하는 객체
-		// - offset 만큼 건너 뛰고
-		//   그 다음 지정된 행의 개수(limit)만큼 조회
+		// -offset 만큼 건너 뛰고
+		// 그 다음 지정된 행의 개수(limit) 만큼 조회
 		
 		// 1) offset 계산
-		int offset = (pagination.getCurrentPage() -1) * pagination.getLimit();
+		int offset = (pagination.getCurrentPage()-1 )* pagination.getLimit();
 		
 		// 2) RowBounds 객체 생성
-		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		RowBounds rowBounds = new RowBounds(offset,pagination.getLimit());
 		
-		// 3) selectList("namespace.id", 파라미터, RowBounds) 호출
+		// 3) selectList("nameSpace.id",파라미터,RowBounds) 호출
+		
 		return sqlSession.selectList("boardMapper.selectBoardList", boardCode, rowBounds);
-	
 	}
-
-
 
 
 
@@ -74,58 +71,39 @@ public class BoardDAO {
 
 
 
-
-
 	/** 좋아요 여부 확인
-	 * @param memberNo
-	 * @param boardNo
-	 * @return result
+	 * @param map
+	 * @return
 	 */
-	public int boardLikeCheck(int memberNo, int boardNo) {
-		Board board = new Board();
-		board.setMemberNo(memberNo);
-		board.setBoardNo(boardNo);
-		return sqlSession.selectOne("boardMapper.boardLikeCheck",board);
+	public int boardLikeCheck(Map<String, Object> map) {
+		return sqlSession.selectOne("boardMapper.boardLikeCheck",map);
 	}
 
 
 
-
-
-	/** 좋아요 테이블 삽입
+	/** 좋아요 테이블 삽입 insert
 	 * @param paramMap
-	 * @return result
+	 * @return
 	 */
-	public int likeInsert(Map<String, Integer> paramMap) {
-		
-		return sqlSession.insert("boardMapper.likeInsert",paramMap);
+	public int insertLike(Map<String, Integer> paramMap) {
+		return sqlSession.insert("boardMapper.insertLike",paramMap);
 	}
 
 
 
-
-
-	/** 좋아요 테이블 삭제
+	/** 좋아요 테이블 삭제 delete
 	 * @param paramMap
-	 * @return result
+	 * @return
 	 */
-	public int likeDelete(Map<String, Integer> paramMap) {
-		return sqlSession.delete("boardMapper.likeDelete",paramMap);
+	public int deleteLike(Map<String, Integer> paramMap) {
+		return sqlSession.delete("boardMapper.deleteLike",paramMap);
 	}
 
 
 
-
-
-	/** 좋아요 갯수 조회
-	 * @param paramMap
-	 * @return count
-	 */
-	public int boardLikeCount(Map<String, Integer> paramMap) {
-		return sqlSession.selectOne("boardMapper.boardLikeCount",paramMap);
+	public int selectLike(Map<String, Integer> paramMap) {
+		return sqlSession.selectOne("boardMapper.selectLike",paramMap);
 	}
-
-
 
 
 
@@ -135,5 +113,45 @@ public class BoardDAO {
 	 */
 	public int updateReadCount(int boardNo) {
 		return sqlSession.update("boardMapper.updateReadCount",boardNo);
+	}
+
+
+
+	public int deleteBoard(Board board) {
+		return sqlSession.update("boardMapper.deleteBoard",board);
+	}
+
+
+
+	/** 게시글 수 조회(검색)
+	 * @param paramMap
+	 * @return listCount
+	 */
+	public int getListCount(Map<String, Object> paramMap) {
+		return sqlSession.selectOne("boardMapper.getSearchListCount",paramMap);
+	}
+
+
+
+	/** 게시글 목록 조회(검색)
+	 * @param paramMap
+	 * @param pagination
+	 * @return boardList
+	 */
+	public List<Board> selectBoardList(Map<String, Object> paramMap, Pagination pagination) {
+		// RowBounds 객체
+				// - 마이바티스에서 페이징 처리를 위해 제공하는 객체
+				// -offset 만큼 건너 뛰고
+				// 그 다음 지정된 행의 개수(limit) 만큼 조회
+				
+				// 1) offset 계산
+				int offset = (pagination.getCurrentPage()-1 )* pagination.getLimit();
+				
+				// 2) RowBounds 객체 생성
+				RowBounds rowBounds = new RowBounds(offset,pagination.getLimit());
+				
+				// 3) selectList("nameSpace.id",파라미터,RowBounds) 호출
+				
+				return sqlSession.selectList("boardMapper.searchBoardList", paramMap, rowBounds);
 	}
 }

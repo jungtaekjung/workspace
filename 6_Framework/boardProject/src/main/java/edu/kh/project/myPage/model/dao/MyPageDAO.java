@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.kh.project.member.model.dto.Member;
 
-@Repository // 파일, DB 관련 클래스 + Bean 등록(IOC, 스프링이 객체 관리)
+@Repository //파일, DB관련 클래스 + Bean 등록(IOC, 스프링이 객체 관리)
 public class MyPageDAO {
 	
 	// 등록된 Bean 중 타입이 SqlSessionTemplate으로 일치하는 Bean을 주입(DI)
@@ -14,32 +14,18 @@ public class MyPageDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	
+
 
 	/** 회원 정보 수정 DAO
 	 * @param updateMember
 	 * @return result
 	 */
 	public int updateInfo(Member updateMember) {
-		
-		
-		
-		// return sqlSession.update("namespace.id",전달할 값);
+//		return sqlSession.update("namespace.id",전달할 값);
 		return sqlSession.update("myPageMapper.updateInfo",updateMember);
 	}
 
 
-
-	public String selectPw(int memberNo) {
-		
-		return sqlSession.selectOne("myPageMapper.selectPw",memberNo);
-	}
-
-
-
-	public int changePw(Member loginMember) {
-		return sqlSession.update("myPageMapper.changePw",loginMember);
-	}
 
 
 
@@ -48,7 +34,6 @@ public class MyPageDAO {
 	 * @return encPw
 	 */
 	public String selectEncPw(int memberNo) {
-		
 		return sqlSession.selectOne("myPageMapper.selectEncPw",memberNo);
 	}
 
@@ -61,9 +46,9 @@ public class MyPageDAO {
 	 */
 	public int changePw(String newPw, int memberNo) {
 		// Mybatis에서 SQL 수행 시
-		// 전달할 수 있는 파라미터는 1개뿐!
+		//전달할 수 있는 파라미터는 1개뿐!
 		// -> 여러 파라미터를 전달해야 하는 경우
-		//    DTO 또는 Map으로 묶어서 전달
+		//	 DTO또는 Map으로 묶어서 전달
 		
 		Member member = new Member();
 		member.setMemberNo(memberNo);
@@ -74,16 +59,57 @@ public class MyPageDAO {
 
 
 
+
+
+	/** 회원 탈퇴
+	 * @param memberNo
+	 * @return
+	 */
 	public int secession(int memberNo) {
 		return sqlSession.update("myPageMapper.secession",memberNo);
-	
 	}
 
 
 
+
+
+	/** 프로필 이미지 수정
+	 * @param loginMember
+	 * @return
+	 */
 	public int updateProfileImage(Member loginMember) {
-		return sqlSession.update("myPageMapper.updateProfileImage",loginMember);
+		 return sqlSession.update("myPageMapper.updateProfileImage",loginMember);
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

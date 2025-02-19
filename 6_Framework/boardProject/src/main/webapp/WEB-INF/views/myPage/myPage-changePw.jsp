@@ -63,6 +63,5 @@
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     <script src="/resources/js/myPage/myPage.js"></script>
-
 </body>
 </html>

@@ -21,21 +21,20 @@
 <body>
     <main>
         <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-    
-                            <!-- boardCode :  @PathVariable에 세팅된 값 -->
-        <form action="/board2/${boardCode}/insert" method="POST" class="board-write"
-                enctype="multipart/form-data" id="boardWriteFrm">
-                <!-- enctype="multipart/form-data" : 제출 시 데이터 인코딩 X
-                    -> 파일 제출 가능 
-                    -> MultipartResolver가 문자열, 파일 구분
-                    - 문자열 -> String, int, DTO, Map (HttpMessageConverter)
-                    - 파일 -> MultipartFile 객체 -> transferTo() (파일을 서버에 저장)
-                -->
+                    <!--boardCode : @PathVariable에 세팅된 값-->
+        <form action="/board2/${boardCode}/insert" method="POST" class="board-write" 
+        enctype="multipart/form-data" id="boardWriteFrm">  
+        <!--enctype="multipart/form-data" : 제출 시 데이터 인코딩 X
+            ->파일 제출 가능
+            ->MultipartResolver가 문자열, 파일 구분
+            - 문자열 -> String,int,DTO,Map (HttpMessageConverter)
+            - 파일 -> MultipartFile 객체 -> transferTo() (파일을 서버에 저장)
+        -->
             <h1 class="board-name">${boardName}</h1>
 
             <!-- 제목 -->
             <h1 class="board-title">
-                <input type="text" name="boardTitle" id="boardTitle" placeholder="제목" value="">
+                <input type="text" name="boardTitle" placeholder="제목" value="">
             </h1>
 
 
@@ -91,7 +90,7 @@
 
             <!-- 내용 -->
             <div class="board-content">
-                <textarea name="boardContent" id="boardContent"></textarea>
+                <textarea name="boardContent"></textarea>
             </div>
 
 
@@ -100,7 +99,7 @@
                 <button type="submit" id="writebtn">등록</button>
             </div>
 
-            <input type="hidden" name="deleteList" id="deleteList" value="">
+            
         </form>
 
     </main>

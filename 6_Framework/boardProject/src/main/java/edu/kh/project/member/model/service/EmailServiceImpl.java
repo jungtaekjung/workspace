@@ -29,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender mailSender;
     
-    private String fromEmail = "khjtj0620@gmail.com";
+    private String fromEmail = "hsj3779@gmail.com";
     private String fromUsername = "수업용프로젝트";
 
 

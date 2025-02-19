@@ -1,6 +1,7 @@
 package edu.kh.project.member.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,36 +11,48 @@ import edu.kh.project.member.model.dto.Member;
 
 @Repository // DB 연결 + bean 등록 (IOC)
 public class AjaxDAO {
-
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	
+	
 	/** 이메일로 닉네임 조회
 	 * @param email
 	 * @return nickname
 	 */
 	public String selectNickname(String email) {
-		
-		
 		return sqlSession.selectOne("ajaxMapper.selectNickname",email);
 	}
 
+
+
 	/** 닉네임으로 전화번호 조회
 	 * @param nickname
-	 * @return memberTel
+	 * @return tel
 	 */
 	public String selectTel(String nickname) {
 		return sqlSession.selectOne("ajaxMapper.selectTel",nickname);
 	}
 
-	/** 이메일 중복 검사
+
+
+	public String dupCheck(String email) {
+		return sqlSession.selectOne("ajaxMapper.dupCheck",email);
+	}
+
+
+
+	
+	/** 이메일 중복검사
 	 * @param email
 	 * @return count
 	 */
-	public int checkEmail(String email) {
-		
+	public String checkEmail(String email) {
 		return sqlSession.selectOne("ajaxMapper.checkEmail",email);
 	}
+
+
 
 	/** 닉네임 중복 검사
 	 * @param nickname
@@ -49,7 +62,9 @@ public class AjaxDAO {
 		return sqlSession.selectOne("ajaxMapper.checkNickname",nickname);
 	}
 
-	/** 이메일이 일치하는 회원 정보 조호;
+
+
+	/** 이메일이 일치하는 회원 정보 조회
 	 * @param email
 	 * @return member
 	 */
@@ -57,11 +72,14 @@ public class AjaxDAO {
 		return sqlSession.selectOne("ajaxMapper.selectMember",email);
 	}
 
-	/** 일부 이메일 값을 입력받아 일치하는 회원 정보 조호;
-	 * @param email
+
+
+	/** 이메일이 일부라도 일치하는 모든 회원 조회
+	 * @param input
 	 * @return
 	 */
-	public List<Member> selectAllMember(String email) {
-		return sqlSession.selectList("ajaxMapper.selectAllMember",email);
+	public List<Object> selectMemberList(String input) {
+		return sqlSession.selectList("ajaxMapper.selectMemberList",input);
 	}
+
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ajaxMapper">
+
 	<resultMap type="Member" id="member_rm">
 
 		<!-- DB의 기본 키(복합키면 여러 개 작성) -->
@@ -17,74 +18,83 @@
 		<result property="memberDeleteFlag" column="MEMBER_DEL_FL" />
 		<result property="authority" column="AUTHORITY" />
 	</resultMap>
-
-
+	
+	
+	
+	
 
 
 	<!-- 이메일로 닉네임 조회 -->
 	<select id="selectNickname" parameterType="string"
 		resultType="string">
-
 		SELECT MEMBER_NICKNAME
 		FROM MEMBER
-		WHERE MEMBER_EMAIL =
-		#{email}
-		AND MEMBER_DEL_FL = 'N'
-
+		WHERE MEMBER_EMAIL
+		=#{email}
+		AND MEMBER_DEL_FL ='N'
 	</select>
+
 
 	<!-- parameterType : 전달 받은 파라미터의 자료형 작성(선택사항) 미 작성 시 TypeHandler가 알아서 처리 -->
 	<!-- 닉네임으로 전화번호 조회 -->
-	<select id="selectTel" parameterType="string"
-		resultType="string">
+	<select id="selectTel" resultType="string">
 		SELECT MEMBER_TEL
 		FROM MEMBER
-		WHERE MEMBER_NICKNAME =
-		#{nickname}
-		AND MEMBER_DEL_FL = 'N'
+		WHERE MEMBER_NICKNAME
+		=#{nickname}
+		AND MEMBER_DEL_FL ='N'
 	</select>
+
+	<select id="dupCheck" resultType="string">
+		SELECT MEMBER_EMAIL
+		FROM MEMBER
+		WHERE MEMBER_EMAIL =#{email}
+	</select>
+
 
 	<!-- 이메일 중복 검사 -->
-	<select id="checkEmail" resultType="_int">
+	<select id="checkEmail" resultType="string">
 		SELECT COUNT(*) FROM MEMBER
 		WHERE MEMBER_EMAIL = #{email}
-		AND MEMBER_DEL_FL = 'N'
-
+		AND MEMBER_DEL_FL='N'
 	</select>
 
+	<!-- 닉네임 중복검사 -->
 	<select id="checkNickname" resultType="_int">
 		SELECT COUNT(*) FROM
 		MEMBER
 		WHERE MEMBER_NICKNAME = #{nickname}
-		AND MEMBER_DEL_FL = 'N'
-
+		AND MEMBER_DEL_FL='N'
 	</select>
+
 
 	<!-- 이메일로 회원 정보 조회 -->
 	<select id="selectMember" resultMap="member_rm">
-		SELECT MEMBER_NO,
-		MEMBER_EMAIL, MEMBER_NICKNAME, MEMBER_TEL,
-		NVL(MEMBER_ADDR, '미작성') AS
-		MEMBER_ADDR,
-		TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월", DD"일"') AS
-		ENROLL_DATE
+		SELECT
+		MEMBER_NO,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_TEL,
+		NVL(MEMBER_ADDR,'미작성') MEMBER_ADDR,
+		TO_CHAR(ENROLL_DATE,'YYYY"년" MM"월",
+		DD"일"') ENROLL_DATE
 		FROM MEMBER
-		WHERE MEMBER_EMAIL = #{email}
-		AND MEMBER_DEL_FL =
-		'N'
+		WHERE MEMBER_EMAIL= #{email}
+		AND
+		MEMBER_DEL_FL ='N'
 	</select>
 
-	<!-- 일부 이메일값을 입력받아 모든 회원 정보 조회 -->
-	<select id="selectAllMember" resultMap="member_rm">
-		SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NICKNAME
+	<!-- 이메일이 일부라도 일치하는 모든 회원 조회 -->
+	<select id="selectMemberList" resultMap="member_rm">
+		SELECT MEMBER_NO,
+		MEMBER_EMAIL, MEMBER_NICKNAME
 		FROM MEMBER
-		WHERE MEMBER_EMAIL LIKE '%${email}%'
-		AND MEMBER_DEL_FL = 'N'
+		WHERE MEMBER_EMAIL LIKE '%' || #{input} || '%'
+								<!-- '%${input}%' -->
+		AND
+		MEMBER_DEL_FL='N'
 	</select>
 	
-	<!-- ${email}을 사용하는 이유?
-		#{}으로 작성하면 '%'값'%' 형태로
-		sql이 정상적인 형태가 되지 않기 때문에
-		'값'을 감싸고 있는 ''제거하기 위해서
+	<!-- ${input}을 사용한 이유?
+		 #{}으로 작성하면 '%'값'%' 형태로
+		 sql이 정상적인 형태가 되지 않기 때문에
+		 '값'을 감싸고 있는 '' 제거하기 위해서 
 	 -->
 </mapper>

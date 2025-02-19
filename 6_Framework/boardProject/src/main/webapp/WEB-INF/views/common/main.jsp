@@ -33,8 +33,10 @@
 
                 ${sessionScope.loginMember}
 
+
                 <h3>이메일이 일치하는 회원 닉네임 조회</h3>
-                <button onclick="selectNickname('user01@kh.or.kr')">조회</button>
+                email : <input id="inputEmail">
+                <button onclick="selectNickname('user03@kh.or.kr')">조회</button>
                 <div id="result">콘솔 확인</div>
 
                 <hr>
@@ -44,8 +46,11 @@
                 <button id="btn1">조회</button>
                 <h4 id="result1"></h4>
 
+
+                <hr>
+
                 <h3>이메일을 입력 받아 일치하는 회원의 정보 조회</h3>
-                <input type="text" id="inputEmail">
+                <input type="text" id="inputEmail2">
                 <button id="btn2">조회</button>
                 <ul id="result2"></ul>
 
@@ -64,7 +69,17 @@
                         
                     </thead>
                     <tbody id="result3">
-                       
+                        <tr>
+                            <td>1</td>
+                            <td>user01@kh.or.kr</td>
+                            <td>유저일</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>user02@kh.or.kr</td>
+                            <td>유저이</td>
+                        </tr>
                     </tbody>
                     
                 </table>
@@ -95,11 +110,12 @@
                                     <button>로그인</button>
                                 </section>
                             </fieldset>
-							
+                            
+                            
+                            
 							<c:if test="${!empty cookie.saveId.value }">
 								<c:set var="save" value="checked"/>
-							</c:if>	
-							
+							</c:if>
                             <label>
                                 <input type="checkbox" name="saveId" ${save}> 아이디 저장
                             </label>
@@ -119,7 +135,16 @@
                         <article class="login-area">
 
                             <a href="/myPage/info">
-                                <img src="/resources/images/user.png" id="memberProfile">
+                                <!--프로필 이미지가 있는 경우-->
+                        <c:if test="${!empty loginMember.profileImage}">
+                            <img src="${loginMember.profileImage}" id="memberProfile">
+
+                        </c:if>
+                        <!--프로필 이미지가 없는 경우-->
+                        <c:if test="${empty loginMember.profileImage}">
+
+                            <img src="/resources/images/user.png" id="memberProfile">
+                        </c:if>
                             </a>
 
                             <div class="my-info">
@@ -147,7 +172,6 @@
 
     <%-- footer --%>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-
     <!-- main.js 추가 -->
      <script src="/resources/js/main.js"></script>
 

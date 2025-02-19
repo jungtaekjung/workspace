@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/resources/css/member/login.css">
 
 
-    <script src="https://kit.fontawesome.com/a95430b2e6.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/9d18722475.js" crossorigin="anonymous"></script>
 </head>
 
 
@@ -65,9 +65,8 @@
             </p>
         </form>
     </main>
-
-     <!-- main.js 추가 -->
-     <script src="/resources/js/main.js"></script>
+    <!-- main.js 추가 -->
+    <script src="/resources/js/main.js"></script>
 
   </body>
 </html>
