@@ -19,7 +19,7 @@
     <section>
         <!-- 검색어 입력할 수 있는 요소 배치 -->
 
-        <article class="search-area">
+        <article class="search-area" style="position:relative;">
 
             <!-- 
                 action : 내부 input에 작성된 값을 제출할 경로/주소 
@@ -29,7 +29,7 @@
                 - POST : input태그 값을 주소에 담지 않고 제출(주소에 안보임)
                         -> HTTP Body에 담아서 제출
             -->
-            <form action="#" method="GET">
+            <form action="/board/search" method="GET">
 
                 <fieldset> <!-- form태그 내 영역 구분 -->
 
@@ -43,6 +43,10 @@
                     placeholder="검색어를 입력해주세요."
                     autocomplete="off" value="${param.query}">
 
+                    <!-- 통합(제목) 검색 -->
+                     <input type="hidden" name="key" value="all">
+
+
                     <!-- 검색 버튼 -->
                     <!-- button type="submit" 이 기본값 -->
                     <button id="searchBtn" class="fa-solid fa-magnifying-glass"></button>
@@ -50,7 +54,7 @@
                 </fieldset>
 
             </form>
-
+            <div id="autocomplete"></div>
         </article>
 
     </section>
@@ -82,6 +86,7 @@
             </c:otherwise>
         </c:choose>
     </div>
+    <script src="/resources/js/board/header.js"></script>
 </header>
 
 <nav>

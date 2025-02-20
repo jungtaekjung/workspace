@@ -154,4 +154,13 @@ public class BoardDAO {
 				
 				return sqlSession.selectList("boardMapper.searchBoardList", paramMap, rowBounds);
 	}
+
+
+
+	
+
+	  public List<Board> autocomplete(Map<String, Object> paramMap) {
+	      return sqlSession.selectList("boardMapper.autocomplete",paramMap);
+	   }
+
 }

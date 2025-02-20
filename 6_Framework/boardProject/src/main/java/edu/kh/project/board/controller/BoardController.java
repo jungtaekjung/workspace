@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.Session;
@@ -107,6 +108,31 @@ public class BoardController {
 		
 		return "board/boardList";
 	}
+	
+	
+		//게시글 목록 조회
+		@GetMapping("/search")
+		public String selectBoardList(@RequestParam(value="cp",required=false,defaultValue="1") int cp
+				,Model model
+				,@RequestParam Map<String, Object> paramMap // 전달받은 파라미터들
+				) {
+
+			
+			
+				
+				//게시글 목록 조회 서비스 호출
+				Map<String, Object> map = service.selectBoardList(paramMap,cp);
+				
+				// 조회 결과를 request scope에 세팅 후 forward
+				model.addAttribute("map",map);
+			
+				
+				
+				return"board/boardSearchList";
+			}
+	
+	
+	
 	
 	//게시글 상세조회
 	@GetMapping("/{boardCode}/{boardNo}")
@@ -272,18 +298,22 @@ public class BoardController {
 	}
 	
 	
+	  //게시글 자동완성
+	   @GetMapping("/autocomplete")
+	   @ResponseBody
+	   public Map<String, Object> autocomplete(Model model
+	         ,@RequestParam Map<String, Object> paramMap) {
+	      
+	      System.out.println(paramMap);
+	      Map<String, Object> map = service.autocomplete(paramMap);
+	      
+	      
+	      return map;
+	   }   
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
 	
 	
 

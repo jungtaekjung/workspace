@@ -193,6 +193,10 @@
 
         const boardNo = "${board.boardNo}";
 
+        const boardCode = '${boardCode}';
+
+        
+
     </script>
 
     <script src="/resources/js/board/boardDetail.js"></script>

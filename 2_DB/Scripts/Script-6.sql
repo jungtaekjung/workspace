@@ -460,6 +460,7 @@ SELECT COUNT(*) FROM BOARD
 WHERE BOARD_DEL_FL = 'N'
 AND BOARD_CODE = 1;
 
+SELECT * FROM BOARD;
 
 -- 게시글 목록 조회
 -- 마이바티스 사용 X

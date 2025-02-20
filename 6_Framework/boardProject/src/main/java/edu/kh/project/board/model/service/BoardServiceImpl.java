@@ -146,6 +146,21 @@ public class BoardServiceImpl implements BoardService{
 
 
 
+	  @Override
+	   public Map<String, Object> autocomplete(Map<String, Object> paramMap) {
+	      
+	      List<Board> boardList= dao.autocomplete(paramMap);
+	      
+	      Map<String, Object> map = new HashMap<String, Object>();
+	      map.put("boardList", boardList);
+	      
+	      return map;
+	   }
+
+
+
+	
+
 
 
 

@@ -1,6 +1,7 @@
 console.log("boardDetail.js연결")
 
 
+
 const boardLike=document.getElementById("boardLike");
 //좋아요 버튼이 클릭 되었을 때
 
@@ -66,7 +67,7 @@ boardLike.addEventListener("click", e=>{
 
 const updateBtn = document.getElementById("updateBtn");
 
-updateBtn.addEventListener("click",()=>{
+updateBtn?.addEventListener("click",()=>{
     location.href = location.pathname.replace('board','board2')
                     +"/update"+location.search;
 })
@@ -78,7 +79,7 @@ updateBtn.addEventListener("click",()=>{
 //"정말로 삭제하시겠습니까?" -> 확인 클릭 시
 const deleteBtn= document.getElementById("deleteBtn");
 
-deleteBtn.addEventListener("click",function(){
+deleteBtn?.addEventListener("click",function(){
     if(confirm("정말로 삭제하시겠습니까?")){
         location.href = location.pathname.replace('board','board2')
                     +"/delete"+location.search;
@@ -88,3 +89,27 @@ deleteBtn.addEventListener("click",function(){
 
 //삭제 서비스 호출 성공 시 ->해당 게시판 목록으로 이동 "삭제되었습니다." 알림창 출력
 //삭제 서비스 호출 실패 시 ->해당 게시글 상세조회 화면 "게시글 삭제 실패" 알림창 출력 
+
+
+// ---------------------------------------------------------------------------
+
+// 목록으로
+const goToListBtn = document.getElementById('goToListBtn');
+
+goToListBtn.addEventListener("click",()=>{
+
+    // URL 내장 객체 : 주소 관련 정보를 나타내는 객체
+    // URL.searchParams : 쿼리스트링만 별도 객체로 반환
+    const params= new URL(location.href).searchParams;
+
+    let url;
+
+    if(params.get("key")=='all'){ // 통합 검색인 경우
+        url = '/board/search';
+    }else{
+        url = '/board/'+ boardCode;
+    }
+
+    location.href = url + location.search;
+                          // 쿼리스트링만 반환
+})
