@@ -19,7 +19,7 @@
     <section>
         <!-- 검색어 입력할 수 있는 요소 배치 -->
 
-        <article class="search-area" style="position:relative;">
+        <article class="search-area">
 
             <!-- 
                 action : 내부 input에 작성된 값을 제출할 경로/주소 

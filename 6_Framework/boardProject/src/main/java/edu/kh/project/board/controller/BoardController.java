@@ -298,19 +298,18 @@ public class BoardController {
 	}
 	
 	
-	  //게시글 자동완성
-	   @GetMapping("/autocomplete")
-	   @ResponseBody
-	   public Map<String, Object> autocomplete(Model model
-	         ,@RequestParam Map<String, Object> paramMap) {
-	      
-	      System.out.println(paramMap);
-	      Map<String, Object> map = service.autocomplete(paramMap);
-	      
-	      
-	      return map;
-	   }   
-	
+	//게시글 자동완성
+	@GetMapping("/autocomplete")
+	@ResponseBody
+	public Map<String, Object> autocomplete(Model model
+			,@RequestParam Map<String, Object> paramMap) {
+
+		Map<String, Object> map = service.autocomplete(paramMap);
+
+
+		return map;
+	}   
+
 
 
 

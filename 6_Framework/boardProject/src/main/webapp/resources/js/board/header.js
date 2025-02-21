@@ -23,12 +23,10 @@ query.addEventListener("input",function(){
             autocomplete.style.display = "block";
             for(let i=0; i<10; i++){
                 
-                boardName=data.boardList[i].boardName
-                boardTitle=data.boardList[i].boardTitle
-                boardCode=data.boardList[i].boardCode
-                boardNo=data.boardList[i].boardNo
-                console.log(boardName)
-                console.log(boardTitle)
+               let boardName=data.boardList[i].boardName
+               let boardTitle=data.boardList[i].boardTitle
+               let boardCode=data.boardList[i].boardCode
+               let boardNo=data.boardList[i].boardNo
 
                 const highlightedTitle = boardTitle.replace(new RegExp(searchText), (match) => `<span style="background-color: yellow;">${match}</span>`);
                 const highlightedName = boardName.replace(new RegExp(searchText), (match) => `<span style="background-color: yellow;">${match}</span>`);
