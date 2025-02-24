@@ -355,7 +355,7 @@ function showInsertComment(parentNo, btn){
     // ** 답글 작성 textarea가 한 개만 열릴 수 있도록 만들기 **
     const temp = document.getElementsByClassName("commentInsertContent");
 
-    if(temp.length > 0){ // 답글 작성 textara가 이미 화면에 존재하는 경우
+    if(temp.length > 0){ // 답글 작성 textarea가 이미 화면에 존재하는 경우
 
         if(confirm("다른 답글을 작성 중입니다. 현재 댓글에 답글을 작성 하시겠습니까?")){
             temp[0].nextElementSibling.remove(); // 버튼 영역부터 삭제

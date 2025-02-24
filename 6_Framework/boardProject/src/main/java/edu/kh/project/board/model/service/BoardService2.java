@@ -1,5 +1,6 @@
 package edu.kh.project.board.model.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -33,5 +34,6 @@ public interface BoardService2 {
 	 * @return
 	 */
 	int deleteBoard(int boardNo);
+
 
 }

@@ -105,7 +105,7 @@
 
 		(SELECT COUNT(*) FROM "COMMENT" C
 		WHERE C.BOARD_NO = B.BOARD_NO
-		AND COMMENT_DEL_FN = 'N') COMMENT_COUNT,
+		AND COMMENT_DEL_FL = 'N') COMMENT_COUNT,
 
 		(SELECT COUNT(*) FROM BOARD_LIKE L
 		WHERE L.BOARD_NO =
@@ -427,6 +427,21 @@
    
    </select>
 	
-
+	<select id="selectImageListAll" resultType="string">
+	SELECT IMG_RENAME FROM BOARD_IMG
+	</select>
+	
+	<!-- 헤더 검색 -->
+   <select id="headerSearch" resultType="map">
+      SELECT * FROM(
+         SELECT BOARD_NO, BOARD_TITLE, READ_COUNT, BOARD_CODE, BOARD_NAME 
+         FROM BOARD
+         JOIN BOARD_TYPE USING(BOARD_CODE)
+         WHERE BOARD_TITLE LIKE '%${query}%'
+         AND BOARD_DEL_FL = 'N'
+         ORDER BY READ_COUNT DESC, BOARD_NO DESC)
+      <![CDATA[ WHERE ROWNUM <= 10  ]]>
+   </select>
+	
 
 </mapper>

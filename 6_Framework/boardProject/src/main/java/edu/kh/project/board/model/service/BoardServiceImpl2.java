@@ -281,4 +281,7 @@ public class BoardServiceImpl2 implements BoardService2{
 		return dao.boardDelete(boardNo);
 	}
 
+
+
+
 }

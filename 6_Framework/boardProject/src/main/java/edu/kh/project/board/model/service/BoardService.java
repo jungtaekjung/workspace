@@ -57,6 +57,13 @@ public interface BoardService {
 
 	Map<String, Object> autocomplete(Map<String, Object> paramMap);
 
+	List<String> selectImageList();
+
+	/** 헤더 검색
+	 * @param query
+	 * @return list
+	 */
+	List<Map<String, Object>> headerSearch(String query);
 
 
 
