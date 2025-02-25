@@ -68,6 +68,9 @@
 	<!-- 스프링 스케쥴러 어노테이션 인식 -->
 	<task:annotation-driven/>
 	
+	<!-- AOP Proxy를 이용한 관점 제어 자동화 -->
+	<aop:aspectj-autoproxy/>
+	
 	
 	
 </beans:beans>

@@ -282,7 +282,37 @@ if(imageInput!=null){
         }
     })
 
+    // x버튼 클릭 후 이미지 선택 취소 시 기존 이미지로 변경하기
+    imageInput.addEventListener("click",()=>{
+
+        // 이미지 선택 이전에 x버튼 클릭 여부 확인
+        if(deleteCheck ==0){ // x버튼 클릭 O
+
+            // 이벤트 버블링 : 한 요소에 이벤트가 발생하면 요소에 할당된 핸들러 동작 후
+            // 가장 최상단 조상 요소를 만나기 전까지 부모 요소의 핸들러가 순차적으로 동작
+            // focus(버블링 X), focusin(버블링 O)
+            
+            document.body.onfocus = () =>{
+
+                // console.log(imageInput.value) // 빈칸('')
+                                              // 왜? 이미지를 얻어오기 전에 출력하기 때문에
+                setTimeout(function(){
+
+                    // 파일 선택 취소 시
+                    if(imageInput.value ==''){
+                        profileImage.setAttribute('src',originalImage);
+                        deleteCheck = -1;
+                        
+                    }
+                },400); // 0.4초 후 실행
+
+                // 추가된 이벤트 초기화
+                document.body.onfocus = null;
+            }
+        }
+    })
 
 }
+
 
     
