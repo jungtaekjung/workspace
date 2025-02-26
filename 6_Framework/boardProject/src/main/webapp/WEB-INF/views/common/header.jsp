@@ -100,6 +100,11 @@
             <li><a href="/board/${boardType.BOARD_CODE}">${boardType.BOARD_NAME}</a></li>
         </c:forEach>
 
+        <!-- 로그인 시 채팅 노출 -->
+         <c:if test="${!empty loginMember}">
+            <li><a href="/chatting">채팅</a></li>
+         </c:if>
+
     </ul>
 </nav>
 
