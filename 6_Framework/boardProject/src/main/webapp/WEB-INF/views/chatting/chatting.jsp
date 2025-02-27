@@ -42,7 +42,7 @@
 
 
             <ul id="resultArea">
-                <li class="result-row" data-id="1">
+                <!-- <li class="result-row" data-id="1">
                     <img class="result-row-img" src="/resources/images/user.png">
                     <span> <mark>유저</mark>일</span>
                 </li>
@@ -52,40 +52,39 @@
                 </li>
 
 
-                <li class="result-row">일치하는 회원이 없습니다</li>
+                <li class="result-row">일치하는 회원이 없습니다</li> -->
             </ul>
         </div>
    
         <div class="chatting-area">
             <ul class="chatting-list">
-
                 <c:forEach var="room" items="${chattingRoomList}">
-                    <li class="chatting-item" chat-no="${room.chattingNo}" target-no="${room.targetNo}">
-                        <div class="item-header">
-                            <c:if test="${!empty room.targetProfile}">
-                                <img class="list-profile" src="${room.targetProfile}">
+    
+                   <li class="chatting-item" chat-no="${room.chattingNo}" target-no="${room.targetNo}">
+                      <div class="item-header">
+                         <c:if test="${not empty room.targetProfile}">
+                            <img class="list-profile" src="${room.targetProfile}">
+                         </c:if>
+                         <c:if test="${empty room.targetProfile}">
+                            <img class="list-profile" src="/resources/images/user.png">
+                         </c:if>
+                      </div>
+                      <div class="item-body">
+                         <p>
+                            <span class="target-name">${room.targetNickName}</span>
+                            <span class="recent-send-time">${room.sendTime}</span>
+                         </p>
+                         <div>
+                            <p class="recent-message">${room.lastMessage}</p>
+    
+                            <c:if test="${room.notReadCount > 0}">
+                               <p class="not-read-count">${room.notReadCount}</p>
                             </c:if>
-
-                            <c:if test="${empty room.targetProfile}">
-                                <img class="list-profile" src="/resources/images/user.png">
-                            </c:if>
-                        </div>
-                        <div class="item-body">
-                            <p>
-                                <span class="target-name">${room.targetNickName}</span>
-                                <span class="recent-send-time">${room.sendTime}</span>
-                            </p>
-                            <div>
-                                <p class="recent-message">${room.lastMessage}</p>
-                                
-                                <c:if test="${room.notReadCount !=0}">
-                                    <p class="not-read-count">${room.notReadCount}</p>
-                                </c:if>
-                            </div>
-                        </div>
-                    </li>
+                         </div>
+                      </div>
+                   </li>
                 </c:forEach>
-            </ul>
+             </ul>
 
 
             <div class="chatting-content">
@@ -126,7 +125,10 @@
     
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
    
-
+    <script>
+        // 로그인한 회원 번호
+        const loginMemberNo = "${loginMember.memberNo}"
+    </script>
 
     <script src="/resources/js/chatting/chatting.js"></script>
 </body>
