@@ -1,5 +1,80 @@
-/* 채팅방 생성 버튼 */
-#openChatRoom {
+/* 테마변경 */
+#changeTheme{
+    display: none;
+ }
+ label[for="changeTheme"]{
+     width: 100px;
+     height: 30px;
+    border: none;
+     border-radius: 10px;
+     font-weight: bold;
+     color: white;
+     cursor: pointer;
+    background-color: #e94e77 ;
+    display : inline-block;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+ }
+ 
+ label[for="changeTheme"]:hover{
+     width: 100px;
+     height: 30px;
+    border: 1px solid #e94e77;
+     border-radius: 10px;
+     font-weight: bold;
+     color: #e94e77;
+     cursor: pointer;
+    background-color: white ;
+    display : inline-block;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+ }
+ 
+ 
+ :root[color-theme='light'] {
+    --background: white;
+    --boxColor: white;
+    --borderBottom : 0;
+    --borderRadius : 0px;
+    --margin : 0px;
+    --border : 1px solid black;
+    --contentLeft : 30%;
+    --contentRight : 70%;
+    --chattingHight : 570px;
+    --chattingWidth : 80%;
+    --display : block;
+    --chattingColor : yellow;
+    --listColor : white;
+    --select : #ddd;
+    --fontColor : black;
+ }
+ 
+ :root[color-theme='pink'] {
+    --background: rgba(250,177,206,0.5);
+    --boxColor: #dddfe6;
+    --sendBtn : #f199bc;
+    --borderRadius : 10px;
+    --margin : 5px;
+    --border : 1px solid #e94e77 ;
+    --borderBottom : 1px solid #e94e77 ;
+    --colorWhite : #e94e77;
+    --contentLeft : 29%;
+    --contentRight : 69%;
+    --chattingHight : 555px;
+    --chattingWidth : 79.5%;
+    --display : flex;
+    --chattingColor :rgb(249,163,198);
+    --listColor : rgba(249,163,198,0.6);
+    --select : #e94e77;
+    --fontColor : white;
+ 
+ }
+ 
+ 
+ /* 채팅방 생성 버튼 */
+ #openChatRoom {
     width: 120px;
  }
  
@@ -81,10 +156,10 @@
  }
  
  #resultArea{
-   list-style: none;
-   overflow: auto;
-   height: 550px;
-}
+    list-style: none;
+    overflow: auto;
+    height: 550px;
+ }
  
  .result-row{
     width: 100%;
@@ -114,12 +189,16 @@
     margin-top: 20px;
     margin-bottom: 50px;
     display: flex;
+    background: var(--background);
+    border-radius: var(--borderRadius);
  }
  
  /*  채팅 목록 */
  .chatting-list{
-    width: 30%;
-    border : 1px solid black;
+    width:  var(--contentLeft);
+    border-radius: var(--borderRadius);
+    margin: var(--margin);
+    border: var(--border);
     list-style: none;
     overflow: auto;
  }
@@ -128,8 +207,12 @@
     height: 12%;
     display: flex;
     padding: 5px 0;
-    border-bottom: 1px solid black;
+    border: var(--borderBottom);
+    border-bottom: var(--border);
+    border-radius: var(--borderRadius);
+    margin: var(--margin);
     cursor: pointer;
+    background-color: var(--listColor);
  }
  
  .chatting-item * {
@@ -137,7 +220,11 @@
  }
  
  .chatting-item > div{ height: 100%; text-align: center;}
- .item-header{ width : 25%; }
+ .item-header{ 
+    width : 25%; 
+    
+    display: var(--display);
+ }
  .item-body{ 
     width : 75%; 
     padding : 2px 0;
@@ -148,13 +235,15 @@
  }
  
  .chatting-item.select{
-    background-color: #ddd;
+    background-color: var(--select)
  }
  
  
  .list-profile{ 
     max-width: 65px;
      max-height: 65px;
+    border-radius: var(--borderRadius);
+    padding-left: var(--margin);
  }
  
  .target-name{
@@ -202,13 +291,15 @@
  
  /* 채팅 내용 */
  .chatting-content{
-    width: 70%;
+    width: var(--contentRight);
  }
  
  .display-chatting {
     width: 100%;
-    height: 570px;
-    border: 1px solid black;
+    height: var(--chattingHight);
+    border: var(--border);
+    border-radius: var(--borderRadius);
+    margin: var(--margin);
     overflow: auto;
     list-style: none;
     padding: 10px 10px;
@@ -225,6 +316,8 @@
  .target-chat > img{
     width: 50px;
     margin-right: 5px;
+    border-radius: var(--borderRadius);
+    height: 50px;
  }
  
  .chat {
@@ -243,17 +336,26 @@
     height: 80px;
     width: 100%;
     display: flex;
+    margin: var(--margin);
  }
  
  #inputChatting {
     padding: 3px;
     font-size: 1.3em;
-    width: 80%;
+    width: var(--chattingWidth);
     resize: none;
+    border-radius: var(--borderRadius);
+    border: var(--border);
+    margin-right: var(--margin);
  }
  
  #send {
     width: 20%;
+    border-radius: var(--borderRadius);
+    border: var(--border);
+    background: var(--colorWhite);
+    font-size: 16px;
+    color: var(--fontColor);
  }
  
  .my-chat {
@@ -261,7 +363,7 @@
  }
  
  .my-chat>p {
-    background-color: yellow;
+    background-color: var(--chattingColor);
  }
  
  .chatDate {
@@ -289,3 +391,23 @@
     background-color: black;
     color: white;
  }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.kh.project.chatting.model.dto.ChattingRoom;
+import edu.kh.project.chatting.model.dto.Message;
 import edu.kh.project.member.model.dto.Member;
 
 @Repository
@@ -52,5 +53,20 @@ public class ChattingDAO {
 
 	public int updateReadFlag(Map<String, Object> paramMap) {
 		return sqlSession.update("chattingMapper.updateReadFlag",paramMap);
+	}
+
+
+	public List<Message> selectMessageList(Object object) {
+		return null;
+	}
+
+
+	public List<Message> selectMessageList(int chattingNo) {
+		return sqlSession.selectList("chattingMapper.selectMessageList",chattingNo);
+	}
+
+
+	public int insertMessage(Message msg) {
+		return sqlSession.insert("chattingMapper.insertMessage",msg);
 	}
 }

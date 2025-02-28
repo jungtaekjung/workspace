@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import edu.kh.project.chatting.model.dao.ChattingDAO;
 import edu.kh.project.chatting.model.dto.ChattingRoom;
+import edu.kh.project.chatting.model.dto.Message;
+import edu.kh.project.common.utility.Util;
 import edu.kh.project.member.model.dto.Member;
 
 @Service
@@ -44,6 +46,33 @@ public class ChattingServiceImpl implements ChattingService{
 	@Override
 	public int updateReadFlag(Map<String, Object> paramMap) {
 		return dao.updateReadFlag(paramMap);
+	}
+
+	@Override
+	public List<Message> selectMessageList(Map<String, Object> paramMap) {
+		
+		// 1) 메세지 목록 조회
+		List<Message> messageList = 
+				dao.selectMessageList(Integer.parseInt(String.valueOf(paramMap.get("chattingNo"))));
+		
+		// String.valueOf : Object의 값을 String으로 변환
+		//					값이 null인 경우 "null"이라는 문자열로 처리
+		
+		// 2) 메세지목록이 존재하는 경우 알림 읽음 처리
+		 if(!messageList.isEmpty()) {
+			 dao.updateReadFlag(paramMap);
+		 }
+		return messageList;
+	}
+
+	@Override
+	public int insertMessage(Message msg) {
+		
+		// XSS 방지 처리
+		msg.setMessageContent(Util.XSSHandling(msg.getMessageContent()));
+		
+		
+		return dao.insertMessage(msg);
 	}
 
 	

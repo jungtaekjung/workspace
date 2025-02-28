@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import edu.kh.project.chatting.model.dto.ChattingRoom;
+import edu.kh.project.chatting.model.dto.Message;
 import edu.kh.project.chatting.model.service.ChattingService;
 import edu.kh.project.member.model.dto.Member;
 
@@ -91,6 +92,13 @@ public class ChattingController {
 		
 		return service.updateReadFlag(paramMap);
 		
+	}
+	
+	// 채팅방 메세지 목록 조회
+	@GetMapping(value="/chatting/selectMessageList", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public List<Message> selectMessageList(@RequestParam Map<String, Object> paramMap){
+		return service.selectMessageList(paramMap);
 	}
 	
 }

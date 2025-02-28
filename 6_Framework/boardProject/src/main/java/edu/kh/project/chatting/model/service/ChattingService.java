@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.kh.project.chatting.model.dto.ChattingRoom;
+import edu.kh.project.chatting.model.dto.Message;
 import edu.kh.project.member.model.dto.Member;
 
 public interface ChattingService {
@@ -28,6 +29,14 @@ public interface ChattingService {
 	 * @return result
 	 */
 	int updateReadFlag(Map<String, Object> paramMap);
+
+	/** 채팅방 메세지 목록 조회
+	 * @param paramMap
+	 * @return messageList
+	 */
+	List<Message> selectMessageList(Map<String, Object> paramMap);
+
+	int insertMessage(Message msg);
 	
 
 }

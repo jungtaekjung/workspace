@@ -14,7 +14,8 @@
 
     <link rel="stylesheet" href="/resources/css/main-style.css">
     <link rel="stylesheet" href="/resources/css/board/boardDetail-style.css">
-    <link rel="stylesheet" href="/resources/css/chatting/chatting-style.css">
+    <!-- <link rel="stylesheet" href="/resources/css/chatting/chatting-style.css"> -->
+    <link rel="stylesheet" href="/resources/css/chatting/chattingTheme-style.css">
 
 
     <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
@@ -30,6 +31,8 @@
 
 
         <button id="addTarget">추가</button>
+        <label for="changeTheme" >테마변경</label>
+        <input id="changeTheme" type="checkbox" />
 
 
         <div id="addTargetPopupLayer" class="popup-layer-close">  
@@ -89,7 +92,7 @@
 
             <div class="chatting-content">
                 <ul class="display-chatting">
-                    <li class="my-chat">
+                    <!-- <li class="my-chat">
                         <span class="chatDate">12:11</span>
                         <p class="chat">오늘 수업 어땠어?</p>
                     </li>
@@ -104,11 +107,11 @@
                             <p class="chat">채팅 배웠는데 너무 재밌어!<br>혜선쌤 강의는 최고야! 짜릿해~</p>
                             <span class="chatDate">14:05</span>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>  
            
                 <div class="input-area">
-                    <textarea id="inputChatting" rows="3">내일도 지각하지 않고 수업들으러 와야지^^!</textarea>
+                    <textarea id="inputChatting" rows="3"></textarea>
                     <button id="send">보내기</button>
                 </div>
             </div>
