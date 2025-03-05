@@ -139,42 +139,34 @@ public class BoardDAO {
 	 * @return boardList
 	 */
 	public List<Board> selectBoardList(Map<String, Object> paramMap, Pagination pagination) {
-		// RowBounds 객체
-				// - 마이바티스에서 페이징 처리를 위해 제공하는 객체
-				// -offset 만큼 건너 뛰고
-				// 그 다음 지정된 행의 개수(limit) 만큼 조회
-				
-				// 1) offset 계산
-				int offset = (pagination.getCurrentPage()-1 )* pagination.getLimit();
-				
-				// 2) RowBounds 객체 생성
-				RowBounds rowBounds = new RowBounds(offset,pagination.getLimit());
-				
-				// 3) selectList("nameSpace.id",파라미터,RowBounds) 호출
-				
-				return sqlSession.selectList("boardMapper.searchBoardList", paramMap, rowBounds);
+		int offset = (pagination.getCurrentPage()-1 )* pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset,pagination.getLimit());
+		
+		
+		return sqlSession.selectList("boardMapper.searchBoardList", paramMap, rowBounds);
 	}
 
 
-
-	
-
-	  public List<Board> autocomplete(Map<String, Object> paramMap) {
-	      return sqlSession.selectList("boardMapper.autocomplete",paramMap);
-	   }
+	/*자동완성
+	 * */
+	public List<Board> autocomplete(Map<String, Object> paramMap) {
+		return sqlSession.selectList("boardMapper.autocomplete",paramMap);
+	}
 
 
 
 	public List<String> selectImageList() {
 		return sqlSession.selectList("boardMapper.selectImageListAll");
 	}
-	
-	 /** 헤더 검색
+
+
+
+	   /** 헤더 검색
 	    * @param query
 	    * @return list
 	    */
 	   public List<Map<String, Object>> headerSearch(String query) {
 	      return sqlSession.selectList("boardMapper.headerSearch", query);
 	   }
-
 }

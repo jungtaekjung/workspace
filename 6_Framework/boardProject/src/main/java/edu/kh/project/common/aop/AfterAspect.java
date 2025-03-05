@@ -13,7 +13,7 @@ public class AfterAspect {
 	
 	@After("CommonPointcut.serviceImplPointcut()")
 	public void afterLog() {
-		log.info("----------------------------------------------------\n\n");
+		log.info("----------------------------------\n\n");
 	}
 
 }

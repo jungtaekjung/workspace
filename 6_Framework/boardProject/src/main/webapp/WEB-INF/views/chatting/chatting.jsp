@@ -25,7 +25,7 @@
 <body>
     <main>
 
-        ${chattingRoomList}
+
 
         <jsp:include page="../common/header.jsp"></jsp:include>
 
@@ -33,6 +33,7 @@
         <button id="addTarget">추가</button>
         <label for="changeTheme" >테마변경</label>
         <input id="changeTheme" type="checkbox" />
+        
 
 
         <div id="addTargetPopupLayer" class="popup-layer-close">  
@@ -61,53 +62,40 @@
    
         <div class="chatting-area">
             <ul class="chatting-list">
-                <c:forEach var="room" items="${chattingRoomList}">
-    
-                   <li class="chatting-item" chat-no="${room.chattingNo}" target-no="${room.targetNo}">
-                      <div class="item-header">
-                         <c:if test="${not empty room.targetProfile}">
-                            <img class="list-profile" src="${room.targetProfile}">
-                         </c:if>
-                         <c:if test="${empty room.targetProfile}">
-                            <img class="list-profile" src="/resources/images/user.png">
-                         </c:if>
-                      </div>
-                      <div class="item-body">
-                         <p>
-                            <span class="target-name">${room.targetNickName}</span>
-                            <span class="recent-send-time">${room.sendTime}</span>
-                         </p>
-                         <div>
-                            <p class="recent-message">${room.lastMessage}</p>
-    
-                            <c:if test="${room.notReadCount > 0}">
-                               <p class="not-read-count">${room.notReadCount}</p>
+
+
+                <c:forEach var="list" items="${roomList}">
+
+                    <li class="chatting-item" chat-no="${list.chattingNo}" target-no="${list.targetNo}">
+                        <div class="item-header">
+                            <c:if test="${!empty list.targetProfile}">
+                                <img class="list-profile" src="${list.targetProfile}">
                             </c:if>
-                         </div>
-                      </div>
-                   </li>
+                            <c:if test="${empty list.targetProfile}">
+                                <img class="list-profile" src="/resources/images/user.png">
+                            </c:if>
+                        </div>
+                        <div class="item-body">
+                            <p>
+                                <span class="target-name">${list.targetNickName}</span>
+                                <span class="recent-send-time">${list.sendTime}</span>
+                            </p>
+                            <div>
+                                <p class="recent-message">${list.lastMessage}</p>
+    
+                                <c:if test="${list.notReadCount>0}">
+                                    <p class="not-read-count">${list.notReadCount}</p>
+                                </c:if>
+                            </div>
+                        </div>
+                    </li>
                 </c:forEach>
-             </ul>
+            </ul>
 
 
             <div class="chatting-content">
                 <ul class="display-chatting">
-                    <!-- <li class="my-chat">
-                        <span class="chatDate">12:11</span>
-                        <p class="chat">오늘 수업 어땠어?</p>
-                    </li>
-
-
-                    <li class="target-chat">
-                        <img src="/resources/images/user.png">
-
-
-                        <div>
-                            <b>유저이</b>  <br>
-                            <p class="chat">채팅 배웠는데 너무 재밌어!<br>혜선쌤 강의는 최고야! 짜릿해~</p>
-                            <span class="chatDate">14:05</span>
-                        </div>
-                    </li> -->
+   
                 </ul>  
            
                 <div class="input-area">
@@ -129,8 +117,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
    
     <script>
-        // 로그인한 회원 번호
-        const loginMemberNo = "${loginMember.memberNo}"
+        //로그인한 회원 번호
+        const loginMemberNo = "${loginMember.memberNo}";
+        const loginMemberNickname = "${loginMember.memberNickname}"
     </script>
 
     <script src="/resources/js/chatting/chatting.js"></script>

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.Session;
+import javax.management.Query;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,25 +80,25 @@ public class BoardController {
 			,Model model
 			,@RequestParam Map<String, Object> paramMap // 전달받은 파라미터들
 			) {
+		
+		//boardCode 확인
+		//System.out.println("boardCode:"+boardCode);
+		
+		
 
-		
-		
-		if(paramMap.get("key") == null) { // 검색어가 없을 경우
-			
+		if(paramMap.get("key")==null) { 	//검색어가 없을 경우
 			//게시글 목록 조회 서비스 호출
 			Map<String, Object> map = service.selectBoardList(boardCode,cp);
 			
 			// 조회 결과를 request scope에 세팅 후 forward
 			model.addAttribute("map",map);
-		
-		}else { // 검색어가 있을 경우
 			
-			paramMap.put("boardCode", boardCode);
+		}else { //검색어가 있을 경우
 			
-			//게시글 목록 조회 서비스 호출
+			paramMap.put("boardCode",boardCode);
+			
 			Map<String, Object> map = service.selectBoardList(paramMap,cp);
 			
-			// 조회 결과를 request scope에 세팅 후 forward
 			model.addAttribute("map",map);
 			
 		}
@@ -105,34 +106,8 @@ public class BoardController {
 		
 		
 
-		
 		return "board/boardList";
 	}
-	
-	
-		//게시글 목록 조회
-		@GetMapping("/search")
-		public String selectBoardList(@RequestParam(value="cp",required=false,defaultValue="1") int cp
-				,Model model
-				,@RequestParam Map<String, Object> paramMap // 전달받은 파라미터들
-				) {
-
-			
-			
-				
-				//게시글 목록 조회 서비스 호출
-				Map<String, Object> map = service.selectBoardList(paramMap,cp);
-				
-				// 조회 결과를 request scope에 세팅 후 forward
-				model.addAttribute("map",map);
-			
-				
-				
-				return"board/boardSearchList";
-			}
-	
-	
-	
 	
 	//게시글 상세조회
 	@GetMapping("/{boardCode}/{boardNo}")
@@ -294,31 +269,65 @@ public class BoardController {
 	public int like(@RequestBody Map<String, Integer> paramMap){
 		//System.out.println("paramMap : "+ paramMap );
 		return service.like(paramMap);
+		
 	}
 	
-	// 헤더 검색
-	@GetMapping(value="/headerSearch", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public List<Map<String, Object>> headerSearch(String query){
-		return service.headerSearch(query);
-	}
 	
+	//게시글 통합검색
+	@GetMapping("/search")
+	public String searchList(@RequestParam(value="cp",required=false,defaultValue="1") int cp
+			,Model model
+			,@RequestParam Map<String, Object> paramMap // 전달받은 파라미터들
+			) {
+		
+		
+			Map<String, Object> map = service.selectBoardList(paramMap,cp);
+			
+			// 조회 결과를 request scope에 세팅 후 forward
+			
+			
+			model.addAttribute("map",map);
+			
+		
+		
+		return "board/boardSearchList";
+	}
 	
 	//게시글 자동완성
 	@GetMapping("/autocomplete")
 	@ResponseBody
 	public Map<String, Object> autocomplete(Model model
 			,@RequestParam Map<String, Object> paramMap) {
-
+		
+		System.out.println(paramMap);
 		Map<String, Object> map = service.autocomplete(paramMap);
-
-
+		
+		
+		
 		return map;
-	}   
+	}
+	
+	   // 헤더 검색
+    @GetMapping(value="/headerSearch", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public List<Map<String, Object>> headerSearch(String query){
+       return service.headerSearch(query);
+    }
+	
 
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

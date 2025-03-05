@@ -42,10 +42,10 @@
                     <input type="search" name="query" id="query"
                     placeholder="검색어를 입력해주세요."
                     autocomplete="off" value="${param.query}">
+              
 
-                    <!-- 통합(제목) 검색 -->
-                     <input type="hidden" name="key" value="all">
-
+                    <!-- 통합 (제목) 제목 검색-->
+                    <input type="hidden" name="key" value="all">
 
                     <!-- 검색 버튼 -->
                     <!-- button type="submit" 이 기본값 -->
@@ -54,10 +54,17 @@
                 </fieldset>
 
             </form>
-            <div id="autocomplete"></div>
-        </article>
+         
 
+                <div id="autocomplete">
+                    
+                </div>
+         
+            
+        </article>
+        
     </section>
+
 
 
     <section></section>
@@ -86,7 +93,7 @@
             </c:otherwise>
         </c:choose>
     </div>
-    <script src="/resources/js/board/headerMine.js"></script>
+    
 </header>
 
 <nav>
@@ -107,3 +114,4 @@
         
     </ul>
 </nav>
+<script src="/resources/js/header.js"></script>

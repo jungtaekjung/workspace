@@ -1,6 +1,7 @@
 package edu.kh.project.common.filter;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -21,8 +22,7 @@ import edu.kh.project.member.model.dto.Member;
 
 // @WebFilter : 해당 클래스를 필터로 등록하고 지정된 주소로 요청이 올 때 마다 동작
 @WebFilter(filterName="loginFilter",
-			urlPatterns={"/myPage/*","/board2/*"})
-						 
+			urlPatterns={"/myPage/*", "/board2/*","/chatting/*"})
 public class LoginFilter implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {
@@ -59,11 +59,7 @@ public class LoginFilter implements Filter {
 			// 4.로그인 상태인 경우 다음 필터 또는 DispatcherServlet으로 전달
 			chain.doFilter(request, response);
 		}
-		
 			
-
 	}
-
-
 
 }

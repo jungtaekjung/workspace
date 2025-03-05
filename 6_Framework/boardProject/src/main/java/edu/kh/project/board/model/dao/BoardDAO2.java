@@ -1,6 +1,5 @@
 package edu.kh.project.board.model.dao;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -98,5 +97,4 @@ public class BoardDAO2 {
 		return sqlSession.selectOne("boardMapper.checkImage",deleteMap);
 	}
 
-	
 }

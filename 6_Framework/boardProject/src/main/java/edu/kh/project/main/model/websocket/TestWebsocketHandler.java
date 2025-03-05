@@ -13,56 +13,51 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class TestWebsocketHandler extends TextWebSocketHandler{
 	
 	// WebSocketSession : 클라이언트 - 서버간 전이중통신을 담당하는 객체
-	//				      클라이언트의 세션을 가로채서 저장하고 있음
+	//					  클라이언트의 세션을 가로채서 저장하고 있음
 	
 	private Set<WebSocketSession> sessions = Collections.synchronizedSet(new HashSet<>());
 	
 	// synchronizedSet : 동기화된 Set 객체 반환
 	// -> 멀티쓰레드(줄 안서고 기능들이 서로 실행되려고 함) 환경에서
-	// 	  쓰레드간의 의도치 않은 충돌을 예방하기 위해서 동기화(줄세움)
-
+	//	  쓰레드간의 의도치않은 충돌을 예방하기 위해서 동기화(줄세움)
 	
-	// - 클라이언트와 연결이 완료되고, 통신할 준비가 되면 실행
+	// -클라이언트와 연결이 완료되고, 통신할 준비가 되면 실행
+	
+
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		
 		// 클라이언트가 웹소켓 연결을 요청하면 sessions에
-		// 클라이언트와의 전이중 통신을 담당하는 객체 WebSocketSession을 추가
+		// 클아이언트와의 전이중 통신을 담당하는 객체 WebsocketSession을 추가
 		sessions.add(session);
 	}
 
 	// - 클라이언트로부터 텍스트 메세지를 받았을 때 실행
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-	
+		
 		// payload : 통신 시 탑재된 데이터(메세지)
 		System.out.println("전달 받은 메세지 : " + message.getPayload());
 		
-		// /testSock/로 연결된 클라이언트들(sessions)에게 전달받은 내용 보내기
-	
-		for( WebSocketSession s: sessions) {
+		// /testSock/로 연결된 클라이언트를 (sessions)에게 전달받은 내용 보내기
+		for(WebSocketSession s :sessions) {
 			s.sendMessage(message);
 		}
-	}
-	
-	
-
-	@Override
-	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
 	}
 
 	// - 클라이언트와 연결이 종료되면 실행
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-	
+		
 		// sessions에서 나간 클라이언트의 정보를 제거
 		sessions.remove(session);
 	}
+	
+	
+	
+	
 
-	
-	
-	
 }
+
 /* WebSocket
 - 브라우저와 웹서버간의 전이중통신을 지원하는 프로토콜이다
 - HTML5버전부터 지원하는 기능이다.

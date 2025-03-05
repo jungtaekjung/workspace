@@ -34,10 +34,8 @@ public class Board {
 	   
 	   // 댓글 목록
 	   private List<Comment> commentList;
-
 	   
 	   //보드네임
-	    private String boardName;
-
+	   private String boardName;
 
 }

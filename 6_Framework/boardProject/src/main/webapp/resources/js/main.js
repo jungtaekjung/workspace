@@ -174,34 +174,35 @@ btn3.addEventListener("click",function(){
     })
     .catch(err => {console.log(err)});
     
-})
+});
 
-// -------------------------------------------------------
+//--------------------------------------------
 // 웹소켓 테스트
 
 // 1. SockJS 라이브러리 추가(main.jsp)
 
 // 2. SockJS를 이용해서 클라이언트용 웹소켓 객체 생성
+
 let testSock = new SockJS("/testSock/");
 
 function sendMessage(name, str){
 
-    // 매개변수를 JS객체에 저장
+    // 매개변수를 JS 객체에 저장
     let obj = {}; // 비어있는 객체
 
     obj.name = name; // 객체에 일치하는 key가 없다면 자동으로 추가
     obj.str = str;
 
-    // console.log(obj);
+    //console.log(obj)
 
-    // 웹소켓이 연결된 곳으로 메세지를 보냄
-    testSock.send(JSON.stringify(obj));
-                    // JS객체 -> JSON
-    
+    //웹소켓이 연결된 곳으로 메세지를 보냄
+    testSock.send( JSON.stringify(obj) );
+                    //JS객체 -> JSON
+
 }
 
-// 웹소켓 객체(testSock)가 서버로 부터 전달받은 메세지가 있을 경우
-testSock.onmessage = e => {
+//웹 소켓 객체(testSock)가 서버로 부터 전달받은 메세지가 있을 경우
+testSock.onmessage = e =>{
     // e : 이벤트 객체
     // e.data : 전달 받은 메세지(JSON)
 

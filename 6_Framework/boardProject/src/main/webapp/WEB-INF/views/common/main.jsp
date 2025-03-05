@@ -134,7 +134,7 @@
                     <c:otherwise>
                         <article class="login-area">
 
-                            <a href="/myPage/info">
+                            <a href="/myPage/profile">
                                 <!--프로필 이미지가 있는 경우-->
                         <c:if test="${!empty loginMember.profileImage}">
                             <img src="${loginMember.profileImage}" id="memberProfile">
@@ -173,7 +173,8 @@
     <%-- footer --%>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
-    <!--SockJS 추가 -->
+
+    <!-- SockJS 추가-->
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
     <!-- main.js 추가 -->

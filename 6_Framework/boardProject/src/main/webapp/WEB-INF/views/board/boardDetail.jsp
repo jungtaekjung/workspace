@@ -192,10 +192,13 @@
         const loginMemberNo = "${loginMember.memberNo}";
 
         const boardNo = "${board.boardNo}";
+        const boardCode = "${boardCode}";
 
-        const boardCode = '${boardCode}';
+        // 로그인한 회원의 닉네임
+        const memberNickname = '${loginMember.memberNickname}'
 
-        
+        //게시글 제목
+        const boardTitle="${board.boardTitle}"
 
     </script>
 

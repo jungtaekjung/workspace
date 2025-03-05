@@ -10,7 +10,7 @@
 
             <!-- 부모/자식 댓글 -->
             <c:forEach items="${board.commentList}" var="comment">
-                <li class="comment-row <c:if test='${comment.parentNo !=0}'>child-comment</c:if>">
+            <li id="c${comment.commentNo}" class="comment-row <c:if test='${comment.parentNo !=0}'>child-comment</c:if>">
                 <p class="comment-writer">
 
 
@@ -36,16 +36,14 @@
                     </p>
                     <!-- 버튼 영역 -->
                     <div class="comment-btn-area">
-
-                        <!-- 로그인 한 경우 -->
-                         <c:if test="${!empty loginMember}">
-                             <button onclick="showInsertComment(${comment.commentNo},this)">답글</button>   
-                         </c:if>
+                        <c:if test="${!empty loginMember}">
+                            <button onclick="showInsertComment(${comment.commentNo},this)">답글</button>   
+                        </c:if>
                             
                         <!-- 로그인 회원과 댓글 작성자가 같은 경우 --> 
                         <c:if test="${loginMember.memberNo == comment.memberNo}">
-                            <button onclick="showUpdateComment(${comment.commentNo}, this)">수정</button>
-                            <button onclick="deleteComment(${comment.commentNo}, this)">삭제</button>
+                            <button onclick="showUpdateComment(${comment.commentNo},this)">수정</button>     
+                            <button onclick="deleteComment(${comment.commentNo})">삭제</button>
                         </c:if> 
                     </div>
                 </li>
@@ -53,7 +51,7 @@
 
 
 
-           
+   
 
         </ul>
     </div>

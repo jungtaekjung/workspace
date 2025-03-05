@@ -44,7 +44,7 @@ function roomListAddEvent(){
             // 현재 클릭한 채팅방에 select 클래스 추가
             item.classList.add("select");
 
-            // 비동기로 메세지 목록을 조회하는 함수 호출
+            //비동기로 메세지 목록을 조회하는 함수 호출
             selectMessageList();
 
 
@@ -140,60 +140,52 @@ function chattingEnter(e){
 
     const targetNo = e.currentTarget.getAttribute("data-id");
 
-    fetch("/chatting/enter?targetNo="+targetNo)
-    .then(resp=>resp.text())
-    .then(chattingNo => {
+    fetch("/chatting/enter?targetNo=" + targetNo)
+    .then(resp => resp.text())
+    .then(chattingNo =>{
+        // console.log(chattingNo)
 
         selectRoomList(); // 채팅방 목록 조회
 
-        setTimeout(() =>{
+        setTimeout(()=>{
 
-            
-            // 존재하는 채팅방이 있으면 클릭해서 입장
+            //존재하는 채팅방이 있으면 클릭해서 입장
             const itemList = document.querySelectorAll(".chatting-item");
             for(let item of itemList){
-                if(item.getAttribute("chat-no") == chattingNo){
+                
+                //목록에 채팅방이 존재한다면
+                if(item.getAttribute("chat-no")== chattingNo){
+    
                     // 팝업 닫기
-                    addTargetPopupLayer.classList.toggle("popup-layer-close")
+                    addTargetPopupLayer.classList.add("popup-layer-close");
+              
                     // 사용자 검색 결과 삭제
                     resultArea.innerHTML="";
                     // 검색어 삭제
-                    targetInput.value ="";
-                    
+                    targetInput.value="";
+    
+                    // 해당 채팅방 클릭
                     item.click();
-                    
-                    return;
+    
+                    return; //일치하는거 어짜피 하나라 바로 리턴
                 }
+                
             }
         },150);
+
     })
-    .catch(e=> console.log(e))
+    .catch(e => console.log(e))
+
 }
 
-
-
-
-
-
-
-
-
-
-
-//문서 로딩 완료 후 수행할 기능
-
-// document.addEventListener("DOMContentLoaded", roomListAddEvent());
-
-
-
-
-
-// 비동기로 채팅방 목록 조회
+//비동기로 채팅방 목록 조회
 function selectRoomList(){
+
     fetch("/chatting/roomList")
     .then(resp => resp.json())
     .then(roomList =>{
-        console.log(roomList);
+        console.log(roomList)
+
         
 
         // 채팅방 목록 출력 영역 선택
@@ -282,19 +274,19 @@ function selectRoomList(){
 
                 // 현재 채팅방을 보고있는 경우
                 // 비동기로 해당 채팅방 글을 읽음으로 표시
-              
-              setTimeout(()=>{
-                
-                  fetch("/chatting/updateReadFlag",{
-                      method : "PUT",
-                      headers : {"Content-Type" : "application/json"},
-                      body : JSON.stringify({"chattingNo" : selectChattingNo , "memberNo" : loginMemberNo})
-                      
+                setTimeout(()=>{
+
+                    fetch("/chatting/updateReadFlag",{
+                        method : "PUT",
+                        headers : {"Content-Type" :  "application/json"},
+                        body : JSON.stringify({"chattingNo" : selectChattingNo , 
+                                                "memberNo" : loginMemberNo})
                     })
-                    .then(resp =>resp.text())
+                    .then( resp => resp.text())
                     .then(result => console.log(result))
-                    .catch(err => console.log(err))
-                }, 300)
+                    .catch(err=> console.log(err))
+
+                },300)
             }
            
 
@@ -303,22 +295,23 @@ function selectRoomList(){
             chattingList.append(li);
         }
 
-        
-        roomListAddEvent();
+
+        roomListAddEvent(); //채팅방 목록에 클릭 이벤트 함수 호출
+
 
 
     })
-    .catch(e=> console.log(e))
+    .catch(e => console.log(e))
+
 }
 
-// 비동기로 메세지 목록 조회하는 함수
+
+//비동기로 메세지 목록 조회하는 함수
 function selectMessageList(){
-    fetch("/chatting/selectMessageList?chattingNo="+selectChattingNo + "&memberNo=" + loginMemberNo)
+    fetch("/chatting/selectMessageList?chattingNo=" + selectChattingNo + "&memberNo=" + loginMemberNo)
     .then(resp => resp.json())
     .then(messageList => {
-        
-        // console.log(messageList)
-    
+       // console.log(messageList)
         const ul = document.querySelector(".display-chatting");
 
 
@@ -377,80 +370,93 @@ function selectMessageList(){
 
 
             ul.append(li);
-            ul.scrollTop = ul.scrollHeight;
+            ul.scrollTop = ul.scrollHeight; //스크롤 제일 밑으로
             
         }
 
-    
     }
-        
-
 
     )
-    .catch(e=> console.log(e))
+    .catch(e=>console.log(e))
 }
 
+
+//----------------------------------------------------
 // sockJS를 이용한 Websocket 구현
 
 let chattingSock;
 
+
 // 로그인이 되어 있는 경우
-// /chattingSock 이라는 요청 주소로 통신할 수 있는 Websocket 생성
-if(loginMemberNo != ''){
+// /chattingSock 이라는 요청 주소로 통신할 수 있는 WebSocket 생성
+if(loginMemberNo !=""){
     chattingSock = new SockJS("/chattingSock");
+
 }
 
-// 채팅 입력 시 
-const send = document.getElementById("send")
+//채팅 입력 시
 
-const sendMessage = () => {
+const send=document.getElementById("send");
+
+const sendMessage = () =>{
     const inputChatting = document.getElementById("inputChatting");
 
-    if(inputChatting.value.trim() !=""){ // 채팅 내용이 있는 경우
+    if(inputChatting.value.trim() != ""){ // 채팅 내용이 있는 경우
         var obj = {
             "senderNo" : loginMemberNo,
-            "targetNo" : selectTargetNo,
-            "chattingNo" : selectChattingNo,
-            "messageContent" : inputChatting.value
+            'targetNo' : selectTargetNo,
+            chattingNo : selectChattingNo,
+            messageContent : inputChatting.value
         };
         console.log(obj);
 
         // JS객체 -> JSON으로 변환하여 전송
-        chattingSock.send(JSON.stringify(obj));
+        chattingSock.send( JSON.stringify(obj) );
 
-        inputChatting.value = ""; // 기존 메세지 내용 삭제
+        
 
+       
+        const content = `<strong>${loginMemberNickname}</strong>님이  채팅을 보냈습니다. <br>${inputChatting.value}`;
+
+        const url = `${location.pathname}?chat-no=${selectChattingNo}`;
+        console.log(url);
+        // type, url,pkNo,content
+            sendNotification(
+                "chatting",
+                url, 
+                selectTargetNo,
+                content
+            );
+            inputChatting.value=""; // 기존 메세지 내용 삭제
+
+
+        
     }else{ // 없는 경우
-        alert("채팅을 입력해주세요");
+        alert("채팅을 입력해 주세요.");
         inputChatting.value="";
-
     }
-
 }
 
 // 엔터 시 메세지 제출
-// shift + enter 시 줄바꿈
-inputChatting.addEventListener("keyup", e=>{
-    // console.log(e.key); // 입력한 값 출력
-    // console.log(e.shiftKey) // shift + enter인 경우 true 반환
+// shift + enter 시 줄 바꿈
+inputChatting.addEventListener("keyup",e=>{
+    //console.log(e.key); // 입력한 값 출력
+    //console.log(e.shiftKey) // shift+enter인 경우 true 반환
 
     if(e.key == "Enter"){
-        if(!e.shiftKey)
+        if(!e.shiftKey){
             sendMessage();
+        }
     }
-
 })
 
 
 // WebSocket 객체 chattingSock이
-// 서버로부터 메세지를 받으면 자동으로 실행될 콜백 함수
-
+// 서버로부터 메세지를 받으면 자동으로 실행 될 콜백 함수
 chattingSock.onmessage = e=>{
-
-    // 전달받은 객체값을 JS 객체로 변환해서 msg 변수에 저장
-    const msg = JSON.parse(e.data);
-    // console.log(msg);
-
+    // 전달 받은 값(JSON)을 JS 객체로 변환해서 obj 변수에 저장
+    const msg= JSON.parse(e.data);
+    //console.log(msg);
     // 현재 채팅방을 보고있는 경우
     if(selectChattingNo == msg.chattingNo){
 
@@ -497,23 +503,75 @@ chattingSock.onmessage = e=>{
    
             div.append(b, br, p, span);
             li.append(img,div);
-            // console.log("gd")
    
         }
    
         ul.append(li)
-        ul.scrollTop = ul.scrollHeight; // 스크롤 제일 밑으로
+        ul.scrollTop = ul.scrollHeight; //스크롤 제일 밑으로
         
     }
     selectRoomList();
+    
 
 
 }
 
 
-// ----------------------------------------------------
 
-// 테마 변경
+
+
+
+//채팅 클릭함수
+function clickFirstChatItem() {
+    
+    const firstItem = document.querySelector('.chatting-list li');
+    if (firstItem) {
+        firstItem.click();
+    }
+}
+//-------------------------------------------------------
+
+//문서 로딩 완료 후 수행할 기능
+
+// document.addEventListener("DOMContentLoaded", roomListAddEvent());
+
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    //채팅방 목록에 클릭 이벤트 추가
+    roomListAddEvent();
+
+    //보내기 버튼에 클릭 이벤트 추가
+    send.addEventListener('click', sendMessage);
+
+    //채팅 알림을 클릭해서 채팅 페이지로 이동한 경우
+    const params =new URLSearchParams(location.search);
+    const chatNo= params.get("chat-no");
+    if(chatNo !=null){
+        const chatItems= document.querySelectorAll(".chatting-item");
+        chatItems.forEach(item => {
+            if(item.getAttribute("chat-no")==chatNo)
+                item.click();
+            return;
+        })
+
+    }else{ // 아닌 경우 == 채팅방 입장 시
+        document.querySelector(".chatting-item")?.click();
+        //채팅방 입장 시 채팅 목록이 존재하는 경우
+    //가장 최근 채팅방에 입장
+    }
+
+    //clickFirstChatItem();
+    
+
+
+
+});
+
+
+
+//-------------------------------------------
+
+//테마 변경
 const changeTheme = document.getElementById("changeTheme"); // checkbox
 
 // localStorage : 브라우저에 key-value 값을 Storage에 저장할 수 있다.
@@ -523,51 +581,34 @@ const isUserColorTheme = localStorage.getItem('color-theme');
 const isOsColorTheme = window.matchMedia('(prefers-color-scheme: pink)').matches ? 'pink' : 'light';
 // prefers-color-scheme : CSS 미디어 특성을 이용해 사용자의 OS가 사용하는 테마를 감지
 
-// 사용자의 테마 를 얻어오는 함수
+// 사용자의 테마를 얻어오는 함수
 const getUserTheme = () =>(isUserColorTheme ? isUserColorTheme : isOsColorTheme);
 
-// 문서의 모든 컨텐츠가 로드된 경우
-window.onload = () =>{
-    if(getUserTheme() == 'light'){ // light 모드인 경우
-        document.documentElement.setAttribute('color-theme','light');
+//문서의 모든 콘텐츠가 로드된 경우
+window.onload= ()=>{
+    if(getUserTheme() == 'light'){ // light모드인 경우
+        document.documentElement.setAttribute('color-theme','light'); // html태그에 color-theme 속성 추가
         localStorage.setItem('color-theme','light');
     }else{ // pink 모드인 경우
         document.documentElement.setAttribute('color-theme','pink');
         localStorage.setItem('color-theme','pink');
-        changeTheme.setAttribute('checked',true);
-
+        changeTheme.setAttribute("checked",true);
     }
+
 }
 
 // 테마 변경 버튼 클릭 시
-changeTheme.addEventListener('click',e=>{
-    if(e.target.checked){ // 체크된 경우
+changeTheme.addEventListener("click",e=>{
+    if(e.target.checked){ //체크된 경우
         document.documentElement.setAttribute('color-theme','pink');
-        // html 태그에 color-theme 속성 추가
+        // html태그에 color-theme 속성 추가
 
         localStorage.setItem('color-theme','pink');
 
-    }else{ // 체크 해제된 경우
+    }else{//체크 해제된 경우
         document.documentElement.setAttribute('color-theme','light');
-
         localStorage.setItem('color-theme','light');
-    }
+    } 
 })
 
-
-
-document.addEventListener("DOMContentLoaded", ()=>{
-    //채팅방 목록에 클릭 이벤트 추가
-    roomListAddEvent();
-
-    // 보내기 버튼에 이벤트 추가
-    send.addEventListener('click', sendMessage);
-
-    setTimeout(() => {
-        const firstChattingItem = document.querySelector(".chatting-item");
-        if (firstChattingItem) {
-            firstChattingItem.click(); 
-        }
-    }, 100); 
-    
-});
+//테마 변경

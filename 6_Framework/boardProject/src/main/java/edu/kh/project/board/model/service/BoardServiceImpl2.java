@@ -141,7 +141,7 @@ public class BoardServiceImpl2 implements BoardService2{
 	public int boardUpdate(Board board, List<MultipartFile> images, String webPath, String filePath,
 			String deleteList) throws IllegalStateException, IOException {
 
-		
+		//XSS 방지 처리
 		board.setBoardTitle(Util.XSSHandling(board.getBoardTitle()));
 		board.setBoardContent(Util.XSSHandling(board.getBoardContent()));
 		
@@ -280,8 +280,5 @@ public class BoardServiceImpl2 implements BoardService2{
 	public int deleteBoard(int boardNo) {
 		return dao.boardDelete(boardNo);
 	}
-
-
-
 
 }

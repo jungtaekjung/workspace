@@ -1,26 +1,24 @@
-console.log("comment.js 연결");
-
 // 댓글 목록 조회
 function selectCommentList(){
 
-    // REST(REpresentational State Transfer) API
+    //REST(REpresentational State Transfer) API
     // - 자원을 이름으로 구분(REpresentational)하여
     //   자원의 상태(State)를 주고 받는 것(Transfer)
 
     // -> 주소를 명시하고
-    // Http Method(GET, POST, PUT, DELETE)를 이용해
+    // Http Method(GET,POST,PUT,DELETE)를 이용해
     // 지정된 자원에 대한 CRUD 진행
 
-    // Create   : 생성, 삽입(POST)
-    // Read     : 조회(GET)
-    // Update   : 수정(PUT,PATCH)
-    // DELETE   : 삭제(DELETE)
+    // Create : 생성, 삽입(POST)
+    // Read   : 조회(GET)
+    // Update : 수정(PUT,PATCH)
+    // DELETE : 삭제(DELETE)
 
-    // 기본적으로 form 태그는 GET/POST만 지원
+    // 기본적으로 form 태그는 GET/POST 만 지원
     
-    fetch("/comment?boardNo="+ boardNo) // Get방식은 주소에 파라미터 담아서 전달
+    fetch("/comment?boardNo="+boardNo) // Get방식은 주소에 파라미터 담아서 전달
     .then(resp => resp.json()) // 응답 객체 -> 파싱
-    .then(cList => { // qList : 댓글 목록
+    .then(cList => { // cList : 댓글 목록
         console.log(cList);
 
         // 화면에 출력되어 있는 댓글 목록 삭제
@@ -153,26 +151,47 @@ addComment.addEventListener("click", e => { // 댓글 등록 버튼이 클릭이
     }
 
     // 3) AJAX를 이용해서 댓글 내용 DB에 저장(INSERT)
+    /*
+    const data = {"commentContent" : commentContent.value,
+                    "memberNo" : loginMemberNo,
+                    "boardNo" : boardNo};
+                    data로 보내도 됨, 근대 따로 보낼거임
+                    */
+
     fetch("/comment",{
-        method : "POST",
-        headers : {
-            "Content-Type" : "application/json"
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
         },
-        body : JSON.stringify({
+        body: JSON.stringify({
             boardNo : boardNo,
-            memberNo : loginMemberNo,
-            commentContent : commentContent.value
+            memberNo:loginMemberNo,
+            commentContent: commentContent.value
         })
     })
-    .then(resp => resp.text())
-    .then(result => {
-        if(result > 0){ // 등록 성공
+    .then(resp => resp.json())
+    .then(commentNo => {
+        if(commentNo > 0){ // 등록 성공
             alert("댓글이 등록되었습니다.");
 
             commentContent.value = ""; // 작성했던 댓글 삭제
 
             selectCommentList(); // 비동기 댓글 목록 조회 함수 호출
             // -> 새로운 댓글이 추가되어짐
+
+        //댓글을 작성 한 경우
+        //게시글 작성자에게 알림 전송
+
+        //알림 클릭 시 작성된 댓글 위치로 바로 이동
+        //->url에 댓글 번호 추가(?cn=댓글번호)
+            const content = `<strong>${memberNickname}</strong>님이 <strong>${boardTitle}</strong> 게시글에 댓글을 작성했습니다.`;
+            // type, url,pkNo,content
+                sendNotification(
+                    "insertComment",
+                    `${location.pathname}?cn=${commentNo}`, // 게시글 상세조회 페이지 주소
+                    boardNo,
+                    content
+                );
 
         } else { // 실패
             alert("댓글 등록에 실패했습니다...");
@@ -188,14 +207,17 @@ function deleteComment(commentNo){
 
     if( confirm("정말로 삭제 하시겠습니까?") ){
 
+        const data = {
+            "memberNo" : loginMemberNo,
+            "commentNo" : commentNo};
+    
+            
         fetch("/comment",{
-            method : "DELETE",
-            headers : {
-                "Content-Type" : "application/json"
+            method:"DELETE",
+            headers:{
+                "Content-Type":"application/json"
             },
-            body : JSON.stringify({
-                commentNo : commentNo
-            })
+            body: JSON.stringify(data)
         })
         .then(resp => resp.text())
         .then(result => {
@@ -319,17 +341,19 @@ function updateComment(commentNo, btn){
     // 새로 작성된 댓글 내용 얻어오기
     const commentContent = btn.parentElement.previousElementSibling.value;
 
+    const data = {"commentContent" : commentContent,
+        "memberNo" : loginMemberNo,
+        "commentNo" : commentNo};
+
+        
     fetch("/comment",{
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json"
         },
-        body: JSON.stringify({
-            commentNo: commentNo,
-            commentContent: commentContent
-        })
+        body: JSON.stringify(data)
     })
-    .then(resp=>resp.json())
+    .then(resp => resp.text())
     .then(result => {
         if(result > 0){
             alert("댓글이 수정되었습니다.");
@@ -355,7 +379,7 @@ function showInsertComment(parentNo, btn){
     // ** 답글 작성 textarea가 한 개만 열릴 수 있도록 만들기 **
     const temp = document.getElementsByClassName("commentInsertContent");
 
-    if(temp.length > 0){ // 답글 작성 textarea가 이미 화면에 존재하는 경우
+    if(temp.length > 0){ // 답글 작성 textara가 이미 화면에 존재하는 경우
 
         if(confirm("다른 답글을 작성 중입니다. 현재 댓글에 답글을 작성 하시겠습니까?")){
             temp[0].nextElementSibling.remove(); // 버튼 영역부터 삭제
@@ -427,30 +451,43 @@ function insertChildComment(parentNo, btn){
     }
 
 
+    const data = {"commentContent" : commentContent,
+        "memberNo" : loginMemberNo,
+        "boardNo" : boardNo,
+        "parentNo" : parentNo};
 
+        
     fetch("/comment",{
-        method : "POST",
-        headers : {
-            "Content-Type" : "application/json"
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
         },
-        body : JSON.stringify({
-            boardNo : boardNo,
-            memberNo : loginMemberNo,
-            commentContent : commentContent,
-            parentNo : parentNo
-        })
+        body: JSON.stringify(data)
     })
-    .then(resp => resp.text())
-    .then(result => {
-        if(result > 0){ // 등록 성공
+    .then(resp => resp.json())
+    .then(commentNo => {
+        if(commentNo > 0){ // 등록 성공
             alert("답글이 등록되었습니다.");
             selectCommentList(); // 비동기 댓글 목록 조회 함수 호출
+
+            //답글(대댓글)을 작성한 경우
+            // 부모 댓글 작성자에게 OOO님이 답글을 작성했습니다. 알림 전송
+        const content = `<strong>${memberNickname}</strong>님이  답글을 작성했습니다.`;
+        // type, url,pkNo,content
+            sendNotification(
+                "insertChildComment",
+                `${location.pathname}?cn=${commentNo}`, 
+                parentNo,
+                content
+            );
 
         } else { // 실패
             alert("답글 등록에 실패했습니다...");
         }
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err)
+  
+);
 
 
 }

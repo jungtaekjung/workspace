@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/event-stream; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link rel="stylesheet" href="/resources/css/main-style.css">
@@ -7,7 +7,21 @@
 <script src="https://kit.fontawesome.com/385a4842a7.js" crossorigin="anonymous"></script>
 <script src="/resources/js/header.js"></script>
 
+<script>
+    /*알림 관련 전역 변수*/
+
+    // 현재 접속한 클라이언트가 로그인한 상태인지 확인하는 변수
+    // -> 알림은 로그인한 회원만 받을수 있기 때문에
+
+    const notificationLoginCheck = "${loginMember}" ? true : false;
+
+    console.log(notificationLoginCheck);
+</script>
+
+
 <header>
+   
+  
     <section>
         <!-- 클릭 시 메인 페이지로 이동하는 로고 -->
         <a href="/">
@@ -55,14 +69,32 @@
             </form>
 
             <ul id="searchResult" class="close"></ul>
+
         </article>
 
     </section>
 
 
-    <section></section>
+    <section>
+        <!-- 알림 영역 -->
+         <c:if test="${!empty loginMember}">
+            <div class="notification-container">
+                <!-- 알림 버튼 -->
+                 <button class="notification-btn fa-regular fa-bell" id="my-element">
+
+                    <!-- 알림 개수 표시 -->
+                     <div class="notification-count-area"></div>
+                 </button>
+
+                 <!-- 알림 목록 -->
+                  <ul class="notification-list"></ul>
+            </div>
+         </c:if>
+    </section>
     
     <!-- 우측 상단 드롭다운 메뉴 -->
+
+
     
     <div class="header-top-menu">
        <c:choose>
@@ -73,7 +105,7 @@
           <c:otherwise>
              <!-- 로그인 O -->
              <label for="headerMenuToggle">
-                닉네임 <i class="fa-solid fa-caret-down"></i>
+                ${loginMember.memberNickname} <i class="fa-solid fa-caret-down"></i>
              </label>
              
              <input type="checkbox" id="headerMenuToggle">
@@ -100,11 +132,12 @@
             <li><a href="/board/${boardType.BOARD_CODE}">${boardType.BOARD_NAME}</a></li>
         </c:forEach>
 
-        <!-- 로그인 시 채팅 노출 -->
+        <!-- 로그인 시 채팅 노출-->
          <c:if test="${!empty loginMember}">
             <li><a href="/chatting">채팅</a></li>
          </c:if>
 
     </ul>
 </nav>
+
 

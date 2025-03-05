@@ -92,7 +92,7 @@
 	position: relative;
 }
 
-
+/*손가락모양*/
 .child-comment:before {
 	content: "\f0a4";
 	font-family: "FontAwesome";

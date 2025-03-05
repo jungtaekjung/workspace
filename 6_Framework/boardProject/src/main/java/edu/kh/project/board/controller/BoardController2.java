@@ -176,7 +176,7 @@ public class BoardController2 {
 	
 	
 	
-		//게시글 삭제
+	//게시글 삭제
 		@GetMapping("/{boardCode:[0-9]+}/{boardNo}/delete")
 		public String boardDelete(	@PathVariable("boardNo") int boardNo,
 				@PathVariable("boardCode") int boardCode

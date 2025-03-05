@@ -1,7 +1,6 @@
 console.log("boardDetail.js연결")
 
 
-
 const boardLike=document.getElementById("boardLike");
 //좋아요 버튼이 클릭 되었을 때
 
@@ -55,6 +54,20 @@ boardLike.addEventListener("click", e=>{
         e.target.nextElementSibling.innerText=count;
         // document.getElementById("likeCount").innerText=count;
 
+
+        //좋아요를 한 경우
+        //게시글 작성자에게 알림 전송
+        if(check==0){//if시작
+        const content = `<strong>${memberNickname}</strong>님이 <strong>${boardTitle}</strong> 게시글을 좋아합니다.`;
+        // type, url,pkNo,content
+            sendNotification(
+                "boardLike",
+                location.pathname, // 게시글 상세조회 페이지 주소
+                boardNo,
+                content
+            );
+        }//if끝
+
     })
     .catch(err=>{ //예외 발생 시 처리하는 코드
         console.log(err);
@@ -91,25 +104,24 @@ deleteBtn?.addEventListener("click",function(){
 //삭제 서비스 호출 실패 시 ->해당 게시글 상세조회 화면 "게시글 삭제 실패" 알림창 출력 
 
 
-// ---------------------------------------------------------------------------
+//-----------------------
 
-// 목록으로
-const goToListBtn = document.getElementById('goToListBtn');
+//목록으로
 
-goToListBtn.addEventListener("click",()=>{
+document.getElementById("goToListBtn").addEventListener("click",()=>{
 
     // URL 내장 객체 : 주소 관련 정보를 나타내는 객체
     // URL.searchParams : 쿼리스트링만 별도 객체로 반환
-    const params= new URL(location.href).searchParams;
+    const params = new URL(location.href).searchParams
 
     let url;
 
-    if(params.get("key")=='all'){ // 통합 검색인 경우
-        url = '/board/search';
+    if(params.get("key") == 'all'){ //통합 검색인 경우
+        url='/board/search';
     }else{
-        url = '/board/'+ boardCode;
+        url='/board/' + boardCode;
     }
 
-    location.href = url + location.search;
-                          // 쿼리스트링만 반환
+    location.href= url + location.search;
+                        //쿼리스트링만 반환
 })

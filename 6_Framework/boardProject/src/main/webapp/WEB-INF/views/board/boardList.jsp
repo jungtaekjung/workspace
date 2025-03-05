@@ -14,10 +14,10 @@
 </c:forEach> -->
 <c:set var="boardName" value="${boardTypeList[boardCode-1].BOARD_NAME}"></c:set>
 
-<!-- 검색을 진행한 경우 파라미터(key, query)를 쿼리스트링 형태로 저장한 변수 선언-->
- <c:if test="${!empty param.query}">
+<!--검색을 진행한 경우 파라미터(key,query)를 쿼리스트링 형태로 저장한 변수 선언-->
+<c:if test="${!empty param.query}">
     <c:set var="qs" value="&key=${param.key}&query=${param.query}"/>
- </c:if>
+</c:if>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -38,10 +38,9 @@
         <section class="board-list">
 
             <h1 class="board-name">${boardName}</h1>
-
-        <c:if test="${!empty param.query}">
-            <h3 style="margin : 30px;">"${param.query}" 검색 결과</h3>
-        </c:if>
+            <c:if test="${!empty param.query}">
+                <h3 style="margin:30px">"${param.query}" 검색 결과</h3>
+            </c:if>
 
 
             <div class="list-wrapper">
@@ -76,7 +75,7 @@
                                             <c:if test="${!empty board.thumbnail}">
                                                 <img class="list-thumbnail" src="${board.thumbnail}">
                                             </c:if> 
-    										<%-- ${boardCode} : @PathVariable로 request scope에 추가된 값 --%>
+    										<%-- ${boardCode} : @Pathvariable로 request scope에 추가된 값 --%>
                                             <a href="/board/${boardCode}/${board.boardNo}?cp=${pagination.currentPage}${qs}">${board.boardTitle}</a>   
                                             [${board.commentCount}]                        
                                         </td>
@@ -145,15 +144,19 @@
 
                 <select name="key" id="searchKey">
                     <option value="t">제목</option>
-                    <option value="c">내용</option>
+                    <option value="c" >내용</option>
                     <option value="tc">제목+내용</option>
                     <option value="w">작성자</option>
                 </select>
 
-                <input type="text" name="query"  id="searchQuery" placeholder="검색어를 입력해주세요.">
+                <!--param.query 도 가능-->
+                <input type="text" name="query"  id="searchQuery" placeholder="검색어를 입력해주세요."
+                >
 
                 <button>검색</button>
             </form>
+
+
 
         </section>
     </main>
