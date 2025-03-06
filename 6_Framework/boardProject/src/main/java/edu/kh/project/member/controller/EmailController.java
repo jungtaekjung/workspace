@@ -28,7 +28,7 @@ public class EmailController {
     @GetMapping("/signUp")
     @ResponseBody
     public int signUp(String email) {
-        return service.signUp(email, "회원 가입");
+        return service.signUp(email, "회원 3가입");
     }
     
     

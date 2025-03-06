@@ -228,21 +228,23 @@ const connectSse = () => {
                             //채팅 알림인 경우 채팅방번호, 알림번호 추가로 얻어옴
 
         // 채팅 알림을 받았는데 해당 채팅방에 입장한 상태인 경우 알림 X
+    try{
 
         if(selectChattingNo==obj.chattingRoomNo){
             fetch("/notification", {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 body: obj.notificationNo
-              })
-              .then(resp => {
+            })
+            .then(resp => {
                 if(!resp.ok) throw new Error("채팅 알림 삭제 실패");
-              })
-              .catch(err => console.log(err));
-
-              return;
-
+            })
+            .catch(err => console.log(err));
+            
+            return;
+            
         }
+    }catch(e){}
 
 
         //종 버튼에 색 추가
