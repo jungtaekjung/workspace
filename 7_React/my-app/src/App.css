@@ -6,3 +6,5 @@ h1{
   background-color: yellow;
   
 }
+
+.completed{text-decoration: line-through;}

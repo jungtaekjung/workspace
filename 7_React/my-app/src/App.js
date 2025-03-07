@@ -6,6 +6,10 @@ import Ex1 from './components/Exam1'; // .js 생략가능
 import Ex2 from './components/Exam2'; // .js 생략가능
 import PropsEx from './components/R1_props'; // .js 생략가능
 import State1 from './components/R2_state1'; // .js 생략가능
+import State2 from './components/R3_state2'; // .js 생략가능
+import State3 from './components/R4_state3'; // .js 생략가능
+import TodoList from './components/R5_todoList'; // .js 생략가능
+import ContextApi from './components/R6_contextApi'; // .js 생략가능
 
 
 function App() {
@@ -16,17 +20,20 @@ function App() {
     <>
     {/* jsx 주석 */}
 
-    <h1 className='temp' style={ {color : 'red', fontSize : '20px'} }>Hello React</h1>
+    {/* <h1 className='temp' style={ {color : 'red', fontSize : '20px'} }>Hello React</h1> */}
       {/* inline 방식으로 style 추가 시 : style ={ { 스타일명 : '값' } }  */}
 
-    <div>리액트 첫걸음</div>
+    {/* <div>리액트 첫걸음</div> */}
 
     {/* <Ex1 /> */}
     {/* <Ex2 /> */}
     {/* <PropsEx name={'카리나'}/> */}
     {/* <PropsEx name={'닝닝'}/> */}
-    <State1/>
-
+    {/* <State1/> */}
+    {/* {<State2 init={50}/>} */}
+    {/* <State3/> */}
+    {/* <TodoList/> */}
+    <ContextApi/>
     </>
   );
 }
