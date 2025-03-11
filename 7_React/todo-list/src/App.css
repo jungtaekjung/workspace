@@ -1,0 +1,203 @@
+#root{
+  padding: 15px;
+}
+
+
+.signup-wrapper{
+  position: relative;
+}
+
+
+.signup-container{
+  width: 350px;
+  padding: 10px;
+  position: absolute;
+
+
+  background-color: white;
+  border: 3px solid #ccc;
+}
+
+
+.signup-container > label{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+
+.signup-container > label > input{
+  flex-basis: 65%;
+}
+
+
+.signup-container button{
+  width: 100%;
+}
+
+.id-error{
+  color: red;
+  font-weight: bold;
+}
+
+
+
+/* login */
+.login-container{
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 24px;
+}
+
+.login-container th{
+  width: 50px;
+}
+
+.loginBtn{
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  width: 80px;
+  height: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+
+.loginBtn:hover{
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+.login-container input{
+  height: 30px;
+  outline: 0;
+  padding: 5px;
+}
+
+/* todo-list css */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+
+.todo-container{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+
+.todo-container header{
+  width: 500px;
+  height: 80px;
+  text-align: center;
+  padding: 25px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+
+/* Todo 추가 */
+.todo-container .addTodo{
+  height: 40px;
+  display: flex;
+  margin: 20px 0;
+}
+
+
+/* + 추가 아이콘 */
+.todo-container .addTodo > *:first-child{
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  background-color: rgba(211, 211, 211,0.5);
+  display: block;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+.todo-container .addTodo > *:first-child:hover{
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+}
+
+
+/* todo 입력 */
+.todo-container .addTodo > input{
+  width: 460px;
+  padding-left: 10px;
+  border: 0;
+  outline: 0;
+  background-color: rgba(211, 211, 211,0.5);
+  font-size: 18px;
+}
+
+
+/* todoList 목록 */
+.todo-container .content{
+  width: 500px;
+  min-height: 400px;
+  border: 1px solid black;
+  padding: 15px;
+}
+
+
+.todo-list > li {
+  margin-left: 50px;
+}
+
+
+.todo-list div{
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+.todo-list div > *{
+  font-size: 20px;
+}
+.todo-list div > *:nth-child(1){
+  width: 300px;
+}
+
+
+/* O,X 버튼 */
+.todo-list div > *:nth-child(2){
+  width: 40px;
+  cursor: pointer;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+
+.todo-list div > *:nth-child(2):hover{
+  background-color: black;
+  color: white;
+}
+
+
+/* 휴지통 */
+.todo-list div > *:nth-child(3){
+  width: 50px;
+  cursor: pointer;
+}
+.todo-list div > *:nth-child(3):hover{
+  color: red;
+}
+.todo-completed{
+  text-decoration: line-through;
+}
+
+
