@@ -221,3 +221,15 @@ nav a:hover{
   background-color: #455ba8;
   color: white;
 }
+
+/* 에러페이지 */
+.error-page{
+  display: flex;
+  height: 800px;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  font-weight: bold;
+  font-size: 30px;
+  
+}

@@ -140,6 +140,27 @@
 				},
 				"auth-model": "oracle_native"
 			}
+		},
+		"oracle_thin-19589003d07-307520c1fef2b893": {
+			"provider": "oracle",
+			"driver": "oracle_thin",
+			"name": "HAEZO CLOUD DB 사용자 계정",
+			"save-password": true,
+			"configuration": {
+				"host": "localhost",
+				"port": "1521",
+				"database": "ORCL",
+				"url": "jdbc:oracle:thin:@(description\u003d (retry_count\u003d20)(retry_delay\u003d3)(address\u003d(protocol\u003dtcps)(port\u003d1521)(host\u003dadb.ap-chuncheon-1.oraclecloud.com))(connect_data\u003d(service_name\u003dg76cfb4276350e1_haezo1_high.adb.oraclecloud.com))(security\u003d(ssl_server_dn_match\u003dyes)))",
+				"configurationType": "URL",
+				"home": "C:\\app\\user1\\product\\18.0.0\\dbhomeXE",
+				"type": "dev",
+				"closeIdleConnection": true,
+				"provider-properties": {
+					"@dbeaver-connection-type@": "CUSTOM",
+					"@dbeaver-sid-service@": "SERVICE"
+				},
+				"auth-model": "oracle_native"
+			}
 		}
 	},
 	"connection-types": {
