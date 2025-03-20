@@ -58,7 +58,7 @@ const inputNickname=document.getElementById("inputNickname")
 const btn1=document.getElementById("btn1")
 const result1=document.getElementById("result1")
 
-btn1.addEventListener("click",()=>{
+btn1?.addEventListener("click",()=>{
 
     // fetch() API 를 이용한 ajax(비동기 통신)
 
@@ -88,7 +88,7 @@ const inputEmail2=document.getElementById("inputEmail2")
 const btn2=document.getElementById("btn2")
 const result2=document.getElementById("result2")
 
-btn2.addEventListener("click",()=>{
+btn2?.addEventListener("click",()=>{
     // POST 방식 비동기 요청
 
     //JSON.stringify() : JS 객체 -> JSON
@@ -138,7 +138,7 @@ const btn3=document.getElementById("btn3")
 const input=document.getElementById("input")
 const result3=document.getElementById("result3");
 
-btn3.addEventListener("click",function(){
+btn3?.addEventListener("click",function(){
 
     fetch("/selectMemberList",{
         method : "POST",
@@ -183,30 +183,61 @@ btn3.addEventListener("click",function(){
 
 // 2. SockJS를 이용해서 클라이언트용 웹소켓 객체 생성
 
-let testSock = new SockJS("/testSock/");
+// let testSock = new SockJS("/testSock/");
 
-function sendMessage(name, str){
+// function sendMessage(name, str){
 
-    // 매개변수를 JS 객체에 저장
-    let obj = {}; // 비어있는 객체
+//     // 매개변수를 JS 객체에 저장
+//     let obj = {}; // 비어있는 객체
 
-    obj.name = name; // 객체에 일치하는 key가 없다면 자동으로 추가
-    obj.str = str;
+//     obj.name = name; // 객체에 일치하는 key가 없다면 자동으로 추가
+//     obj.str = str;
 
-    //console.log(obj)
+//     //console.log(obj)
 
-    //웹소켓이 연결된 곳으로 메세지를 보냄
-    testSock.send( JSON.stringify(obj) );
-                    //JS객체 -> JSON
+//     //웹소켓이 연결된 곳으로 메세지를 보냄
+//     testSock.send( JSON.stringify(obj) );
+//                     //JS객체 -> JSON
 
+// }
+
+// //웹 소켓 객체(testSock)가 서버로 부터 전달받은 메세지가 있을 경우
+// testSock.onmessage = e =>{
+//     // e : 이벤트 객체
+//     // e.data : 전달 받은 메세지(JSON)
+
+//     let obj = JSON.parse(e.data); // JSON -> JS 객체
+
+//     console.log(`보낸사람 : ${obj.name} / 내용 : ${obj.str}`);
+// }
+
+// 자바 스크립트로 쿠키 얻어오기
+function getCookie(key){
+    const cookies =document.cookie;
+
+    // 배열.map() : 배열의 모든 요소에 접근하여 함수 수행 후
+    //              수행 결과를 이용해서 새로운 배열을 만드는 함수
+
+    const cookieList = cookies.split("; ").map(cookie => cookie.split("="));
+
+    const obj ={}; // 비어있는 객체 생성
+
+    for(let i=0; i<cookieList.length; i++){
+        obj[cookieList[i][0]] = cookieList[i][1]
+    }
+    return obj[key];
 }
 
-//웹 소켓 객체(testSock)가 서버로 부터 전달받은 메세지가 있을 경우
-testSock.onmessage = e =>{
-    // e : 이벤트 객체
-    // e.data : 전달 받은 메세지(JSON)
+// 쿠키에 saveId가 있을 경우
 
-    let obj = JSON.parse(e.data); // JSON -> JS 객체
+if(memberEmail !=null){ 
+    // 화면에 memberEmail 입력이 있을 경우
+    const saveId = getCookie("saveId");
+    // 있으면 이메일, 없는 경우 undefined
 
-    console.log(`보낸사람 : ${obj.name} / 내용 : ${obj.str}`);
+    if(saveId != undefined){ // 쿠키에 저장된 email이 있는 경우
+        memberEmail.value = saveId;
+        document.getElementsByName('saveId')[0].checked = true;
+    }
+
 }
